@@ -1,0 +1,49 @@
+<?php
+namespace common\models\query;
+
+/**
+ * This is the ActiveQuery class for [[\common\models\Product]].
+ *
+ * @see \common\models\ProductosTallas
+ */
+class ProductosTallasQuery extends \yii\db\ActiveQuery
+{
+    /*public function active()
+    {
+        return $this->andWhere('[[status]]=1');
+    }*/
+
+    /**
+     * {@inheritdoc}
+     * @return \common\models\ProductosTallas[]|array
+     */
+    public function all($db = null)
+    {
+        return parent::all($db);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return \common\models\ProductosTallas|array|null
+     */
+    public function one($db = null)
+    {
+        return parent::one($db);
+    }
+
+    /**
+     * @return \common\models\query\ProductosQuery
+     */
+    public function idProducto($idProducto)
+    {
+        return $this->andWhere(['IdProducto' => $idProducto]);
+
+    }
+
+    public function idTalla($idTalla)
+    {
+        return $this->andWhere(['idTalla' => $idTalla]);
+    }
+
+   
+}
