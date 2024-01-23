@@ -17,8 +17,9 @@ nbproject
 # windows thumbnail cache
 Thumbs.db
 
-# composer vendor dir
+# composer vendor dir y modulos de node
 /vendor
+/node_modules
 
 # composer itself is not needed
 composer.phar
@@ -35,9 +36,9 @@ phpunit.phar
 /.vagrant
 
 # ignore generated files
-/frontend/web/index.php
-/frontend/web/index-test.php
-/frontend/web/robots.txt
-/backend/web/index.php
-/backend/web/index-test.php
-/backend/web/robots.txt
+# /frontend/web/index.php
+# /frontend/web/index-test.php
+# /frontend/web/robots.txt
+# /backend/web/index.php
+# /backend/web/index-test.php
+# /backend/web/robots.txt
