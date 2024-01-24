@@ -1,7 +1,12 @@
 ## Instalación
 1. Ir al directorio raiz y ejecutar `composer install`
-1. Ejecutar `php init` desde el directorio raiz  del proyecto y escoger el ambiente de desarrollo o producción.
-1. OpeAbrir el archivo `common/config/main-local.php` y configurar las credenciales de la base de datos.
+1. Ejecutar `php init` desde el directorio raiz  del proyecto y escoger el ambiente de desarrollo o producción, independientemente de que ambiente se escoja no inicializar los siguientes arcchivos:
+    ```
+    codeception-local.php
+    main-local.php
+    params-local.php
+    ```
+1. Abrir el archivo `common/config/main-local.php` y configurar las credenciales de la base de datos.
 1. Crear los Hosts Virtuales para los directorios `frontend/web` y `backend/web` 
     ```
     <VirtualHost *:80>
