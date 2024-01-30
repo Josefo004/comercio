@@ -50,7 +50,9 @@ class ProductosController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Productos::find(),
+            'query' => Productos::find()
+                                ->joinWith('codigoEstado')
+                                ->where(['<>','Productos.CodigoEstado','D']),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -140,9 +142,12 @@ class ProductosController extends Controller
      */
     public function actionDelete($IdProducto)
     {
-        $this->findModel($IdProducto)->delete();
-
+        $modelo = $this->findModel($IdProducto);
+        $modelo->CodigoEstado = 'D';
+        $modelo->update();
         return $this->redirect(['index']);
+        //$this->findModel($IdProducto)->delete();
+
     }
 
     /**

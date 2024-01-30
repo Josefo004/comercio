@@ -7,7 +7,7 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-$this->title = 'Login';
+$this->title = 'Autenticarse';
 ?>
 <div class="site-login">
     <div class="mt-5 offset-lg-3 col-lg-6">

@@ -135,6 +135,12 @@ ALTER TABLE dbo.Productos
 ALTER TABLE dbo.Productos
   ADD CONSTRAINT FK_IdCategoriaGenero_Productos FOREIGN KEY (IdCategoriaGenero) REFERENCES dbo.CategoriaGenero(IdCategoriaGenero);
 
+ALTER TABLE dbo.Productos
+  ADD CodigoEstado CHAR(1) DEFAULT 'V'  NOT NULL;
+  
+ALTER TABLE dbo.Productos
+  ADD CONSTRAINT FK_CodigoEstado_Productos FOREIGN KEY (CodigoEstado) REFERENCES dbo.Estados(CodigoEstado);
+
 select * from Productos;
 
 update Productos set Imagen = 'AUJmIbzvbe6UktWlsMC6lhz0JiLuxOpw/polera2.jpg' where IdProducto in (28,30,32,34,36,38,40,42)

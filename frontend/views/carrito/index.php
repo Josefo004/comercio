@@ -28,7 +28,7 @@ HTML;
     ?>
         Cantidad : 
       <p class="card-text"><?=$producto->Descripcion ?></p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <p class="card-text"><small class="text-muted"><?= $producto->FechaHoraActualizacion ?></small></p>
     </div>
   </div>
 </div>

@@ -78,7 +78,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Productos::find()->publicado(),
+            //'query' => Productos::find()->publicado(),
+            'query' => Productos::find()->publicado2(),
         ]);
         return $this->render('index', [
             'dataProvider' => $dataProvider

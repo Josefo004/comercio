@@ -23,6 +23,7 @@ use Yii;
  * @property string|null $FechaHoraActualizacion
  * @property string|null $CodigoUsuarioCreacion
  * @property string|null $CodigoUsuarioActualizacion
+ * @property string $CodigoEstado
  *
  * @property Usuarios $codigoUsuarioActualizacion
  * @property Usuarios $codigoUsuarioCreacion
@@ -57,6 +58,7 @@ class Productos extends \yii\db\ActiveRecord
             [['imagenFile'], 'image', 'extensions' => 'png, jpg, jpeg, webp', 'maxSize' => 10 * 1024 * 1024],
             [['Imagen'], 'string', 'max' => 2000],
             [['CodigoUsuarioCreacion', 'CodigoUsuarioActualizacion'], 'string', 'max' => 3],
+            [['CodigoEstado'], 'string', 'max' => 1],
             [['CodigoUsuarioCreacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioCreacion' => 'CodigoUsuario']],
             [['CodigoUsuarioActualizacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioActualizacion' => 'CodigoUsuario']],
         ];
@@ -83,7 +85,19 @@ class Productos extends \yii\db\ActiveRecord
             'FechaHoraActualizacion' => 'Fecha Hora Actualizacion',
             'CodigoUsuarioCreacion' => 'Codigo Usuario Creacion',
             'CodigoUsuarioActualizacion' => 'Codigo Usuario Actualizacion',
+            'CodigoEstado' => 'Código Estado',
         ];
+    }
+
+    /**
+     * Gets query for [[CodigoEstado]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    //relacionamos productos con estado
+    public function getCodigoEstado()
+    {
+        return $this->hasOne(Estados::class, ['CodigoEstado' => 'CodigoEstado']);
     }
 
     /**
@@ -95,6 +109,7 @@ class Productos extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::class, ['CodigoUsuario' => 'CodigoUsuarioActualizacion']);
     }
+
     public function getErrors($attribute = null) {
         $errors=parent::getErrors($attribute);
         if(!empty($errors)){

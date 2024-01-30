@@ -39,6 +39,12 @@ class ProductosQuery extends \yii\db\ActiveQuery
         return $this->andWhere(['Publicado' => 1]);
     }
 
+    //Productos publicados y que no esten eliminados
+    public function publicado2()
+    {
+        return $this->where(['Publicado' => 1])->andWhere(['<>','CodigoEstado','D']);
+    }
+
     public function id($id)
     {
         return $this->andWhere(['id' => $id]);
