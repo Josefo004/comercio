@@ -24,6 +24,8 @@ use Yii;
  * @property string|null $CodigoUsuarioCreacion
  * @property string|null $CodigoUsuarioActualizacion
  * @property string $CodigoEstado
+ * @property int $IdCategoriaGenero
+ * @property int $IdCategoriaProducto
  *
  * @property Usuarios $codigoUsuarioActualizacion
  * @property Usuarios $codigoUsuarioCreacion
@@ -59,6 +61,8 @@ class Productos extends \yii\db\ActiveRecord
             [['Imagen'], 'string', 'max' => 2000],
             [['CodigoUsuarioCreacion', 'CodigoUsuarioActualizacion'], 'string', 'max' => 3],
             [['CodigoEstado'], 'string', 'max' => 1],
+            [['IdCategoriaGenero'], 'integer'],
+            [['IdCategoriaProducto'], 'integer'],
             [['CodigoUsuarioCreacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioCreacion' => 'CodigoUsuario']],
             [['CodigoUsuarioActualizacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioActualizacion' => 'CodigoUsuario']],
         ];
@@ -86,7 +90,31 @@ class Productos extends \yii\db\ActiveRecord
             'CodigoUsuarioCreacion' => 'Codigo Usuario Creacion',
             'CodigoUsuarioActualizacion' => 'Codigo Usuario Actualizacion',
             'CodigoEstado' => 'Código Estado',
+            'IdCategoriaGenero' => 'Genero Producto',
+            'IdCategoriaProducto' => 'Categoria Producto',
         ];
+    }
+
+    /**
+     * Gets query for [[IdCategoriaGenero]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    //relacionamos productos con la categoria de genero
+    public function getIdCategoriaProducto()
+    {
+        return $this->hasOne(CategoriaProductos::class, ['IdCategoriaProducto' => 'IdCategoriaProducto']);
+    }
+
+    /**
+     * Gets query for [[IdCategoriaGenero]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    //relacionamos productos con la categoria de genero
+    public function getIdCategoriaGenero()
+    {
+        return $this->hasOne(CategoriaGeneros::class, ['IdCategoriaGenero' => 'IdCategoriaGenero']);
     }
 
     /**

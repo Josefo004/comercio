@@ -1,17 +1,17 @@
 USE Ecommerce;
 
-DROP TABLE dbo.CategoriaGenero;
+DROP TABLE dbo.CategoriaGeneros;
 
-CREATE TABLE dbo.CategoriaGenero(
+CREATE TABLE dbo.CategoriaGeneros(
 	IdCategoriaGenero INT PRIMARY KEY IDENTITY (1, 1),
 	Descripcion VARCHAR(100) NOT NULL,
 );
 
-INSERT INTO CategoriaGenero (Descripcion) VALUES('SIN CATEGORIA');
-INSERT INTO CategoriaGenero (Descripcion) VALUES('MUJER');
-INSERT INTO CategoriaGenero (Descripcion) VALUES('VARON');
-INSERT INTO CategoriaGenero (Descripcion) VALUES('NIÑA');
-INSERT INTO CategoriaGenero (Descripcion) VALUES('NIÑO');
+INSERT INTO CategoriaGeneros (Descripcion) VALUES('SIN CATEGORIA');
+INSERT INTO CategoriaGeneros (Descripcion) VALUES('MUJER');
+INSERT INTO CategoriaGeneros (Descripcion) VALUES('VARON');
+INSERT INTO CategoriaGeneros (Descripcion) VALUES('NIÑA');
+INSERT INTO CategoriaGeneros (Descripcion) VALUES('NIÑO');
 
 -- *************************
 -- *************************
@@ -21,23 +21,23 @@ USE Ecommerce;
 
 DROP TABLE dbo.CategoriaProducto;
 
-CREATE TABLE dbo.CategoriaProducto(
+CREATE TABLE dbo.CategoriaProductos(
 	IdCategoriaProducto INT PRIMARY KEY IDENTITY (1, 1),
 	Descripcion VARCHAR(200) NOT NULL,
 );
 
-INSERT INTO CategoriaProducto (Descripcion) VALUES('SIN CATEGORIA PRODUCTO');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('POLERA - CAMISETA');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('POLO - POLERA CON CUELLO');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('SUDADERA');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('CONJUNTO DEPORTIVO');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('BUZO');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('CANGURO');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('CHAQUETA');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('CHAMARRA');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('JERSEY - CHOMPA');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('ABRIGO');
-INSERT INTO CategoriaProducto (Descripcion) VALUES('LLAVERO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('SIN CATEGORIA PRODUCTO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('POLERA - CAMISETA');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('POLO - POLERA CON CUELLO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('SUDADERA');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('CONJUNTO DEPORTIVO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('BUZO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('CANGURO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('CHAQUETA');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('CHAMARRA');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('JERSEY - CHOMPA');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('ABRIGO');
+INSERT INTO CategoriaProductos (Descripcion) VALUES('LLAVERO');
 
 
 -- *************************
@@ -135,7 +135,7 @@ ALTER TABLE dbo.Productos
   ADD IdCategoriaGenero INT DEFAULT 1 NOT NULL;
   
 ALTER TABLE dbo.Productos
-  ADD CONSTRAINT FK_IdCategoriaGenero_Productos FOREIGN KEY (IdCategoriaGenero) REFERENCES dbo.CategoriaGenero(IdCategoriaGenero);
+  ADD CONSTRAINT FK_IdCategoriaGenero_Productos FOREIGN KEY (IdCategoriaGenero) REFERENCES dbo.CategoriaGeneros(IdCategoriaGenero);
 
 ALTER TABLE dbo.Productos
   ADD CodigoEstado CHAR(1) DEFAULT 'V'  NOT NULL;
@@ -147,7 +147,10 @@ ALTER TABLE dbo.Productos
   ADD IdCategoriaProducto INT DEFAULT 1 NOT NULL;
   
 ALTER TABLE dbo.Productos
-  ADD CONSTRAINT FK_IdCategoriaProducto_Productos FOREIGN KEY (IdCategoriaProducto) REFERENCES dbo.CategoriaProducto(IdCategoriaProducto);
+  ADD CONSTRAINT FK_IdCategoriaProducto_Productos FOREIGN KEY (IdCategoriaProducto) REFERENCES dbo.CategoriaProductos(IdCategoriaProducto);
+
+ALTER TABLE dbo.Productos
+  DROP CONSTRAINT FK_IdCategoriaGenero_Productos;
 
 select * from Productos;
 
@@ -155,30 +158,32 @@ update Productos set Imagen = 'AUJmIbzvbe6UktWlsMC6lhz0JiLuxOpw/polera2.jpg' whe
 
 update Productos set Imagen = '-F-5nC5Dm34LkgpfLjlEbAPqVbQ8IVB1/polera femenina.jpg' where IdProducto in (29,31,33,35,37,39,41,43)
 
-UPDATE Productos SET IdCategoriaProducto=2 WHERE IdProducto=21;
-UPDATE Productos SET IdCategoriaProducto=3 WHERE IdProducto=22;
-UPDATE Productos SET IdCategoriaProducto=4 WHERE IdProducto=23;
-UPDATE Productos SET IdCategoriaProducto=5 WHERE IdProducto=24;
-UPDATE Productos SET IdCategoriaProducto=6 WHERE IdProducto=25;
-UPDATE Productos SET IdCategoriaProducto=7 WHERE IdProducto=26;
-UPDATE Productos SET IdCategoriaProducto=8 WHERE IdProducto=27;
-UPDATE Productos SET IdCategoriaProducto=9 WHERE IdProducto=28;
-UPDATE Productos SET IdCategoriaProducto=10 WHERE IdProducto=29;
-UPDATE Productos SET IdCategoriaProducto=11 WHERE IdProducto=30;
-UPDATE Productos SET IdCategoriaProducto=12 WHERE IdProducto=31;
-UPDATE Productos SET IdCategoriaProducto=2 WHERE IdProducto=32;
-UPDATE Productos SET IdCategoriaProducto=3 WHERE IdProducto=33;
-UPDATE Productos SET IdCategoriaProducto=4 WHERE IdProducto=34;
-UPDATE Productos SET IdCategoriaProducto=5 WHERE IdProducto=35;
-UPDATE Productos SET IdCategoriaProducto=6 WHERE IdProducto=36;
-UPDATE Productos SET IdCategoriaProducto=7 WHERE IdProducto=37;
-UPDATE Productos SET IdCategoriaProducto=8 WHERE IdProducto=38;
-UPDATE Productos SET IdCategoriaProducto=9 WHERE IdProducto=39;
-UPDATE Productos SET IdCategoriaProducto=10 WHERE IdProducto=40;
-UPDATE Productos SET IdCategoriaProducto=11 WHERE IdProducto=41;
-UPDATE Productos SET IdCategoriaProducto=1 WHERE IdProducto=42;
+UPDATE Productos SET IdCategoriaGenero=1 WHERE IdProducto=21;
+UPDATE Productos SET IdCategoriaGenero=2 WHERE IdProducto=22;
+UPDATE Productos SET IdCategoriaGenero=3 WHERE IdProducto=23;
+UPDATE Productos SET IdCategoriaGenero=4 WHERE IdProducto=24;
+UPDATE Productos SET IdCategoriaGenero=5 WHERE IdProducto=25;
+UPDATE Productos SET IdCategoriaGenero=1 WHERE IdProducto=26;
+UPDATE Productos SET IdCategoriaGenero=2 WHERE IdProducto=27;
+UPDATE Productos SET IdCategoriaGenero=3 WHERE IdProducto=28;
+UPDATE Productos SET IdCategoriaGenero=4 WHERE IdProducto=29;
+UPDATE Productos SET IdCategoriaGenero=5 WHERE IdProducto=30;
+UPDATE Productos SET IdCategoriaGenero=1 WHERE IdProducto=31;
+UPDATE Productos SET IdCategoriaGenero=2 WHERE IdProducto=32;
+UPDATE Productos SET IdCategoriaGenero=3 WHERE IdProducto=33;
+UPDATE Productos SET IdCategoriaGenero=4 WHERE IdProducto=34;
+UPDATE Productos SET IdCategoriaGenero=5 WHERE IdProducto=35;
+UPDATE Productos SET IdCategoriaGenero=1 WHERE IdProducto=36;
+UPDATE Productos SET IdCategoriaGenero=2 WHERE IdProducto=37;
+UPDATE Productos SET IdCategoriaGenero=3 WHERE IdProducto=38;
+UPDATE Productos SET IdCategoriaGenero=4 WHERE IdProducto=39;
+UPDATE Productos SET IdCategoriaGenero=5 WHERE IdProducto=40;
+UPDATE Productos SET IdCategoriaGenero=1 WHERE IdProducto=41;
+UPDATE Productos SET IdCategoriaGenero=2 WHERE IdProducto=42;
 
-UPDATE Productos SET NombreProducto=(SELECT CategoriaProducto.Descripcion FROM CategoriaProducto WHERE CategoriaProducto.IdCategoriaProducto=Productos.IdCategoriaProducto);
+UPDATE Productos SET NombreProducto=(SELECT CategoriaProducto.Descripcion FROM CategoriaProducto WHERE CategoriaProducto.IdCategoriaGenero=Productos.IdCategoriaProducto);
 
 UPDATE Productos SET NombreProducto=UPPER(LEFT(NombreProducto, 1)) + LOWER(SUBSTRING(NombreProducto, 2, LEN(NombreProducto)));
+
+
 

@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="productos-form">
 
 <?php $form = ActiveForm::begin([
-            'options' => ['enctype' => 'multipart/form-data']
+        'options' => ['enctype' => 'multipart/form-data']
     ]); ?>
 
     <?= $form->field($model, 'NombreProducto')->textInput(['maxlength' => true]) ?>
@@ -33,6 +33,7 @@ use yii\widgets\ActiveForm;
         'inputOptions' => ['class' => 'custom-file-input']
     ])->textInput(['type' => 'file']) ?>
 
+    <?= $form->field($model, 'IdCategoriaGenero')->dropDownList($genero, ['prompt' => 'Seleccione Uno' ])?>
     <?= $form->field($model, 'Precio')->textInput() ?>
     <?= $form->field($model, 'PrecioPreventa')->textInput() ?>
     <?= $form->field($model, 'PrecioReserva')->textInput() ?>

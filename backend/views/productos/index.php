@@ -27,15 +27,30 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'IdProducto',
-            'NombreProducto',
-            
+            //'NombreProducto',
+            [
+                'label' => 'Producto Para',
+                'content' => function ($model) {
+                    //return strtolower($model->idCategoriaGenero->Descripcion);
+                    return Html::tag('spam', $model->idCategoriaGenero->Descripcion, [
+                        'class' => 'badge badge-pill badge-light'
+                    ]);
+                }
+                //'attribute' => 'idCategoriaGenero.Descripcion',
+            ],
+            [
+                'label' => 'Categoria Producto',
+                'content' => function ($model){
+                    return $model->idCategoriaProducto->getDescripcion();
+                }
+                //'attribute' => ucwords('idCategoriaProducto.Descripcion'),
+            ],
             [
                 'attribute' => 'Descripcion',
                 'content' => function ($model) {
                     return \yii\helpers\StringHelper::truncateWords($model->Descripcion, 7);
                 }
-            ],
-          
+            ],          
             [
                 'label' => 'Imagen',
                 'attribute' => 'imagen',
