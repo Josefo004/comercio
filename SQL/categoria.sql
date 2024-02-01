@@ -132,6 +132,9 @@ INSERT INTO CategoriaGenero (Descripcion) VALUES('NIÑO');
 select * from CategoriaGenero;
 
 ALTER TABLE dbo.Productos
+  ADD CodigoProducto VARCHAR(10) NULL,
+
+ALTER TABLE dbo.Productos
   ADD IdCategoriaGenero INT DEFAULT 1 NOT NULL;
   
 ALTER TABLE dbo.Productos
@@ -185,5 +188,7 @@ UPDATE Productos SET NombreProducto=(SELECT CategoriaProducto.Descripcion FROM C
 
 UPDATE Productos SET NombreProducto=UPPER(LEFT(NombreProducto, 1)) + LOWER(SUBSTRING(NombreProducto, 2, LEN(NombreProducto)));
 
-
+ALTER TABLE dbo.Productos
+  ADD FechaCaducidadPreVenta DATE NULL,
+  ADD FechaCaducidadReserva DATE NULL,
 

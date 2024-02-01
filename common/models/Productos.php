@@ -26,6 +26,9 @@ use Yii;
  * @property string $CodigoEstado
  * @property int $IdCategoriaGenero
  * @property int $IdCategoriaProducto
+ * @property string $CodigoProducto
+ * @property string $FechaCaducidadPreVenta
+ * @property string $FechaCaducidadReserva
  *
  * @property Usuarios $codigoUsuarioActualizacion
  * @property Usuarios $codigoUsuarioCreacion
@@ -33,6 +36,7 @@ use Yii;
  * @property Ordenes[] $idOrdens
  * @property ProductosOrdenados[] $productosOrdenados
  */
+
 class Productos extends \yii\db\ActiveRecord
 {
     public $imagenFile;
@@ -63,6 +67,9 @@ class Productos extends \yii\db\ActiveRecord
             [['CodigoEstado'], 'string', 'max' => 1],
             [['IdCategoriaGenero'], 'integer'],
             [['IdCategoriaProducto'], 'integer'],
+            [['CodigoProducto'], 'string', 'max' => 10],
+            [['FechaCaducidadPreVenta'], 'date', 'format' => 'php:Y-m-d'],
+            [['FechaCaducidadReserva'], 'date', 'format' => 'php:Y-m-d'],
             [['CodigoUsuarioCreacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioCreacion' => 'CodigoUsuario']],
             [['CodigoUsuarioActualizacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioActualizacion' => 'CodigoUsuario']],
         ];
@@ -90,8 +97,11 @@ class Productos extends \yii\db\ActiveRecord
             'CodigoUsuarioCreacion' => 'Codigo Usuario Creacion',
             'CodigoUsuarioActualizacion' => 'Codigo Usuario Actualizacion',
             'CodigoEstado' => 'Código Estado',
-            'IdCategoriaGenero' => 'Genero Producto',
-            'IdCategoriaProducto' => 'Categoria Producto',
+            'IdCategoriaGenero' => 'Indumentaria Para',
+            'IdCategoriaProducto' => 'Tipo de Indumentaria',
+            'CodigoProducto' => 'Codigo Producto',
+            'FechaCaducidadReserva' => 'Caducidad Reserva',
+            'FechaCaducidadPreVenta' => 'Caducidad Preventa',
         ];
     }
 

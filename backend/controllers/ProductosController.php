@@ -4,6 +4,7 @@ namespace backend\controllers;
 use common\components\CommonQueries;
 use common\models\Productos;
 use common\models\CategoriaGeneros;
+use common\models\CategoriaProductos;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -99,8 +100,9 @@ class ProductosController extends Controller
         $model->CantidadVendidos = 0;
         $model->imagenFile = UploadedFile::getInstance($model, 'Imagen');
 
-        $genero = CategoriaGeneros::find();
-        dd($genero);
+        $aGeneros = CategoriaGeneros::getGenerosAsArray();
+        $aProductos = CategoriaProductos::getProductosAsArray();
+        //dd($aProductos);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -112,7 +114,8 @@ class ProductosController extends Controller
 
         return $this->render('create', [
             'model' => $model, 
-            'genero' => $genero
+            'aGeneros' => $aGeneros,
+            'aProductos' => $aProductos,
         ]);
     }
 

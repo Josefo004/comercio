@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\query\ProductosTallasQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "ProductoTallas".
@@ -31,6 +32,13 @@ class CategoriaGeneros extends \yii\db\ActiveRecord
             [['IdCategoriaGenero', 'Descripcion'], 'required'],
             [['Descripcion'], 'string', 'max' => 100],
         ];
+    }
+
+    //devolviendo todos los genros como array asociativo
+    public static function getGenerosAsArray(){
+        $generos = CategoriaGeneros::find()->all();
+        $generos = ArrayHelper::map($generos,'IdCategoriaGenero', 'Descripcion');
+        return $generos;
     }
 
     // /**

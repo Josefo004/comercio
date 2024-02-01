@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\query\ProductosTallasQuery;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -37,6 +38,13 @@ class CategoriaProductos extends \yii\db\ActiveRecord
     public function getDescripcion(){
         return ucfirst(strtolower($this->Descripcion));
         //return mb_ucwords($this->Descripcion);
+    }
+
+    //devolviendo todas las categorias como array asociativo
+    public static function getProductosAsArray(){
+        $productos = CategoriaProductos::find()->all();
+        $productos = ArrayHelper::map($productos,'IdCategoriaProducto', 'Descripcion');
+        return $productos;
     }
 
     // /**
