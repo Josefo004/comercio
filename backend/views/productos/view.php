@@ -25,6 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'IdProducto',
+            'CodigoProducto',
+            [
+                'attribute' => 'idCategoriaGenero.Descripcion',
+                'label' => 'Producto Para',
+            ],
+            [
+                'attribute' => 'idCategoriaProducto.Descripcion',
+                'label' => 'Tipo Producto',
+            ],
+            
             'NombreProducto',
             'Descripcion:html',
             [
@@ -34,7 +44,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'Precio',
             'PrecioPreventa',
+            'FechaCaducidadPreVenta',
             'PrecioReserva',
+            'FechaCaducidadReserva',
             'CantidadLimite',
             'CantidadVendidos',
             [

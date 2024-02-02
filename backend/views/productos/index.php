@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Productos;
+use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -16,10 +17,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Nuevo Producto', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+    <div class="row">
+        <div class="col-md-9">
+            <?= Html::a('Nuevo Producto', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
+        <div class="col-md-3">
+            <?php
+            $form = ActiveForm::begin([
+                'method' => 'get',
+                'action' => ['productos/index'], // La acción de búsqueda en el controlador
+            ]);
+            ?>
+            <div class="form-group">
+                <?= Html::textInput('q', '', ['class' => 'form-control', 'placeholder' => 'Buscar...', 'id' => 'searchInput']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
+    </div>
+    <script>
+        // Agregar evento change al input de búsqueda
+        $('#searchInput').on('input', function() {
+            this.form.submit(); // Envía automáticamente el formulario cuando cambia el contenido del input
+        });
+    </script>
+    
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -27,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'IdProducto',
-            //'NombreProducto',
+            'CodigoProducto',
+            'NombreProducto',
             [
                 'label' => 'Producto Para',
                 'content' => function ($model) {
@@ -38,13 +60,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 //'attribute' => 'idCategoriaGenero.Descripcion',
             ],
-            [
-                'label' => 'Categoria Producto',
-                'content' => function ($model){
-                    return $model->idCategoriaProducto->getDescripcion();
-                }
-                //'attribute' => ucwords('idCategoriaProducto.Descripcion'),
-            ],
+            // [
+            //     'label' => 'Categoria Producto',
+            //     'content' => function ($model){
+            //         return $model->idCategoriaProducto->getDescripcion();
+            //     }
+            //     //'attribute' => ucwords('idCategoriaProducto.Descripcion'),
+            // ],
             [
                 'attribute' => 'Descripcion',
                 'content' => function ($model) {

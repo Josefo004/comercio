@@ -66,14 +66,18 @@ use yii\jui\DatePicker;
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'FechaCaducidadPreVenta')->widget(DatePicker::classname(), [
+            <?= $form->field($model, 'FechaCaducidadPreVenta')->widget(DatePicker::class, [
                 'language' => 'es', // el idioma del widget
                 'dateFormat' => 'dd-MM-yyyy', // el formato de la fecha
-                //'options' => ['class' => 'form-control'], // las opciones del campo de texto
+                'options' => ['class' => 'form-control', 'placeholder' => 'dd-mm-aaaa'], // las opciones del campo de texto
             ])?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'FechaCaducidadReserva')->textInput() ?>
+            <?= $form->field($model, 'FechaCaducidadReserva')->widget(DatePicker::class, [
+                'language' => 'es', // el idioma del widget
+                'dateFormat' => 'dd-MM-yyyy', // el formato de la fecha
+                'options' => ['class' => 'form-control', 'placeholder' => 'dd-mm-aaaa'], // las opciones del campo de texto
+            ])?>
         </div>
     </div>
 

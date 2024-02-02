@@ -5,6 +5,7 @@ use common\components\CommonQueries;
 use common\models\Productos;
 use common\models\CategoriaGeneros;
 use common\models\CategoriaProductos;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -49,14 +50,19 @@ class ProductosController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($q = null)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Productos::find()
                                 ->joinWith('codigoEstado')
                                 ->joinWith('idCategoriaGenero')
                                 ->joinWith('idCategoriaProducto')
-                                ->where(['<>','Productos.CodigoEstado','D']),
+                                ->where(['<>','Productos.CodigoEstado','D'])
+                                ->andFilterWhere(['or',
+                                    ['like', 'Productos.CodigoProducto', $q],
+                                    ['like', 'Productos.NombreProducto', $q],
+                                    ['like', 'Productos.Descripcion', $q],
+                                ]),
             
             'pagination' => [
                 'pageSize' => 6
@@ -83,7 +89,7 @@ class ProductosController extends Controller
     public function actionView($IdProducto)
     {
         return $this->render('view', [
-            'model' => $this->findModel($IdProducto),
+            'model' => $this->findModel2($IdProducto),
         ]);
     }
 
@@ -100,7 +106,7 @@ class ProductosController extends Controller
         $model->CantidadVendidos = 0;
         $model->imagenFile = UploadedFile::getInstance($model, 'Imagen');
 
-        $aGeneros = CategoriaGeneros::getGenerosAsArray();
+        $aGeneros = CategoriaGeneros::getGenerosAsArray();        
         $aProductos = CategoriaProductos::getProductosAsArray();
         //dd($aProductos);
 
@@ -132,6 +138,11 @@ class ProductosController extends Controller
         $model->FechaHoraActualizacion = CommonQueries::GetFechaHoraActual();
         $model->CodigoUsuarioActualizacion =  $this->identity->CodigoUsuario;
         $model->imagenFile = UploadedFile::getInstance($model, 'Imagen');
+
+        // dd($model);
+
+        $aGeneros = CategoriaGeneros::getGenerosAsArray();  
+        $aProductos = CategoriaProductos::getProductosAsArray();
         
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'IdProducto' => $model->IdProducto]);
@@ -139,6 +150,8 @@ class ProductosController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'aGeneros' => $aGeneros,
+            'aProductos' => $aProductos,
         ]);
     }
 
@@ -173,5 +186,15 @@ class ProductosController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModel2($IdProducto){
+        $model = Productos::find()
+                        ->joinWith('codigoEstado')
+                        ->joinWith('idCategoriaGenero')
+                        ->joinWith('idCategoriaProducto')
+                        ->where(['=','Productos.IdProducto',$IdProducto])
+                        ->one();
+        return $model;
     }
 }

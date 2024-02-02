@@ -68,8 +68,8 @@ class Productos extends \yii\db\ActiveRecord
             [['IdCategoriaGenero'], 'integer'],
             [['IdCategoriaProducto'], 'integer'],
             [['CodigoProducto'], 'string', 'max' => 10],
-            [['FechaCaducidadPreVenta'], 'date', 'format' => 'php:Y-m-d'],
-            [['FechaCaducidadReserva'], 'date', 'format' => 'php:Y-m-d'],
+            [['FechaCaducidadPreVenta'], 'date', 'format' => 'php:d-m-Y'],
+            [['FechaCaducidadReserva'], 'date', 'format' => 'php:d-m-Y'],
             [['CodigoUsuarioCreacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioCreacion' => 'CodigoUsuario']],
             [['CodigoUsuarioActualizacion'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['CodigoUsuarioActualizacion' => 'CodigoUsuario']],
         ];

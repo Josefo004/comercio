@@ -38,6 +38,7 @@ class CategoriaGeneros extends \yii\db\ActiveRecord
     public static function getGenerosAsArray(){
         $generos = CategoriaGeneros::find()->all();
         $generos = ArrayHelper::map($generos,'IdCategoriaGenero', 'Descripcion');
+        // return CategoriaGeneros::find()->select('IdCategoriaGenero', 'Descripcion')->asArray()->all();
         return $generos;
     }
 
