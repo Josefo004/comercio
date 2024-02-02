@@ -100,7 +100,7 @@ CREATE TABLE dbo.ProductoTallas(
 	IdProductoTalla INT PRIMARY KEY IDENTITY (1, 1),
 	IdProducto INT NOT NULL,
 	IdTalla INT NOT NULL,
-	Cantidad INT DEFAULT 1 NOT NULL,
+	Cantidad INT DEFAULT 0 NOT NULL,
 	FechaCreacion DATETIME DEFAULT (getdate()) NOT NULL,
 	FechaModificacion DATETIME NULL,
 	CONSTRAINT FK_IdProducto_ProductoTallas FOREIGN KEY (IdProducto) REFERENCES dbo.Productos(IdProducto),
@@ -192,3 +192,53 @@ ALTER TABLE dbo.Productos
   ADD FechaCaducidadPreVenta DATE NULL,
   ADD FechaCaducidadReserva DATE NULL,
 
+-- ****************************************************************************************************
+-- ****************************************************************************************************
+-- ****************************************************************************************************
+-- ****************************************************************************************************
+
+ALTER TABLE dbo.ProductoTallas
+  ADD Cantidad INT DEFAULT 1 NOT NULL;
+
+ALTER TABLE dbo.ProductoTallas
+  DROP CONSTRAINT id;
+
+-- ** Averiguar el nombre de las llaves foraneas
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'ProductoTallas' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.ProductoTallas
+  DROP CONSTRAINT FK__ProductoT__IdTal__7E37BEF6;
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'ProductoTallas' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'ProductoTallas' AND CONSTRAINT_TYPE = 'PRIMARY KEY';
+
+ALTER TABLE dbo.ProductoTallas
+  DROP CONSTRAINT PK__Producto__271D2C843548FC8C
+
+ALTER TABLE dbo.ProductoTallas
+  DROP CONSTRAINT FK__ProductoT__IdPro__7D439ABD;
+
+
+USE Ecommerce;
+
+DROP TABLE dbo.Tallas;
+
+CREATE TABLE dbo.Tallas(
+	IdTalla INT PRIMARY KEY IDENTITY (1, 1),
+	Talla VARCHAR(5) NOT NULL,
+	DescripcionTalla VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('NTT', 'NO TIENE TALLA');
+INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('XS', 'EXTRA SMALL, TALLA EXTRA PEQUEÑA');
+INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('S', 'SMALL, TALLA PEQUEÑA');
+INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('M', 'MEDIUM, TAllA MEDIA');
+INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('L', 'LARGE, TALLA GRANDE');
+INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('XL', 'EXTRA LARGE, TALLA EXTRA GRANDE');

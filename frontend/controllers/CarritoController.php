@@ -13,6 +13,7 @@ class CarritoController extends Controller
     public function actionIndex($id)
     {
        $producto = $this->findModel($id);
+       //dd($producto);
        $productosTallas = ProductoTallas::find()->IdProducto($id)->all();
        foreach ($productosTallas as $tallas)
        {

@@ -66,7 +66,8 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <br><br><br>
+        <!-- <br><br><br> -->
+        <br>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -74,8 +75,9 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
-        <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
+        <p class="float-start"> <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        <!-- <p class="float-end"><?= Yii::powered('USFX') ?></p> -->
+        <p class="float-end"> Desarrollado por &copy;<strong>DTIC</strong></p>
     </div>
 </footer>
 

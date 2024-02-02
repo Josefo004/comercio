@@ -75,12 +75,23 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($q = null)
     {
         $dataProvider = new ActiveDataProvider([
             //'query' => Productos::find()->publicado(),
-            'query' => Productos::find()->publicado2(),
+            //'query' => Productos::find()->publicado2(),
+            'query' => Productos::find()
+                                ->joinWith('codigoEstado')
+                                ->joinWith('idCategoriaGenero')
+                                ->joinWith('idCategoriaProducto')
+                                ->where(['<>','Productos.CodigoEstado','D'])
+                                ->andFilterWhere(['or',
+                                    ['like', 'Productos.CodigoProducto', $q],
+                                    ['like', 'Productos.NombreProducto', $q],
+                                    ['like', 'Productos.Descripcion', $q],
+                                ]),
         ]);
+        //dd($dataProvider);
         return $this->render('index', [
             'dataProvider' => $dataProvider
         ]);

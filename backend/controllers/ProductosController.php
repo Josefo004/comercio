@@ -52,6 +52,18 @@ class ProductosController extends Controller
      */
     public function actionIndex($q = null)
     {
+        // $sw = Productos::find()
+        //                         ->joinWith('codigoEstado')
+        //                         ->joinWith('idCategoriaGenero')
+        //                         ->joinWith('idCategoriaProducto')
+        //                         ->where(['<>','Productos.CodigoEstado','D'])
+        //                         ->andFilterWhere(['or',
+        //                             ['like', 'Productos.CodigoProducto', $q],
+        //                             ['like', 'Productos.NombreProducto', $q],
+        //                             ['like', 'Productos.Descripcion', $q],
+        // ])->all();
+        // dd($sw);
+
         $dataProvider = new ActiveDataProvider([
             'query' => Productos::find()
                                 ->joinWith('codigoEstado')
@@ -74,7 +86,7 @@ class ProductosController extends Controller
             // ],
             
         ]);
-
+        
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
