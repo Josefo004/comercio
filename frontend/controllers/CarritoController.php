@@ -10,17 +10,19 @@ use Yii;
 use yii\web\Controller;
 class CarritoController extends Controller
 {
-    public function actionIndex($id)
+    public function actionIndex($id, $tprecio=null)
     {
-       $producto = $this->findModel($id);
+       $producto = $this->findModel2($id);
        //dd($producto);
+       
        $productosTallas = ProductoTallas::find()->IdProducto($id)->all();
        foreach ($productosTallas as $tallas)
        {
             $detalleTallas[$tallas->idTalla->DescripcionTalla] = DetalleTallas::find()->DetalleTallas($tallas->IdTalla)->all();
        }
-       return $this->render('index',
-           ['producto'=>$producto,
+       return $this->render('index', [
+            'producto' => $producto,
+            'tprecio' => $tprecio,
             'detalleTallas'=>$detalleTallas
            ]);
     }
@@ -33,6 +35,19 @@ class CarritoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    protected function findModel2($IdProducto){
+        $model = Productos::find()
+                        ->joinWith('codigoEstado')
+                        ->joinWith('idCategoriaGenero')
+                        ->joinWith('idCategoriaProducto')
+                        ->where(['=','Productos.IdProducto',$IdProducto])
+                        ->one();
+        return $model;
+    }
+
+
+
     protected function findTalla( $idTalla)
     {
         if (($model = DetalleTallas::findAll([ 'IdTalla'=>$idTalla])) !== null) {

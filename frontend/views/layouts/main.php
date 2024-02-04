@@ -11,6 +11,9 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
+$sGeneros = Yii::$app->session->get('sGeneros');
+$sProductos = Yii::$app->session->get('sProductos');
+//dd($sGeneros);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,8 +39,19 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Inicio', 'url' => ['/site/index']],
+        [
+            'label' => 'Producto Para',
+            //'items' => $this->params['aGeneros'],
+            'items' => $sGeneros,
+        ],
+        [
+            'label' => 'Tipo Producto',
+            //'items' => $this->params['aProductos'],
+            'items' => $sProductos,
+        ],
         ['label' => 'Acerca de', 'url' => ['/site/about']],
         ['label' => 'Contacto', 'url' => ['/site/contact']],
+        
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -66,8 +80,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <!-- <br><br><br> -->
-        <br>
+        <br><br><br>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -76,7 +89,6 @@ AppAsset::register($this);
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
         <p class="float-start"> <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <!-- <p class="float-end"><?= Yii::powered('USFX') ?></p> -->
         <p class="float-end"> Desarrollado por &copy;<strong>DTIC</strong></p>
     </div>
 </footer>

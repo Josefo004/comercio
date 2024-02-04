@@ -18,11 +18,39 @@ use yii\base\InvalidArgumentException;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 
+use common\models\CategoriaGeneros;
+use common\models\CategoriaProductos;
+
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+    public function arrayMenu($data, $uu){
+        $vq = $uu==1? 'g' : 'p';
+        $aaa = [];
+        if(count($data)<1){return ['label'=>'SIN DATOS EN LA BD', 'url' => ['/site/index']];}
+        else{
+            foreach ($data as $clave => $valor) {
+                // $array[3] se actualizará con cada valor de $array...
+                array_push($aaa, ['label' => $valor, 'url' => ['/site/index', $vq => $clave]]);
+            }
+            return $aaa;
+        }
+    }
+
+    public function actionEjecutarUnaVez(){
+        $gg = CategoriaGeneros::getGenerosAsArray();
+        $pp = CategoriaProductos::getProductosAsArray();
+        //dd($gg);
+        $gg = $this->arrayMenu($gg,1);
+        $pp = $this->arrayMenu($pp,2);
+        //dd($pp);
+        Yii::$app->session->set('sGeneros', $gg);
+        Yii::$app->session->set('sProductos', $pp);
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -75,25 +103,48 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex($q = null)
+    public function actionIndex($q = null, $p = null, $g = null)
     {
-        $dataProvider = new ActiveDataProvider([
-            //'query' => Productos::find()->publicado(),
-            //'query' => Productos::find()->publicado2(),
-            'query' => Productos::find()
-                                ->joinWith('codigoEstado')
-                                ->joinWith('idCategoriaGenero')
-                                ->joinWith('idCategoriaProducto')
-                                ->where(['<>','Productos.CodigoEstado','D'])
-                                ->andFilterWhere(['or',
-                                    ['like', 'Productos.CodigoProducto', $q],
-                                    ['like', 'Productos.NombreProducto', $q],
-                                    ['like', 'Productos.Descripcion', $q],
-                                ]),
-        ]);
-        //dd($dataProvider);
+        //'query' => Productos::find()->publicado(),
+        //'query' => Productos::find()->publicado2(),
+        if (!is_null($g)) {
+            $dataProvider = new ActiveDataProvider([
+                'query' => Productos::find()
+                        ->joinWith('codigoEstado')
+                        ->joinWith('idCategoriaGenero')
+                        ->joinWith('idCategoriaProducto')
+                        ->where(['<>','Productos.CodigoEstado','D'])
+                        ->andwhere(['Productos.IdCategoriaGenero'=>$g]),
+            ]);
+        } elseif (!is_null($p)){
+            $dataProvider = new ActiveDataProvider([
+                'query' => Productos::find()
+                        ->joinWith('codigoEstado')
+                        ->joinWith('idCategoriaGenero')
+                        ->joinWith('idCategoriaProducto')
+                        ->where(['<>','Productos.CodigoEstado','D'])
+                        ->andwhere(['Productos.IdCategoriaProducto'=>$p]),
+            ]);
+        } else {
+            $dataProvider = new ActiveDataProvider([
+                'query' => Productos::find()
+                        ->joinWith('codigoEstado')
+                        ->joinWith('idCategoriaGenero')
+                        ->joinWith('idCategoriaProducto')
+                        ->where(['<>','Productos.CodigoEstado','D'])
+                        ->andFilterWhere(['or',
+                            ['like', 'Productos.CodigoProducto', $q],
+                            ['like', 'Productos.NombreProducto', $q],
+                            ['like', 'Productos.Descripcion', $q],
+                        ]),
+            ]);
+        }
+        if ((!Yii::$app->session->has('sGeneros')) || (!Yii::$app->session->has('sProductos'))) $this->actionEjecutarUnaVez();
+        //dd($this->aGeneros);
         return $this->render('index', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            // 'aGeneros' => $this->aGeneros,
+            // 'aProductos' => $this->aProductos,
         ]);
     }
 

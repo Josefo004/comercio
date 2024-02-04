@@ -55,7 +55,7 @@ class Productos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['NombreProducto', 'Precio', 'PrecioPreventa', 'PrecioReserva', 'Publicado'], 'required'],
+            [['NombreProducto', 'PrecioPreventa', 'PrecioReserva', 'Publicado'], 'required'],
             [['Descripcion'], 'string'],
             [['Precio', 'PrecioPreventa', 'PrecioReserva'], 'number'],
             [['CantidadLimite', 'CantidadVendidos', 'Publicado'], 'integer'],
@@ -261,7 +261,7 @@ class Productos extends \yii\db\ActiveRecord
      */
     public function getShortDescription()
     {
-        return \yii\helpers\StringHelper::truncateWords(strip_tags($this->Descripcion), 30);
+        return \yii\helpers\StringHelper::truncateWords(strip_tags($this->Descripcion), 18);
     }
 
     public function afterDelete()

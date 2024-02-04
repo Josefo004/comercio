@@ -1,28 +1,45 @@
-<div class="card border-info  h-100 w-75">
-    <a href="<?php echo \yii\helpers\Url::to(['/carrito/index','id'=>$model->IdProducto]) ?>" class="img-wrapper" >
-        <img class="card-img-top" src="<?php echo $model->getImageUrl() ?>" >
-    </a>
+<?php
+date_default_timezone_set('America/La_Paz');
+$fechaa = date('Y-m-d');
+$fechapv = $model->FechaCaducidadPreVenta;
+$fechare = $model->FechaCaducidadReserva;
+$valFePre = (strtotime($fechapv)>=strtotime($fechaa))?"S":"N";
+$valFeRes = (strtotime($fechare)>=strtotime($fechaa))?"S":"N";
+$genero = ($model->IdCategoriaGenero!=1)?" - ".$model->idCategoriaGenero->Descripcion:"";
+//dd($valFePre)
+?>
+<div class="card border-dark  h-100 w-100">
+    <div class="card-header">
+        <small>Código: <strong><?= $model->CodigoProducto?></strong> <?= $genero?> </small> 
+    </div>
     <div class="card-body">
-        <h5 class="card-title">
-            <a href="<?php echo \yii\helpers\Url::to(['/carrito/index','id'=>$model->IdProducto]) ?>" class="text-dark"><?php echo $model->NombreProducto ?></a>
-        </h5>
-        <table cellpadding = '10px' cellspacing="5px" class="table" width='50%'>
-        <tr>
-            <td class="table-success"><h6><?php echo Yii::$app->formatter->asCurrency($model->Precio) ?></h6>
-                <span class='badge badge-success'> Precio <br> Normal</span>
-            </td>
-            <td class="table-warning">
-                    <h6><?php echo Yii::$app->formatter->asCurrency($model->PrecioPreventa) ?></h6> 
-                    <span class='badge badge-warning'>Venta<br> Anticipada</span>
-            </td>
-            <td class="table-info">
-                <h6><?php echo Yii::$app->formatter->asCurrency($model->PrecioReserva) ?></h6>
-                <span class='badge badge-info'>Precio <br> Reserva</span>
-            </td>
-        </tr>
+        <h6 class="card-title">
+            <strong><?= $model->NombreProducto?> </strong> 
+        </h6>
+        <picture  class="img-wrapper">
+            <img class="card-img-top" src="<?php echo $model->getImageUrl() ?>" >
+        </picture>
+        <table class="table table-sm">
+            <tbody>
+                <?php if (!empty($model->Precio)): ?>
+                <tr>
+                    <th scope="row"><?= yii\helpers\Html::a('Precio Normal: <b>'.Yii::$app->formatter->asCurrency($model->Precio).'</b>', ['/carrito/index','id'=>$model->IdProducto, 'tprecio'=>'pn'], ['class'=>'btn btn-success btn-sm btn-block text-left']) ?></th>
+                </tr>
+                <?php endif;?>
+                <?php if (!empty($model->FechaCaducidadPreVenta) && ($valFePre==="S")): ?>
+                <tr>
+                    <th scope="row"><?= yii\helpers\Html::a('Precio Preventa: <b>'.Yii::$app->formatter->asCurrency($model->PrecioPreventa).'</b>', ['/carrito/index','id'=>$model->IdProducto, 'tprecio'=>'pp'], ['class'=>'btn btn-warning btn-sm btn-block text-left']) ?></th>
+                </tr>
+                <?php endif;?>
+                <?php if (!empty($model->FechaCaducidadReserva) && ($valFeRes==="S")): ?>
+                <tr>
+                    <th scope="row"><?= yii\helpers\Html::a('Precio Reserva: <b>'.Yii::$app->formatter->asCurrency($model->PrecioReserva).'</b>', ['/carrito/index','id'=>$model->IdProducto, 'tprecio'=>'pr'], ['class'=>'btn btn-danger btn-sm btn-block text-left']) ?></th>
+                </tr>
+                <?php endif;?>
+            </tbody>
         </table>
-        <div class="card-text">
-            <?php echo $model->getShortDescription() ?>
-        </div>
+    </div>
+    <div class="card-footer">
+        <?php echo $model->getShortDescription() ?>
     </div>
 </div>

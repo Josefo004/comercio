@@ -15,4 +15,16 @@ $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../config/main-local.php'
 );
 
+session_start();
+
+unset($_SESSION['sGeneros']);
+unset($_SESSION['sProductos']);
+
+// function dd($data)
+// {
+//     yii\helpers\VarDumper::dump($data, 10, true);
+//     Yii::$app->end();
+//     exit();
+// }
+
 (new yii\web\Application($config))->run();

@@ -242,3 +242,6 @@ INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('S', 'SMALL, TALLA PEQUEÑA'
 INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('M', 'MEDIUM, TAllA MEDIA');
 INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('L', 'LARGE, TALLA GRANDE');
 INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('XL', 'EXTRA LARGE, TALLA EXTRA GRANDE');
+
+ALTER TABLE dbo.Productos
+  ALTER COLUMN Precio DECIMAL(10, 2) NULL;

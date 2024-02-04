@@ -10,11 +10,10 @@ $this->title = 'USFX';
 ?>
 <br><br><br>
 <div class="site-index">
-
     <div class="body-content">
         <div class="row">
-            <div class="col-9"></div>
-            <div class="col-3"> 
+            <div class="col-8"></div>
+            <div class="col-4"> 
                 <?php
                 $form = ActiveForm::begin([
                     'method' => 'get',
@@ -26,12 +25,6 @@ $this->title = 'USFX';
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
-            <script>
-                // Agregar evento change al input de búsqueda
-                $('#searchInput').on('input', function() {
-                    this.form.submit(); // Envía automáticamente el formulario cuando cambia el contenido del input
-                });
-            </script>
         </div>
         <?php echo \yii\widgets\ListView::widget([
             'dataProvider' => $dataProvider,
@@ -46,6 +39,11 @@ $this->title = 'USFX';
             ]
             
         ]) ?>
-
+        <script>
+            // Agregar evento change al input de búsqueda
+            $('#searchInput').on('input', function() {
+                this.form.submit(); // Envía automáticamente el formulario cuando cambia el contenido del input
+            });
+        </script>
     </div>
 </div>
