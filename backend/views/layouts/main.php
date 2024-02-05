@@ -148,7 +148,7 @@ AppAsset::register($this);
                     </div>
 
                     <div class="col text-right">
-                        Created by <a href="https://youtube.com/TheCodeholic" target="_blank">TheCodeholic</a>
+                        Created by <strong>DTIC</strong>
                     </div>
                 </div>
             </div>

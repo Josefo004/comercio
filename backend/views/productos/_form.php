@@ -110,6 +110,7 @@ use yii\jui\DatePicker;
         <tbody>
             <?php 
             //dd($tallas);
+            if (isset($tallas) && (count($tallas)>0)) {
             $i = 0;
             foreach ($tallas as $valor) {
             $i++;
@@ -123,6 +124,7 @@ use yii\jui\DatePicker;
             </tr>
             <?php
             }
+            } 
             ?>
         </tbody>
     </table>

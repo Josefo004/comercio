@@ -25,7 +25,7 @@ $sProductos = Yii::$app->session->get('sProductos');
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100" style="padding-top:70px">
 <?php $this->beginBody() ?>
 
 <header>
@@ -80,7 +80,7 @@ $sProductos = Yii::$app->session->get('sProductos');
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <br><br><br>
+        <!-- <br><br><br> -->
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

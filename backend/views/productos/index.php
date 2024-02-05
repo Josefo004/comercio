@@ -46,12 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'IdProducto',
-            'CodigoProducto',
-            'NombreProducto',
             [
-                'label' => 'Producto Para',
+                'label' => 'ID',
+                'attribute' => 'IdProducto',
+            ], 
+            [
+                'label' => 'Codigo',
+                'attribute' => 'CodigoProducto',
+            ],
+            [
+                'label' => 'Indumentaria Para',
                 'content' => function ($model) {
                     //return strtolower($model->idCategoriaGenero->Descripcion);
                     return Html::tag('spam', $model->idCategoriaGenero->Descripcion, [
@@ -59,6 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 }
                 //'attribute' => 'idCategoriaGenero.Descripcion',
+            ],
+            [
+                'label' => 'Producto',
+                'attribute' => 'NombreProducto',
             ],
             // [
             //     'label' => 'Categoria Producto',
@@ -81,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($model->getImageUrl(), ['style' => 'width: 50px']);
                 }
             ],
-            'Precio',
+            //'Precio',
             [
                 'attribute' => 'Publicado',
                 'content' => function ($model) {
@@ -107,6 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'tableOptions' => ['class' => 'table table-sm'],
     ]); ?>
 
 

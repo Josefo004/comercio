@@ -36,6 +36,22 @@ class CarritoController extends Controller
            ]);
     }
 
+    public function actionCreate($id, $tprecio=null)
+    {
+       $producto = $this->findModel2($id);
+       $tallas = $this->findTallas($id);
+       $tallas = $this->asArray1($tallas);
+       //dd($tallas);
+       $modeloCarrito = new CarritoForm();
+       
+       return $this->render('create', [
+            'producto' => $producto,
+            'tallas' => $tallas,
+            'tprecio' => $tprecio,
+            'modeloCarrito' => $modeloCarrito,
+           ]);
+    }
+
     protected function findModel($IdProducto)
     {
         if (($model = Productos::findOne(['IdProducto' => $IdProducto])) !== null) {

@@ -1,5 +1,4 @@
 <?php
-
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\web\JsExpression;
@@ -45,11 +44,17 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
         <div class="row">
           <div class="col-md-11">
             <?= $form->field($modeloCarrito, 'Idtalla')->radioList($tallas) ?>
+            <?= $form->field($modeloCarrito, 'IdProducto')->hiddenInput(['value'=> $producto->IdProducto])->label(false);?>
+            <?= $form->field($modeloCarrito, 'CodigoProducto')->hiddenInput(['value'=> $producto->CodigoProducto])->label(false);?>
+            <?= $form->field($modeloCarrito, 'ProductoPara')->hiddenInput(['value'=> $producto->idCategoriaGenero->Descripcion])->label(false);?>
+            <?= $form->field($modeloCarrito, 'NombreProducto')->hiddenInput(['value'=> $producto->NombreProducto])->label(false);?>
+            
           </div>
         </div>
         <div class="row">
           <div class="col-md-4">
             <?= $form->field($modeloCarrito, 'Cantidad')->textInput(['type' => 'number']) ?>
+            <?= $form->field($modeloCarrito, 'Precio')->hiddenInput(['value'=> $ppp])->label(false);?>
             <?= $form->field($modeloCarrito, 'Precio')->hiddenInput(['value'=> $ppp])->label(false);?>
           </div>
           <div class="col-md-4">
