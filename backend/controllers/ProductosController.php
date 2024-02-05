@@ -5,7 +5,8 @@ use common\components\CommonQueries;
 use common\models\Productos;
 use common\models\CategoriaGeneros;
 use common\models\CategoriaProductos;
-use yii\base\Model;
+use common\models\ProductoTallas;
+
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -102,6 +103,7 @@ class ProductosController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel2($IdProducto),
+            'tallas' => $this->findTallas($IdProducto),
         ]);
     }
 
@@ -164,6 +166,7 @@ class ProductosController extends Controller
             'model' => $model,
             'aGeneros' => $aGeneros,
             'aProductos' => $aProductos,
+            'tallas' => $this->findTallas($IdProducto),
         ]);
     }
 
@@ -207,6 +210,14 @@ class ProductosController extends Controller
                         ->joinWith('idCategoriaProducto')
                         ->where(['=','Productos.IdProducto',$IdProducto])
                         ->one();
+        return $model;
+    }
+
+    protected function findTallas($IdProducto){
+        $model = ProductoTallas::find()
+                        ->joinWith('idTalla')
+                        ->where(['=','IdProducto',$IdProducto])
+                        ->all();
         return $model;
     }
 }

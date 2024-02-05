@@ -5,25 +5,34 @@ namespace frontend\controllers;
 use common\models\Productos;
 use common\models\DetalleTallas;
 use common\models\ProductoTallas;
-use common\models\query\ProductosTallasQuery;
+use frontend\models\CarritoForm;
 use Yii;
 use yii\web\Controller;
 class CarritoController extends Controller
 {
+
+    public function asArray1($data){
+        $re = [];
+        foreach ($data as $valor) {
+            $txt = $valor->idTalla->Talla." ".$valor->idTalla->DescripcionTalla;
+            array_push($re, $txt);
+        }
+        return $re;
+    }
+
     public function actionIndex($id, $tprecio=null)
     {
        $producto = $this->findModel2($id);
-       //dd($producto);
+       $tallas = $this->findTallas($id);
+       $tallas = $this->asArray1($tallas);
+       //dd($tallas);
+       $modeloCarrito = new CarritoForm();
        
-       $productosTallas = ProductoTallas::find()->IdProducto($id)->all();
-       foreach ($productosTallas as $tallas)
-       {
-            $detalleTallas[$tallas->idTalla->DescripcionTalla] = DetalleTallas::find()->DetalleTallas($tallas->IdTalla)->all();
-       }
        return $this->render('index', [
             'producto' => $producto,
+            'tallas' => $tallas,
             'tprecio' => $tprecio,
-            'detalleTallas'=>$detalleTallas
+            'modeloCarrito' => $modeloCarrito,
            ]);
     }
 
@@ -33,7 +42,7 @@ class CarritoController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        // throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     protected function findModel2($IdProducto){
@@ -46,7 +55,14 @@ class CarritoController extends Controller
         return $model;
     }
 
-
+    protected function findTallas($IdProducto){
+        $model = ProductoTallas::find()
+                        ->joinWith('idTalla')
+                        ->where(['=','IdProducto',$IdProducto])
+                        ->andwhere(['>','Cantidad',0])
+                        ->all();
+        return $model;
+    }
 
     protected function findTalla( $idTalla)
     {
@@ -54,7 +70,7 @@ class CarritoController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        // throw new NotFoundHttpException('The requested page does not exist.');
     }
     
 

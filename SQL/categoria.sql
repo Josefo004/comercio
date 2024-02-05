@@ -100,7 +100,7 @@ CREATE TABLE dbo.ProductoTallas(
 	IdProductoTalla INT PRIMARY KEY IDENTITY (1, 1),
 	IdProducto INT NOT NULL,
 	IdTalla INT NOT NULL,
-	Cantidad INT DEFAULT 0 NOT NULL,
+	Cantidad INT DEFAULT 0 NULL,
 	FechaCreacion DATETIME DEFAULT (getdate()) NOT NULL,
 	FechaModificacion DATETIME NULL,
 	CONSTRAINT FK_IdProducto_ProductoTallas FOREIGN KEY (IdProducto) REFERENCES dbo.Productos(IdProducto),
@@ -245,3 +245,63 @@ INSERT INTO Tallas (Talla, DescripcionTalla) VALUES('XL', 'EXTRA LARGE, TALLA EX
 
 ALTER TABLE dbo.Productos
   ALTER COLUMN Precio DECIMAL(10, 2) NULL;
+
+--** Insertada masiva de tallas a los productos
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(21, 2, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(22, 3, 3);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(22, 4, 4);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(22, 5, 7);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(22, 6, 8);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(23, 2, 9);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(23, 3, 10);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(26, 4, 11);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(26, 5, 0);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(26, 6, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(26, 2, 3);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(27, 3, 4);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(27, 4, 5);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(27, 5, 6);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(27, 6, 7);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(28, 2, 8);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(28, 3, 9);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(28, 4, 10);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(28, 5, 11);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(29, 6, 1);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(29, 2, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(29, 3, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(30, 4, 3);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(30, 5, 4);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(31, 6, 7);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(31, 2, 8);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(32, 3, 9);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(32, 4, 10);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(33, 5, 11);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(33, 6, 0);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(33, 2, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(34, 3, 3);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(34, 4, 4);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(34, 5, 5);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(34, 6, 6);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(35, 2, 7);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(35, 3, 8);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(36, 4, 9);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(36, 5, 10);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(36, 6, 11);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(36, 2, 1);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(37, 3, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(37, 4, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(37, 5, 3);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(37, 6, 4);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(38, 2, 7);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(38, 3, 8);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(38, 4, 9);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(38, 5, 10);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(39, 6, 11);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(39, 2, 12);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(39, 3, 2);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(40, 4, 3);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(40, 5, 4);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(41, 6, 5);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(41, 2, 6);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(42, 1, 7);
+insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(44, 2, 8);

@@ -97,6 +97,35 @@ use yii\jui\DatePicker;
     </div>
 
     <?php ActiveForm::end(); ?>
+    <table class="table table-sm table-striped ">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Talla</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            //dd($tallas);
+            $i = 0;
+            foreach ($tallas as $valor) {
+            $i++;
+            ?>
+            <tr>
+                <th scope="row"><?= $i ?></th>
+                <td><?= $valor->IdProductoTalla ?></td>
+                <td><?= $valor->idTalla->Talla ?></td>
+                <td><?= $valor->idTalla->DescripcionTalla ?></td>
+                <td><?= $valor->Cantidad ?></td>
+            </tr>
+            <?php
+            }
+            ?>
+        </tbody>
+    </table>
     
     <!-- Codigo JavaScript del Formulario -->
     <?php

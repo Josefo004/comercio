@@ -1,16 +1,25 @@
 <?php
+
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+use yii\web\JsExpression;
+
 $precio = 0;
 switch ($tprecio) {
   case 'pn':
     $precio = Yii::$app->formatter->asCurrency($producto->Precio);
+    $ppp = $producto->Precio;
     break;
   case 'pp':
     $precio = Yii::$app->formatter->asCurrency($producto->PrecioPreventa);
+    $ppp = $producto->PrecioPreventa;
     break;
   case 'pr':
     $precio = Yii::$app->formatter->asCurrency($producto->PrecioReserva);
+    $ppp = $producto->PrecioReserva;
     break;
 }
+$ppp = number_format($ppp,2);
 $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->Descripcion:"";
 ?>
 <div class="card mb-3" >
@@ -28,26 +37,48 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
       </div>
       <div class="row">
         <div class="col-md-11 p-1 m-1"><?=$producto->Descripcion ?></div>
-        <p class="card-text"><small class="text-muted"><?= $producto->idCategoriaGenero->Descripcion ?></small></p>
       </div>
-    <?php 
-    
-      foreach ($detalleTallas as $detalleTalla)
-      {
-          echo "<br>";
-          foreach($detalleTalla as $opciones)
-          {
-              $id=$opciones->IdTalla;
-              echo <<<HTML
-              <input type="radio" class="btn-check" name= 'Talla{$id}' id="btn-check-{$opciones->Opcion}" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btn-check-{$opciones->Opcion}">{$opciones->Opcion}</label>
-              HTML;
-            }
-        }
+      <hr>
+        <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+          <div class="col-md-11">
+            <?= $form->field($modeloCarrito, 'Idtalla')->radioList($tallas) ?>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <?= $form->field($modeloCarrito, 'Cantidad')->textInput(['type' => 'number']) ?>
+            <?= $form->field($modeloCarrito, 'Precio')->hiddenInput(['value'=> $ppp])->label(false);?>
+          </div>
+          <div class="col-md-4">
+            <?= $form->field($modeloCarrito, 'Total')->textInput(['readonly'=> true]) ?>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <?= Html::submitButton('Añadir al Carrito', ['class' => 'btn btn-success']) ?>
+          </div>
+        </div>
+        <?php 
+          ActiveForm::end(); 
+
+          $this->registerJs(
+            new JsExpression("
+              $(document).ready(function(){
+                $('#carritoform-cantidad').on('change', function(){
+                  var valor = $(this).val();
+                  var vv = '';
+                  if ((valor>0)&&(valor<11)){
+                    vv = $('#carritoform-precio').val() * valor;
+                    vv = vv + 'Bs.';
+                  }
+                  $('#carritoform-total').val(vv);
+                });
+              });
+            ")
+        );
+        ?>
         
-    ?>
-        Cantidad : 
-      <
       <p class="card-text"><small class="text-muted"><?= $producto->FechaHoraActualizacion ?></small></p>
     </div>
   </div>

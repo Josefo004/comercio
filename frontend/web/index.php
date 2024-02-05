@@ -19,6 +19,7 @@ session_start();
 
 unset($_SESSION['sGeneros']);
 unset($_SESSION['sProductos']);
+unset($_SESSION['carrito']);
 
 // function dd($data)
 // {
