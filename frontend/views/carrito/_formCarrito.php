@@ -43,11 +43,12 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
           <div class="col-md-11">
-            <?= $form->field($modeloCarrito, 'Idtalla')->radioList($tallas) ?>
+            <?= $form->field($modeloCarrito, 'Idtalla')->radioList($tallas, ['id' => 'tallas-list']) ?>
             <?= $form->field($modeloCarrito, 'IdProducto')->hiddenInput(['value'=> $producto->IdProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'CodigoProducto')->hiddenInput(['value'=> $producto->CodigoProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'ProductoPara')->hiddenInput(['value'=> $producto->idCategoriaGenero->Descripcion])->label(false);?>
             <?= $form->field($modeloCarrito, 'NombreProducto')->hiddenInput(['value'=> $producto->NombreProducto])->label(false);?>
+            <?= $form->field($modeloCarrito, 'Talla')->hiddenInput(['value'=> ""])->label(false);?>
             
           </div>
         </div>
@@ -80,6 +81,15 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
                   }
                   $('#carritoform-total').val(vv.toFixed(2));
                 });
+
+                $(document).ready(function(){
+                  $('#tallas-list input[type=\"radio\"]').click(function(){
+                      var textoSeleccionado = $(this).next('label').text();
+                      console.log(\"Texto seleccionado: \" + textoSeleccionado);
+                      $('#carritoform-talla').val(textoSeleccionado);
+                  });
+              });
+
               });
             ")
         );
