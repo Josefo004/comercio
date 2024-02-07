@@ -51,10 +51,10 @@ $total = number_format($total,2);
                             <td><?= $item['Cantidad'] ?></td>
                             <td><?= $item['Total'] ?></td>
                             <td>
-                                <?= Html::a('Eliminar', ['eliminar', 'id' => $key], [
+                                <?= Html::a('<span class="fas fa-trash"></span> Quitar', ['eliminar', 'id' => $key], [
                                     'class' => 'btn btn-danger btn-sm',
                                     'data' => [
-                                        'confirm' => '¿Estás seguro de que quieres eliminar este elemento?',
+                                        'confirm' => '¿Estás seguro de que quieres eliminar este elemento del Carrito?',
                                         'method' => 'post',
                                     ],
                                 ]) ?>
@@ -71,7 +71,7 @@ $total = number_format($total,2);
         </div> 
         <div class="card-footer">
             <div class="col-md-12 text-right">
-                <?= Html::a('Ir a otra vista', ['site/index'], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Página Principal', ['site/index'], ['class' => 'btn btn-success']) ?>
             </div>
         </div>
     </div>

@@ -13,6 +13,7 @@ use yii\bootstrap5\NavBar;
 AppAsset::register($this);
 $sGeneros = Yii::$app->session->get('sGeneros');
 $sProductos = Yii::$app->session->get('sProductos');
+$hayCarrito = isset($_SESSION['carrito']) ? true : false;
 //dd($sGeneros);
 ?>
 <?php $this->beginPage() ?>
@@ -24,6 +25,7 @@ $sProductos = Yii::$app->session->get('sProductos');
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100" style="padding-top:70px">
 <?php $this->beginBody() ?>
@@ -61,6 +63,11 @@ $sProductos = Yii::$app->session->get('sProductos');
         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
         'items' => $menuItems,
     ]);
+
+    if ($hayCarrito) {
+        //echo Html::tag('div',Html::a('Carrito',['/carrito/show'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+        echo Html::a('Carrito <span class="fas fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-success btn-sm']);
+    }
     if (Yii::$app->user->isGuest) {
         echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
     } else {

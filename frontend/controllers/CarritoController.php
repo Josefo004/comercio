@@ -60,6 +60,10 @@ class CarritoController extends Controller
         ]);
     }
 
+    public function actionShow(){
+        return $this->render('show');
+    }
+
     protected function findModel($IdProducto)
     {
         if (($model = Productos::findOne(['IdProducto' => $IdProducto])) !== null) {
