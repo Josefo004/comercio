@@ -17,7 +17,7 @@ class CarritoController extends Controller
     public function asArray1($data){
         $data = ArrayHelper::map($data,'IdTalla', function($data, $defaultValue){
             //return $data->idTalla->Talla.' '.$data->idTalla->DescripcionTalla.' - cant. '.$data->Cantidad;
-            return $data->idTalla->Talla.' '.$data->idTalla->DescripcionTalla;
+            return '"'.$data->idTalla->Talla.'" '.$data->idTalla->DescripcionTalla;
         });
         return $data;
     }

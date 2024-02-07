@@ -18,8 +18,21 @@ return [
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@common/mail',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'soporte.academica@usfx.bo',
+                'password' => 'Usfx/123456',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
+        ],
+        // 'mailer' => [
+        //     'class' => \yii\symfonymailer\Mailer::class,
+        //     'viewPath' => '@common/mail',
             // send all mails to a file by default.
-            'useFileTransport' => true,
+            // 'useFileTransport' => true,
             // You have to set
             //
             // 'useFileTransport' => false,
@@ -44,6 +57,6 @@ return [
             // See: https://symfony.com/doc/current/mailer.html#using-built-in-transports
             // Or if you use a 3rd party service, see:
             // https://symfony.com/doc/current/mailer.html#using-a-3rd-party-transport
-        ],
+        // ],
     ],
 ];

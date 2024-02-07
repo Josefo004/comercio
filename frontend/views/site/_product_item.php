@@ -19,27 +19,30 @@ $genero = ($model->IdCategoriaGenero!=1)?" - ".$model->idCategoriaGenero->Descri
         <picture  class="img-wrapper">
             <img class="card-img-top" src="<?php echo $model->getImageUrl() ?>" >
         </picture>
+        <div>
+            <?php echo $model->getShortDescription() ?>
+        </div>
+    </div>
+    <div class="card-footer">
         <table class="table table-sm">
             <tbody>
                 <?php if (!empty($model->Precio)): ?>
                 <tr>
-                    <th scope="row"><?= yii\helpers\Html::a('Precio Normal: <b>'.Yii::$app->formatter->asCurrency($model->Precio).'</b>', ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pn'], ['class'=>'btn btn-success btn-sm btn-block text-left']) ?></th>
+                    <th scope="row"><?= yii\helpers\Html::a('Añadir al Carrito <span class="fa fa-cart-plus"></span> '.Yii::$app->formatter->asCurrency($model->Precio), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pn'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
                 </tr>
                 <?php endif;?>
                 <?php if (!empty($model->FechaCaducidadPreVenta) && ($valFePre==="S")): ?>
                 <tr>
-                    <th scope="row"><?= yii\helpers\Html::a('Precio Preventa: <b>'.Yii::$app->formatter->asCurrency($model->PrecioPreventa).'</b>', ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pp'], ['class'=>'btn btn-warning btn-sm btn-block text-left']) ?></th>
+                    <th scope="row"><?= yii\helpers\Html::a('Añadir al Carrito <span class="fa fa-cart-plus"></span> '.Yii::$app->formatter->asCurrency($model->PrecioPreventa), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pp'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
                 </tr>
                 <?php endif;?>
                 <?php if (!empty($model->FechaCaducidadReserva) && ($valFeRes==="S")): ?>
                 <tr>
-                    <th scope="row"><?= yii\helpers\Html::a('Precio Reserva: <b>'.Yii::$app->formatter->asCurrency($model->PrecioReserva).'</b>', ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pr'], ['class'=>'btn btn-danger btn-sm btn-block text-left']) ?></th>
+                    <th scope="row"><?= yii\helpers\Html::a('Añadir al Carrito <span class="fa fa-cart-plus"></span> '.Yii::$app->formatter->asCurrency($model->PrecioReserva), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pr'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
                 </tr>
                 <?php endif;?>
             </tbody>
         </table>
     </div>
-    <div class="card-footer">
-        <?php echo $model->getShortDescription() ?>
-    </div>
+    
 </div>

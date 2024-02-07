@@ -25,7 +25,9 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    
 </head>
 <body class="d-flex flex-column h-100" style="padding-top:70px">
 <?php $this->beginBody() ?>
@@ -66,7 +68,7 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
 
     if ($hayCarrito) {
         //echo Html::tag('div',Html::a('Carrito',['/carrito/show'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-        echo Html::a('Carrito <span class="fas fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-success btn-sm']);
+        echo Html::a('Mi Carrito <span class="fa fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-secondary btn-sm']);
     }
     if (Yii::$app->user->isGuest) {
         echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);

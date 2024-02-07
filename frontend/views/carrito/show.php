@@ -51,7 +51,7 @@ $total = number_format($total,2);
                             <td><?= $item['Cantidad'] ?></td>
                             <td><?= $item['Total'] ?></td>
                             <td>
-                                <?= Html::a('<span class="fas fa-trash"></span> Quitar', ['eliminar', 'id' => $key], [
+                                <?= Html::a('<span class="fa fa-trash-o"></span> Quitar', ['eliminar', 'id' => $key], [
                                     'class' => 'btn btn-danger btn-sm',
                                     'data' => [
                                         'confirm' => '¿Estás seguro de que quieres eliminar este elemento del Carrito?',

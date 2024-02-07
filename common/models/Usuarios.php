@@ -220,6 +220,6 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     }
     public function generateCodigoUsuario()
     {
-        $this->CodigoUsuario = 'adm';
+        $this->CodigoUsuario = 'jmv';
     }
 }

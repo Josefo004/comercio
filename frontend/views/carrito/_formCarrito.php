@@ -64,7 +64,7 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
         </div>
         <div class="row">
           <div class="col-md-6">
-            <?= Html::submitButton('Añadir al Carrito', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Añadir al Carrito <i class="fa fa-cart-plus" aria-hidden="true"></i>', ['class' => 'btn btn-success']) ?>
           </div>
         </div>
         <?php 
@@ -95,7 +95,7 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
         );
         ?>
         
-      <p class="card-text"><small class="text-muted"><?= $producto->FechaHoraActualizacion ?></small></p>
+      <!-- <p class="card-text"><small class="text-muted"><?= $producto->FechaHoraActualizacion ?></small></p> -->
     </div>
   </div>
 </div>
