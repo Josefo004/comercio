@@ -65,8 +65,19 @@ class CarritoController extends Controller
         if (($model = Productos::findOne(['IdProducto' => $IdProducto])) !== null) {
             return $model;
         }
+    }
 
-        // throw new NotFoundHttpException('The requested page does not exist.');
+    public function actionEliminar($id)
+    {
+        $carritot = Yii::$app->session->get('carrito');
+        
+        unset($_SESSION['carrito']);
+        unset($carritot[$id]);
+        if (count($carritot)==0) {
+            return $this->redirect(['site/index']);
+        }    
+        Yii::$app->session->set('carrito', $carritot);
+        return $this->render('show');
     }
 
     protected function findModel2($IdProducto){

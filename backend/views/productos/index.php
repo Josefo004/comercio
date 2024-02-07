@@ -109,10 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
             //'CodigoUsuarioCreacion',
             //'CodigoUsuarioActualizacion',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Productos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'IdProducto' => $model->IdProducto]);
-                 }
+                }
             ],
         ],
         'tableOptions' => ['class' => 'table table-sm'],
