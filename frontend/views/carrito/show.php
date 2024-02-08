@@ -71,7 +71,7 @@ $total = number_format($total,2);
         </div> 
         <div class="card-footer">
             <div class="col-md-12 text-right">
-                <?= Html::a('Página Principal', ['site/index'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('<span class="fa fa-home"></span> Página Principal', ['site/index'], ['class' => 'btn btn-success']) ?>
             </div>
         </div>
     </div>

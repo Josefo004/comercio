@@ -21,7 +21,7 @@ $this->title = 'USFX';
                 ]);
                 ?>
                 <div class="form-group">
-                    <?= Html::textInput('q', '', ['class' => 'form-control', 'placeholder' => 'Buscar...', 'id' => 'searchInput', 'options' => ['autocomplete' => 'off']]) ?>
+                    <?= Html::textInput('q', '', ['class' => 'form-control', 'style' => 'border: 1px solid #00aaf8 ; padding: 10px; border-radius: 5px; background-color: #f9f9f9; color: #333; font-size: 16px;' , 'placeholder' => 'Buscar...', 'id' => 'searchInput', 'options' => ['autocomplete' => 'off']]) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>

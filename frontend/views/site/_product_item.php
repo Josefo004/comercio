@@ -28,17 +28,17 @@ $genero = ($model->IdCategoriaGenero!=1)?" - ".$model->idCategoriaGenero->Descri
             <tbody>
                 <?php if (!empty($model->Precio)): ?>
                 <tr>
-                    <th scope="row"><?= yii\helpers\Html::a('Añadir al Carrito <span class="fa fa-cart-plus"></span> '.Yii::$app->formatter->asCurrency($model->Precio), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pn'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
+                    <th scope="row"><?= yii\helpers\Html::a('<span class="fa fa-cart-plus"></span> Adquirir '.Yii::$app->formatter->asCurrency($model->Precio), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pn'], ['class'=>'btn btn-success btn-block btn-lg']) ?></th>
                 </tr>
                 <?php endif;?>
                 <?php if (!empty($model->FechaCaducidadPreVenta) && ($valFePre==="S")): ?>
                 <tr>
-                    <th scope="row"><?= yii\helpers\Html::a('Añadir al Carrito <span class="fa fa-cart-plus"></span> '.Yii::$app->formatter->asCurrency($model->PrecioPreventa), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pp'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
+                    <th scope="row"><?= yii\helpers\Html::a('<span class="fa fa-cart-plus"></span> Adquirir '.Yii::$app->formatter->asCurrency($model->PrecioPreventa), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pp'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
                 </tr>
                 <?php endif;?>
                 <?php if (!empty($model->FechaCaducidadReserva) && ($valFeRes==="S")): ?>
                 <tr>
-                    <th scope="row"><?= yii\helpers\Html::a('Añadir al Carrito <span class="fa fa-cart-plus"></span> '.Yii::$app->formatter->asCurrency($model->PrecioReserva), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pr'], ['class'=>'btn btn-dark btn-block btn-lg']) ?></th>
+                    <th scope="row"><?= yii\helpers\Html::a('<span class="fa fa-cart-plus"></span> Adquirir '.Yii::$app->formatter->asCurrency($model->PrecioReserva), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pr'], ['class'=>'btn btn-warning btn-block btn-lg']) ?></th>
                 </tr>
                 <?php endif;?>
             </tbody>
