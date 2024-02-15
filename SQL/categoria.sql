@@ -305,3 +305,21 @@ insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(41, 6, 5);
 insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(41, 2, 6);
 insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(42, 1, 7);
 insert into ProductoTallas (IdProducto, IdTalla, Cantidad) values(44, 2, 8);
+
+
+
+--** Borramos la tabla carrito items
+use ecommerce;
+
+select * from Usuarios u;
+
+SELECT * FROM Productos;
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'CarritoItems' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.CarritoItems
+  DROP CONSTRAINT FK__Carrito_I__Codig__403A8C7D;
+  
+DROP TABLE dbo.CarritoItems;

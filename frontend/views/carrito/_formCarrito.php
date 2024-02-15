@@ -2,6 +2,10 @@
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\web\JsExpression;
+use yii\bootstrap5\Modal;
+
+use yii\grid\GridView;
+use yii\data\ArrayDataProvider;
 
 $precio = 0; $validez = "";
 switch ($tprecio) {
@@ -42,14 +46,16 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
       <hr>
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
-          <div class="col-md-11">
+          <div class="col-md-7">
             <?= $form->field($modeloCarrito, 'Idtalla')->radioList($tallas, ['id' => 'tallas-list']) ?>
             <?= $form->field($modeloCarrito, 'IdProducto')->hiddenInput(['value'=> $producto->IdProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'CodigoProducto')->hiddenInput(['value'=> $producto->CodigoProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'ProductoPara')->hiddenInput(['value'=> $producto->idCategoriaGenero->Descripcion])->label(false);?>
             <?= $form->field($modeloCarrito, 'NombreProducto')->hiddenInput(['value'=> $producto->NombreProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'Talla')->hiddenInput(['value'=> ""])->label(false);?>
-            
+          </div>
+          <div class="col-md-4">
+            <?= Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]) ?>
           </div>
         </div>
         <div class="row">
@@ -100,3 +106,84 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
   </div>
 </div>
 </div>
+
+<?php Modal::begin([
+    'title' => 'Guia de Tallas '. $genero,
+    'id' => 'myModal',
+    'size' => yii\bootstrap4\Modal::SIZE_LARGE, // Tamaño grande del modal
+    'bodyOptions' => ['class' => 'modal-body-custom'],
+    'options' => ['class' => 'modal-dialog-custom'],
+    // Otras opciones de configuración si es necesario
+]); 
+
+$urlimg = Yii::$app->urlManager->baseUrl . '/img/tallas_guia.png';
+
+/** Array de tallas */
+$tallad = [
+  ['Talla'=>'14', 'Pecho-Axila'=>'44 cm', 'Largo'=>'57 cm', 'Espalda-Hombro'=>'35.5 cm'],
+  ['Talla'=>'S', 'Pecho-Axila'=>'46 cm', 'Largo'=>'61 cm', 'Espalda-Hombro'=>'37.5 cm'],
+  ['Talla'=>'M', 'Pecho-Axila'=>'50 cm', 'Largo'=>'65 cm', 'Espalda-Hombro'=>'40.5 cm'],
+  ['Talla'=>'L', 'Pecho-Axila'=>'52 cm', 'Largo'=>'68 cm', 'Espalda-Hombro'=>'42.5 cm'],
+  ['Talla'=>'XL', 'Pecho-Axila'=>'55 cm', 'Largo'=>'72 cm', 'Espalda-Hombro'=>'43.5 cm'],
+  ['Talla'=>'XXL', 'Pecho-Axila'=>'58 cm', 'Largo'=>'74 cm', 'Espalda-Hombro'=>'46.5 cm'],
+];
+
+$tallav = [
+  ['Talla'=>'S', 'Pecho-Axila'=>'48 cm', 'Largo'=>'63 cm', 'Espalda-Hombro'=>'37.5 cm'],
+  ['Talla'=>'M', 'Pecho-Axila'=>'52 cm', 'Largo'=>'67 cm', 'Espalda-Hombro'=>'40.5 cm'],
+  ['Talla'=>'L', 'Pecho-Axila'=>'54 cm', 'Largo'=>'70 cm', 'Espalda-Hombro'=>'42.5 cm'],
+  ['Talla'=>'XL', 'Pecho-Axila'=>'56 cm', 'Largo'=>'73 cm', 'Espalda-Hombro'=>'43.5 cm'],
+  ['Talla'=>'XXL', 'Pecho-Axila'=>'59 cm', 'Largo'=>'75 cm', 'Espalda-Hombro'=>'46.5 cm'],
+  ['Talla'=>'XXXL', 'Pecho-Axila'=>'63 cm', 'Largo'=>'78 cm', 'Espalda-Hombro'=>'47.5 cm'],
+];
+
+$gtallas = [];
+switch ($producto->IdCategoriaGenero) {
+  case 2:
+    $gtallas = $tallad;
+    break;
+  case 3:
+    $gtallas = $tallav;
+    break;
+}
+
+$dataProvider = new ArrayDataProvider([
+  'allModels' => $gtallas,
+  'pagination' => false,
+]);
+
+?>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col">
+      <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'summary' => '',
+        'showFooter' => false,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'Talla',
+            'Pecho-Axila',
+            'Largo',
+            'Espalda-Hombro',
+        ],
+        'options' => [
+          'class' => 'table-sm',
+        ],
+      ]); 
+      ?>
+    </div>
+    <div class="col">
+      <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
+    </div>
+  </div>
+ 
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    <!-- Puedes agregar más botones aquí si lo deseas -->
+</div>
+
+<?php Modal::end(); ?>
