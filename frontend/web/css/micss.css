@@ -1,0 +1,11 @@
+/* Contenido css */
+.modal.modal-right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30%; /* Ancho del modal */
+    transform: translateX(0%);
+    overflow-y: auto;
+}
