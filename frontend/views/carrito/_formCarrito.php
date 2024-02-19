@@ -165,9 +165,15 @@ $dataProvider = new ArrayDataProvider([
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'Talla',
-            'Pecho-Axila',
+            [
+              'label' => 'Pecho',
+              'attribute' => 'Pecho-Axila',
+            ],
             'Largo',
-            'Espalda-Hombro',
+            [
+              'label' => 'Espalda',
+              'attribute' => 'Espalda-Hombro',
+            ],
         ],
         'options' => [
           'class' => 'table-sm',
@@ -201,7 +207,7 @@ Modal::begin([
 ?>
     <div class="modal-body">
       <div class="row">
-        <div class="col">
+        <div class="col-md-6">
           <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'summary' => '',
@@ -219,7 +225,7 @@ Modal::begin([
           ]); 
           ?>
         </div>
-        <div class="col">
+        <div class="col-md-6">
           <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
         </div>
       </div>

@@ -10,6 +10,10 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
+use yii\bootstrap5\Button;
+use yii\bootstrap5\Modal;
+use yii\helpers\Url;
+
 AppAsset::register($this);
 $sGeneros = Yii::$app->session->get('sGeneros');
 $sProductos = Yii::$app->session->get('sProductos');
@@ -43,6 +47,29 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
+    if ($hayCarrito) {
+        //echo Html::a(' <span class="fa fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-secondary btn-sm']);
+        echo Html::button('<span class="fa fa-shopping-cart"></span>', [
+            'class' => 'btn btn-primary', 
+            'data' => [
+                'target' => '#modalCarrito', // ID del modal
+                'remote' => Url::to(['/carrito/carrito']),
+            ],
+            //'id' => 'btn-abrir-modal', 
+            'onclick' => "$('#myModalCarritoDerecha').modal('show')"
+        ]);
+        // echo Button::widget([
+        //     'label' => 'Abrir Modal',
+        //     'options' => [
+        //         'class' => 'btn btn-primary',
+        //         'data' => [
+        //             'toggle' => 'modal',
+        //             'target' => '#myModal', // ID del modal
+        //             'remote' => Url::to(['controller/action']), // URL de la acción que renderiza la vista del modal
+        //         ],
+        //     ],
+        // ]);
+    }
     $menuItems = [
         ['label' => 'Inicio', 'url' => ['/site/index']],
         [
@@ -68,10 +95,6 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
         'items' => $menuItems,
     ]);
 
-    if ($hayCarrito) {
-        //echo Html::tag('div',Html::a('Carrito',['/carrito/show'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-        echo Html::a('Mi Carrito <span class="fa fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-secondary btn-sm']);
-    }
     if (Yii::$app->user->isGuest) {
         echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
     } else {
@@ -105,6 +128,23 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
 </footer>
 
 <?php $this->endBody() ?>
+<?php
+Modal::begin([
+    // 'title' => 'Modal a la Derecha',
+    'id' => 'myModalCarritoDerecha',
+    'closeButton' => false,
+    'size' => 'md',
+    'bodyOptions' => ['class' => 'modal-body'],
+    'options' => ['class' => 'modal modal-right'],
+]);
+?>
+    <div id="modalCarrito" class="modal-body">
+      
+    </div>
+<?php 
+Modal::end(); 
+
+?>
 </body>
 </html>
 <?php $this->endPage();

@@ -84,6 +84,11 @@ class CarritoController extends Controller
         return $this->render('show');
     }
 
+    public function actionCarrito()
+    {
+        return $this->renderPartial('carrito');
+    }
+
     protected function findModel2($IdProducto){
         $model = Productos::find()
                         ->joinWith('codigoEstado')
