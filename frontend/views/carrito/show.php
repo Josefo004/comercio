@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var common\models\Productos $model */
 
-$this->title = 'Articulos del Carrito';
+$this->title = 'Productos a Ordenar';
 // $this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
 $carrito = Yii::$app->session->get('carrito');
@@ -51,10 +51,10 @@ $total = number_format($total,2);
                             <td><?= $item['Cantidad'] ?></td>
                             <td><?= $item['Total'] ?></td>
                             <td>
-                                <?= Html::a('<span class="fa fa-trash-o"></span> Quitar', ['eliminar', 'id' => $key], [
+                                <?= Html::a('<span class="fa fa-trash-o"></span> Quitar', ['eliminar2', 'id' => $key], [
                                     'class' => 'btn btn-danger btn-sm',
                                     'data' => [
-                                        'confirm' => '¿Estás seguro de que quieres eliminar este elemento del Carrito?',
+                                        'confirm' => '¿Estás seguro de que quieres eliminar este elemento de la orden?',
                                         'method' => 'post',
                                     ],
                                 ]) ?>

@@ -7,6 +7,16 @@ use yii\bootstrap5\Modal;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 
+use yii\web\View;
+
+if ($modal==1) {
+  $this->registerJs("
+    $(document).ready(function() {
+        $('#myModalCarritoDerecha').modal('show');
+    });
+    ", View::POS_READY);
+}
+
 $precio = 0; $validez = "";
 switch ($tprecio) {
   case 'pn':
@@ -26,6 +36,11 @@ switch ($tprecio) {
 }
 $ppp = number_format($ppp,2);
 $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->Descripcion:"";
+$this->registerJs("
+  $(document).on('ready pjax:success', function() {
+    $('#myModalCarritoDerecha').modal('show');
+  });
+", View::POS_READY);
 ?>
 <div class="card mb-3" >
 <div class="row g-0">
@@ -52,11 +67,12 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
             <?= $form->field($modeloCarrito, 'CodigoProducto')->hiddenInput(['value'=> $producto->CodigoProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'ProductoPara')->hiddenInput(['value'=> $producto->idCategoriaGenero->Descripcion])->label(false);?>
             <?= $form->field($modeloCarrito, 'NombreProducto')->hiddenInput(['value'=> $producto->NombreProducto])->label(false);?>
+            <?= $form->field($modeloCarrito, 'Imagen')->hiddenInput(['value'=> $producto->getImageUrl()])->label(false);?>
             <?= $form->field($modeloCarrito, 'Talla')->hiddenInput(['value'=> ""])->label(false);?>
           </div>
           <div class="col-md-4">
             <?= Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]) ?>
-            <?= Html::button('Abrir Modal', ['class' => 'btn btn-primary', 'id' => 'btn-abrir-modal', 'onclick' => "$('#myModalDerecha').modal('show')"]) ?>
+            <!-- <?= Html::button('Abrir Modal', ['class' => 'btn btn-primary', 'id' => 'btn-abrir-modal', 'onclick' => "$('#myModalDerecha').modal('show')"]) ?> -->
           </div>
         </div>
         <div class="row">
@@ -91,15 +107,16 @@ $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->
 
                 $(document).ready(function(){
                   $('#tallas-list input[type=\"radio\"]').click(function(){
-                      var textoSeleccionado = $(this).next('label').text();
-                      console.log(\"Texto seleccionado: \" + textoSeleccionado);
-                      $('#carritoform-talla').val(textoSeleccionado);
-                  });
+                    var textoSeleccionado = $(this).next('label').text();
+                    console.log(\"Texto seleccionado: \" + textoSeleccionado);
+                    $('#carritoform-talla').val(textoSeleccionado);
+                });
+
               });
 
               });
             ")
-        );
+          );
         ?>
         
       <!-- <p class="card-text"><small class="text-muted"><?= $producto->FechaHoraActualizacion ?></small></p> -->
@@ -229,87 +246,6 @@ Modal::begin([
           <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
         </div>
       </div>
-
-
-      <div class="row">
-        <div class="col">
-          <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'summary' => '',
-            'showFooter' => false,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'Talla',
-                'Pecho-Axila',
-                'Largo',
-                'Espalda-Hombro',
-            ],
-            'options' => [
-              'class' => 'table-sm',
-            ],
-          ]); 
-          ?>
-        </div>
-        <div class="col">
-          <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'summary' => '',
-            'showFooter' => false,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'Talla',
-                'Pecho-Axila',
-                'Largo',
-                'Espalda-Hombro',
-            ],
-            'options' => [
-              'class' => 'table-sm',
-            ],
-          ]); 
-          ?>
-        </div>
-        <div class="col">
-          <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'summary' => '',
-            'showFooter' => false,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'Talla',
-                'Pecho-Axila',
-                'Largo',
-                'Espalda-Hombro',
-            ],
-            'options' => [
-              'class' => 'table-sm',
-            ],
-          ]); 
-          ?>
-        </div>
-        <div class="col">
-          <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
-        </div>
-      </div>
-
-
-
-
-
-
 
     </div>
 <?php Modal::end(); ?>

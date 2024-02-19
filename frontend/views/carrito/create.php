@@ -18,6 +18,7 @@ $this->title = 'Añadir al Carrito';
         'tallas' => $tallas,
         'tprecio' => $tprecio,
         'modeloCarrito' => $modeloCarrito,
+        'modal' => $modal,
     ]) ?>
 
 </div>

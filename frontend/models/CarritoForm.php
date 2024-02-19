@@ -16,6 +16,7 @@ class CarritoForm extends Model
     public $CodigoProducto;
     public $ProductoPara;   
     public $NombreProducto;
+    public $Imagen;
     public $Precio;
     public $Cantidad;
     public $Total;
@@ -27,7 +28,7 @@ class CarritoForm extends Model
     public function rules()
     {
         return [
-            [['IdProducto', 'Idtalla', 'Talla', 'CodigoProducto', 'ProductoPara', 'NombreProducto', 'Precio', 'Cantidad', 'Total'], 'required'],
+            [['IdProducto', 'Idtalla', 'Talla', 'CodigoProducto', 'ProductoPara', 'NombreProducto', 'Imagen', 'Precio', 'Cantidad', 'Total'], 'required'],
             [['Cantidad'], 'number', 'min' => 1, 'max' => 10],
         ];
     }

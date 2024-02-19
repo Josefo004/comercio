@@ -28,9 +28,6 @@ class CarritoController extends Controller
         array_push($mg,$alCarrito);
         Yii::$app->session->set('carrito', $mg);
         $aux = Yii::$app->session->get('carrito');
-        // if (count($aux)>1) {
-        //     dd($aux);
-        // }
     }
 
     public function actionIndex($id, $tprecio=null)
@@ -38,6 +35,7 @@ class CarritoController extends Controller
     /// revisar
     }
 
+    //mandamos el identificador del producto y el tipo de precio al cual queremos procesar el pedido
     public function actionCreate($id, $tprecio=null)
     {
         $producto = $this->findModel2($id);
@@ -48,8 +46,15 @@ class CarritoController extends Controller
         if ($this->request->isPost) {
             $modeloCarrito->load($this->request->post());
             $modeloCarrito->FechaHoraRegistro = CommonQueries::GetFechaHoraActual();
-            $this->addToCarrito($modeloCarrito); 
-            return $this->render('show');
+            $this->addToCarrito($modeloCarrito);
+            //return $this->render('show');
+            return $this->render('create', [
+                'producto' => $producto,
+                'tallas' => $tallas,
+                'tprecio' => $tprecio,
+                'modeloCarrito' => $modeloCarrito,
+                'modal' => 1,
+            ]);
         }
        
         return $this->render('create', [
@@ -57,6 +62,7 @@ class CarritoController extends Controller
             'tallas' => $tallas,
             'tprecio' => $tprecio,
             'modeloCarrito' => $modeloCarrito,
+            'modal' => 0,
         ]);
     }
 
@@ -74,6 +80,20 @@ class CarritoController extends Controller
     public function actionEliminar($id)
     {
         $carritot = Yii::$app->session->get('carrito');
+        //dd($carritot);
+        unset($_SESSION['carrito']);
+        unset($carritot[$id]);
+        if (count($carritot)==0) {
+            return $this->redirect(['site/index']);
+        }    
+        Yii::$app->session->set('carrito', $carritot);
+        // return $this->render('show');
+        return $this->redirect(['site/index','ttt'=>1]);
+    }
+
+    public function actionEliminar2($id)
+    {
+        $carritot = Yii::$app->session->get('carrito');
         
         unset($_SESSION['carrito']);
         unset($carritot[$id]);
@@ -82,11 +102,6 @@ class CarritoController extends Controller
         }    
         Yii::$app->session->set('carrito', $carritot);
         return $this->render('show');
-    }
-
-    public function actionCarrito()
-    {
-        return $this->renderPartial('carrito');
     }
 
     protected function findModel2($IdProducto){

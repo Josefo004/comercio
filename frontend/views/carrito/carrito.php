@@ -7,8 +7,6 @@ use yii\grid\GridView;
 /** @var common\models\Productos $model */
 
 $this->title = 'Articulos del Carrito';
-// $this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
-// $this->params['breadcrumbs'][] = $this->title;
 $carrito = Yii::$app->session->get('carrito');
 $total = array_sum(array_column($carrito, 'Total'));
 $total = number_format($total,2);

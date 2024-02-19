@@ -23,6 +23,14 @@ switch ($tprecio) {
 }
 $ppp = number_format($ppp,2);
 $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->Descripcion:"";
+if (isset($ttt) && ($ttt>0)) {
+    $this->registerJs("
+    $(document).ready(function() {
+        $('#myModalCarritoDerecha').modal('show');
+    });
+    ", View::POS_READY);
+}
+
 ?>
 <div class="card mb-3" >
 <div class="row g-0">

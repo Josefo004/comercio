@@ -10,9 +10,9 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
-use yii\bootstrap5\Button;
+// use yii\bootstrap5\Button;
 use yii\bootstrap5\Modal;
-use yii\helpers\Url;
+// use yii\helpers\Url;
 
 AppAsset::register($this);
 $sGeneros = Yii::$app->session->get('sGeneros');
@@ -48,27 +48,11 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
         ],
     ]);
     if ($hayCarrito) {
-        //echo Html::a(' <span class="fa fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-secondary btn-sm']);
+        //echo Html::a('<span class="fa fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-secondary btn-sm']);        
         echo Html::button('<span class="fa fa-shopping-cart"></span>', [
-            'class' => 'btn btn-primary', 
-            'data' => [
-                'target' => '#modalCarrito', // ID del modal
-                'remote' => Url::to(['/carrito/carrito']),
-            ],
-            //'id' => 'btn-abrir-modal', 
+            'class' => 'btn btn-outline-secondary btn-sm', 
             'onclick' => "$('#myModalCarritoDerecha').modal('show')"
         ]);
-        // echo Button::widget([
-        //     'label' => 'Abrir Modal',
-        //     'options' => [
-        //         'class' => 'btn btn-primary',
-        //         'data' => [
-        //             'toggle' => 'modal',
-        //             'target' => '#myModal', // ID del modal
-        //             'remote' => Url::to(['controller/action']), // URL de la acción que renderiza la vista del modal
-        //         ],
-        //     ],
-        // ]);
     }
     $menuItems = [
         ['label' => 'Inicio', 'url' => ['/site/index']],
@@ -138,8 +122,60 @@ Modal::begin([
     'options' => ['class' => 'modal modal-right'],
 ]);
 ?>
-    <div id="modalCarrito" class="modal-body">
-      
+    <div class="modal-body">
+        <?php
+        if ($hayCarrito) {
+            $carrito = Yii::$app->session->get('carrito');
+            $total = array_sum(array_column($carrito, 'Total'));
+            $total = number_format($total,2);
+            $i = 0;
+            ?>
+            <div class="row mb-2 border border-dark rounded bg-secondary text-white text-center">
+                <div class="col-md-12 pr-1 p-1"><strong>CARRITO <span class="fa fa-shopping-cart"></span></strong></div>
+            </div>
+            <?php
+            foreach ($carrito as $key => $item): 
+                $i++;
+                //echo $item['CodigoProducto'].'<br>';
+            ?>
+            <div class="row mb-2 border border-secondary rounded">
+                <div class="col-md-4 m0 p0">
+                    <picture>
+                        <?= Html::img($item['Imagen'], ['class' => 'img-fluid'])?>
+                    </picture>
+                </div>
+                <div class="col-md-8 m0 p0">
+                    <p>
+                        <strong><?= $item['NombreProducto'] ?></strong><br>
+                        <small><?= $item['ProductoPara'] ?> <small><?= $item['Talla'] ?></small></small><br>
+                    <small>
+                        <strong>Precio </strong>Bs.<?= $item['Precio'] ?> <br>
+                        <strong>Cantidad </strong><?= $item['Cantidad'] ?> 
+                        <strong>Total </strong>Bs.<?= $item['Total'] ?><br>
+                        <?= Html::a('<span class="fa fa-trash-o"></span> Quitar', ['/carrito/eliminar', 'id' => $key], [
+                            'class' => 'btn btn-outline-danger btn-sm',
+                            'data' => [
+                                'confirm' => '¿Estás seguro de que quieres eliminar este elemento del Carrito?',
+                                'method' => 'post',
+                            ],
+                        ]) ?>
+                    </small></p>
+                </div>
+            </div>
+            <?php
+            endforeach;
+            ?>
+            <div class="row mb-2 border border-dark rounded bg-dark text-white text-right">
+                <div class="col-md-12 pr-3 p-1">
+                    Total: <strong>Bs. <?= $total ?></strong> 
+                </div>
+            </div>
+            <div class="row mb-2 float-left">
+                <?=Html::a('<span class="fa fa-file-text-o"></span> Realizar la Orden', ['/carrito/show'], ['class' => 'btn btn-success btn-sm']);?>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 <?php 
 Modal::end(); 
