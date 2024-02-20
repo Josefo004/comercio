@@ -11,9 +11,9 @@ $this->title = 'USFX';
 <!-- <br><br><br> -->
 <div class="site-index">
     <div class="body-content">
-        <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4"> 
+        <div class="row justify-content-end">
+            
+            <div class="col-lg-3 col-md-4"> 
                 <?php
                 $form = ActiveForm::begin([
                     'method' => 'get',
@@ -25,6 +25,7 @@ $this->title = 'USFX';
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
+            
         </div>
         <?php echo \yii\widgets\ListView::widget([
             'dataProvider' => $dataProvider,
@@ -32,7 +33,7 @@ $this->title = 'USFX';
             'layout' => '{summary}<div class="row">{items}</div>{pager}',
             'itemView' => '_product_item',
             'itemOptions' => [
-                'class' => 'col-lg-4 col-md-6 mb-4 product-item'
+                'class' => 'col-lg-3 col-md-4 mb-4 product-item'
             ],
             'pager' => [
                 'class' => \yii\bootstrap4\LinkPager::class

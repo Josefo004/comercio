@@ -118,7 +118,7 @@ Modal::begin([
     'id' => 'myModalCarritoDerecha',
     'closeButton' => false,
     'size' => 'md',
-    'bodyOptions' => ['class' => 'modal-body'],
+    // 'bodyOptions' => ['class' => 'modal-body'],
     'options' => ['class' => 'modal modal-right'],
 ]);
 ?>
@@ -131,7 +131,7 @@ Modal::begin([
             $i = 0;
             ?>
             <div class="row mb-2 border border-dark rounded bg-secondary text-white text-center">
-                <div class="col-md-12 pr-1 p-1"><strong>CARRITO <span class="fa fa-shopping-cart"></span></strong></div>
+                <div class="col-md-12 pr-1 p-1"><strong>MI CARRITO <span class="fa fa-shopping-cart"></span></strong></div>
             </div>
             <?php
             foreach ($carrito as $key => $item): 

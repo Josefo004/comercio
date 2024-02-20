@@ -7,6 +7,7 @@ use common\models\Productos;
 use common\models\DetalleTallas;
 use common\models\ProductoTallas;
 use frontend\models\CarritoForm;
+use frontend\models\OrdenForm;
 use yii\helpers\ArrayHelper;
 
 use Yii;
@@ -67,7 +68,10 @@ class CarritoController extends Controller
     }
 
     public function actionShow(){
-        return $this->render('show');
+        $modeloOrden = new OrdenForm();
+        return $this->render('show',[
+            'modeloOrden' => $modeloOrden,
+        ]);
     }
 
     protected function findModel($IdProducto)
