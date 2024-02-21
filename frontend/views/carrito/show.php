@@ -13,6 +13,37 @@ $this->title = 'Productos a Ordenar';
 $carrito = Yii::$app->session->get('carrito');
 $total = array_sum(array_column($carrito, 'Total'));
 $total = number_format($total,2);
+
+$script = <<< JS
+$(document).ready(function() {
+    $('#ordenform-idpersona').on('change', function() {
+        var idPersona = $(this).val();
+        
+        // Realizar la solicitud AJAX
+        $.ajax({
+            url: 'http://localhost:3000/api/v0/personas/'+idPersona, // Reemplaza 'url-de-tu-api-rest/buscar' con la URL de tu API REST
+            method: 'GET',
+            //data: { idPersona: idPersona },
+            success: function(response) {
+                // Rellenar los campos con la respuesta
+                console.log(response);
+                (response.IdPersona!="")?$('#ordenform-idpersona').val(response.IdPersona):$('#ordenform-idpersona').val(idPersona);
+                $('#ordenform-celular').val(response.Celular);
+                $('#ordenform-email').val(response.Email);
+                $('#ordenform-nombrecompleto').val(response.NombreCompleto);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                // Manejar errores aquí
+            }
+        });
+    });
+});
+JS;
+
+$this->registerJs($script);
+
+
 ?>
 <div>
     <div class="card mb-3" > 

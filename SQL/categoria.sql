@@ -323,3 +323,31 @@ ALTER TABLE dbo.CarritoItems
   DROP CONSTRAINT FK__Carrito_I__Codig__403A8C7D;
   
 DROP TABLE dbo.CarritoItems;
+
+--** ordenes
+select * from Ordenes;
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Ordenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK__Ordenes__CodigoU__33D4B598;
+
+ALTER TABLE [dbo].[Ordenes] ALTER COLUMN [CodigoUsuario] char(15);
+
+--** Eliminar pagos Ordenes
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'PagosOrdenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.PagosOrdenes
+  DROP CONSTRAINT FK__PagosOrde__IdOrd__3A81B327;
+
+ALTER TABLE dbo.PagosOrdenes
+  DROP CONSTRAINT FK__PagosOrde__Codig__3B75D760;
+
+ALTER TABLE dbo.PagosOrdenes
+  DROP CONSTRAINT FK__PagosOrde__Codig__3D5E1FD2;
+
+DROP TABLE dbo.PagosOrdenes;

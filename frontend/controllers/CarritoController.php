@@ -105,7 +105,7 @@ class CarritoController extends Controller
             return $this->redirect(['site/index']);
         }    
         Yii::$app->session->set('carrito', $carritot);
-        return $this->render('show');
+        return $this->redirect(['show']);
     }
 
     protected function findModel2($IdProducto){
