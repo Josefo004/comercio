@@ -26,7 +26,7 @@ $genero = ($model->IdCategoriaGenero!=1)?" - ".$model->idCategoriaGenero->Descri
     <div class="card-footer">
         <table class="table table-sm">
             <tbody>
-                <?php if (!empty($model->Precio)): ?>
+                <?php if (!empty($model->Precio) && $model->Precio > 0): ?>
                 <tr>
                     <th scope="row"><?= yii\helpers\Html::a('<span class="fa fa-cart-plus"></span> Adquirir '.Yii::$app->formatter->asCurrency($model->Precio), ['/carrito/create','id'=>$model->IdProducto, 'tprecio'=>'pn'], ['class'=>'btn btn-success btn-block btn-lg']) ?></th>
                 </tr>

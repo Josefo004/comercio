@@ -80,14 +80,6 @@ use yii\jui\DatePicker;
             ])?>
         </div>
     </div>
-
-
-
-    
-    
-
-    <?= $form->field($model, 'CantidadLimite')->textInput() ?>
-
     
 
     <?= $form->field($model, 'Publicado')->checkbox() ?>

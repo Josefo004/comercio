@@ -132,7 +132,7 @@ INSERT INTO CategoriaGenero (Descripcion) VALUES('NIÑO');
 select * from CategoriaGenero;
 
 ALTER TABLE dbo.Productos
-  ADD CodigoProducto VARCHAR(10) NULL,
+  ADD CodigoProducto VARCHAR(10) NULL;
 
 ALTER TABLE dbo.Productos
   ADD IdCategoriaGenero INT DEFAULT 1 NOT NULL;
@@ -189,8 +189,7 @@ UPDATE Productos SET NombreProducto=(SELECT CategoriaProducto.Descripcion FROM C
 UPDATE Productos SET NombreProducto=UPPER(LEFT(NombreProducto, 1)) + LOWER(SUBSTRING(NombreProducto, 2, LEN(NombreProducto)));
 
 ALTER TABLE dbo.Productos
-  ADD FechaCaducidadPreVenta DATE NULL,
-  ADD FechaCaducidadReserva DATE NULL,
+  ADD FechaCaducidadPreVenta DATE NULL;
 
 -- ****************************************************************************************************
 -- ****************************************************************************************************
@@ -351,3 +350,93 @@ ALTER TABLE dbo.PagosOrdenes
   DROP CONSTRAINT FK__PagosOrde__Codig__3D5E1FD2;
 
 DROP TABLE dbo.PagosOrdenes;
+
+--** Nueva estructura de ordenes
+
+USE Ecommerce;
+
+DROP TABLE dbo.Ordenes;
+
+CREATE TABLE dbo.Ordenes(
+	IdOrden INT PRIMARY KEY IDENTITY (1, 1),
+	CodigoEstado CHAR(1) DEFAULT 'P'  NOT NULL,
+	TotalOrden DECIMAL (10, 2) NOT NULL,
+	CodigoQR VARCHAR(2000) NULL,
+	CodigoUsuarioCreacion CHAR(15) NOT NULL,
+	FechaCreacion DATETIME DEFAULT (getdate()) NOT NULL, 
+	CodigoUsuarioActualizacion CHAR(15) NULL,
+	FechaActualizacion DATETIME NULL, 
+	Observacion VARCHAR(500) NULL,
+	CONSTRAINT FK_CodigoEstado_Ordenes FOREIGN KEY (CodigoEstado) REFERENCES dbo.Estados(CodigoEstado),
+	CONSTRAINT FK_CodigoUsuarioCreacion_Ordenes FOREIGN KEY (CodigoUsuarioCreacion) REFERENCES dbo.Usuarios(CodigoUsuario),
+	CONSTRAINT FK_CodigoUsuarioActualizacion_Ordenes FOREIGN KEY (CodigoUsuarioActualizacion) REFERENCES dbo.Usuarios(CodigoUsuario)
+);
+
+USE Ecommerce;
+
+DROP TABLE dbo.DetalleOrdenes;
+
+CREATE TABLE dbo.DetalleOrdenes(
+	IdDetalleOrden INT PRIMARY KEY IDENTITY (1, 1),
+	IdOrden INT NOT NULL,
+	IdProducto INT NOT NULL,
+	IdProductoTalla INT NOT NULL,
+	CodigoProducto VARCHAR(10) NOT NULL,
+	ProductoPara VARCHAR(100) NOT NULL,
+	NombreProducto VARCHAR(100) NOT NULL,
+	Imagen VARCHAR(2000) NULL,
+	Precio DECIMAL (10, 2) NOT NULL,
+	Cantidad INT NOT NULL,
+	Total DECIMAL (10, 2) NOT NULL,
+	FechaRegistro DATETIME DEFAULT (getdate()) NOT NULL, 
+	CONSTRAINT FK_IdOrden_DetalleOrdenes FOREIGN KEY (IdOrden) REFERENCES dbo.Ordenes(IdOrden),
+	CONSTRAINT FK_IdProducto_DetalleOrdenes FOREIGN KEY (IdProducto) REFERENCES dbo.Productos(IdProducto),
+	CONSTRAINT FK_IdProductoTalla_DetalleOrdenes FOREIGN KEY (IdProductoTalla) REFERENCES dbo.ProductoTallas(IdProductoTalla)
+);
+
+--** Borrado de Ordenes y detalleOrdenes
+use  Ecommerce;
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'DetalleOrdenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.DetalleOrdenes
+  DROP CONSTRAINT FK_IdOrden_DetalleOrdenes;
+
+ALTER TABLE dbo.DetalleOrdenes
+  DROP CONSTRAINT FK_IdProducto_DetalleOrdenes;
+
+ALTER TABLE dbo.DetalleOrdenes
+  DROP CONSTRAINT FK_IdProductoTalla_DetalleOrdenes;
+
+DROP TABLE dbo.DetalleOrdenes;
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Ordenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoEstado_Ordenes;
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoUsuarioCreacion_Ordenes;
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoUsuarioActualizacion_Ordenes;
+
+DROP TABLE dbo.Ordenes;
+
+--** Ordenes Pagadas
+
+USE Ecommerce;
+
+DROP TABLE dbo.OrdenesPagadas;
+
+CREATE TABLE dbo.OrdenesPagadas(
+	IdOrdenPagada INT PRIMARY KEY IDENTITY (1, 1),
+	IdOrden INT NOT NULL,
+	TotalOrden DECIMAL (10, 2) NOT NULL,
+	FechaCreacion DATETIME DEFAULT (getdate()) NOT NULL,
+	CONSTRAINT FK_IdOrden_OrdenesPagadas FOREIGN KEY (IdOrden) REFERENCES dbo.Ordenes(IdOrden),
+);

@@ -47,8 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'FechaCaducidadPreVenta',
             'PrecioReserva',
             'FechaCaducidadReserva',
-            'CantidadLimite',
-            'CantidadVendidos',
             [
                 'attribute' => 'Publicado',
                 'format' => 'html',

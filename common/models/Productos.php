@@ -16,8 +16,6 @@ use Yii;
  * @property float $Precio
  * @property float $PrecioPreventa
  * @property float $PrecioReserva
- * @property int|null $CantidadLimite
- * @property int|null $CantidadVendidos
  * @property int $Publicado
  * @property string|null $FechaHoraRegistro
  * @property string|null $FechaHoraActualizacion
@@ -58,12 +56,12 @@ class Productos extends \yii\db\ActiveRecord
             [['NombreProducto', 'PrecioPreventa', 'PrecioReserva', 'Publicado'], 'required'],
             [['Descripcion'], 'string'],
             [['Precio', 'PrecioPreventa', 'PrecioReserva'], 'number'],
-            [['CantidadLimite', 'CantidadVendidos', 'Publicado'], 'integer'],
+            [['Publicado'], 'integer'],
             [['FechaHoraRegistro', 'FechaHoraActualizacion'], 'safe'],
             [['NombreProducto'], 'string', 'max' => 255],
             [['imagenFile'], 'image', 'extensions' => 'png, jpg, jpeg, webp', 'maxSize' => 10 * 1024 * 1024],
             [['Imagen'], 'string', 'max' => 2000],
-            [['CodigoUsuarioCreacion', 'CodigoUsuarioActualizacion'], 'string', 'max' => 3],
+            [['CodigoUsuarioCreacion', 'CodigoUsuarioActualizacion'], 'string', 'max' => 15],
             [['CodigoEstado'], 'string', 'max' => 1],
             [['IdCategoriaGenero'], 'integer'],
             [['IdCategoriaProducto'], 'integer'],
@@ -89,8 +87,6 @@ class Productos extends \yii\db\ActiveRecord
             'Precio' => 'Precio',
             'PrecioPreventa' => 'Precio Preventa',
             'PrecioReserva' => 'Precio Reserva',
-            'CantidadLimite' => 'Cantidad Limite',
-            'CantidadVendidos' => 'Cantidad Vendidos',
             'Publicado' => 'Publicado',
             'FechaHoraRegistro' => 'Fecha Hora Registro',
             'FechaHoraActualizacion' => 'Fecha Hora Actualizacion',
@@ -220,6 +216,8 @@ class Productos extends \yii\db\ActiveRecord
         }
         $transaction = Yii::$app->db->beginTransaction();
         $ok = parent::save($runValidation, $attributeNames);
+        // $errors = $this->getErrors();
+        // dd($errors);
       
         if ($ok && $this->imagenFile) {
             $fullPath = Yii::getAlias('@frontend/web/imgProductos/' .  $this->Imagen );

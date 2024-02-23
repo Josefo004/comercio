@@ -21,7 +21,8 @@ $(document).ready(function() {
         
         // Realizar la solicitud AJAX
         $.ajax({
-            url: 'http://localhost:3000/api/v0/personas/'+idPersona, // Reemplaza 'url-de-tu-api-rest/buscar' con la URL de tu API REST
+            //url: 'http://localhost:3000/api/v0/personas/'+idPersona, // Reemplaza 'url-de-tu-api-rest/buscar' con la URL de tu API REST
+            url: 'http://172.16.1.251/consultasapi/v0/personas/'+idPersona,
             method: 'GET',
             //data: { idPersona: idPersona },
             success: function(response) {

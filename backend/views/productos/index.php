@@ -101,8 +101,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'PrecioPreventa',
             //'PrecioReserva',
-            //'CantidadLimite',
-            //'CantidadVendidos',
             //'Publicado',
             //'FechaHoraRegistro',
             //'FechaHoraActualizacion',

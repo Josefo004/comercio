@@ -71,7 +71,12 @@ $this->registerJs("
             <?= $form->field($modeloCarrito, 'Talla')->hiddenInput(['value'=> ""])->label(false);?>
           </div>
           <div class="col-md-4">
-            <?= Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]) ?>
+            <?php
+              if ($producto->IdCategoriaGenero > 1 && $producto->IdCategoriaGenero < 4) {
+                echo Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]);
+              }
+            ?>
+            <!-- <?= Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]) ?> -->
             <!-- <?= Html::button('Abrir Modal', ['class' => 'btn btn-primary', 'id' => 'btn-abrir-modal', 'onclick' => "$('#myModalDerecha').modal('show')"]) ?> -->
           </div>
         </div>

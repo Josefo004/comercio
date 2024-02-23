@@ -117,7 +117,6 @@ class ProductosController extends Controller
         $model = new Productos();
         $model->FechaHoraRegistro = CommonQueries::GetFechaHoraActual();
         $model->CodigoUsuarioCreacion = $this->identity->CodigoUsuario;
-        $model->CantidadVendidos = 0;
         $model->imagenFile = UploadedFile::getInstance($model, 'Imagen');
 
         $aGeneros = CategoriaGeneros::getGenerosAsArray();        
