@@ -220,6 +220,31 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     }
     public function generateCodigoUsuario()
     {
-        $this->CodigoUsuario = 'jmv';
+        $this->CodigoUsuario = $this->generateUniqueCodUser();
+    }
+
+    public function generateUniqueCodUser()
+    {
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        // Output: 54esmdr0qf
+        // echo substr(str_shuffle($permitted_chars), 0, 10);
+
+        $nc = $this->NombreCompleto;                    // nombre completo
+        $nc = str_replace("  ", " ", $nc);
+        $nc = strtolower($nc);
+        $porciones = explode(" ", $nc);
+        $codi = "";                                     // codigo inicial
+        foreach ($porciones as $value) {
+            $letra = "";
+            $letra = $value[0];
+            $letra = (strpos($permitted_chars, $letra) === false) ? substr(str_shuffle($permitted_chars), 0, 1) : $value[0]; // si es un caracter NO esta dentro los caracteres permitidos lo remplazamos por uno aleatoriamente
+            $codi .= $letra;
+        }
+        $usrAux = static::findIdentity(['CodigoUsuario' => $codi]);
+        while ($usrAux != null) {
+            $codi = $codi.".".substr(str_shuffle($permitted_chars), 0, 3);
+            $usrAux = static::findIdentity(['CodigoUsuario' => $codi]);
+        }
+        return $codi;
     }
 }

@@ -14,6 +14,7 @@ class OrdenForm extends Model
     public $Email;              // correo electronico
     public $Celular;            // celular del solicitante
     public $NombreCompleto;     // Nombre del solicitante del o de los articulos
+    public $CodigoUsuario;      // Usuario
 
     /**
      * {@inheritdoc}
@@ -21,9 +22,9 @@ class OrdenForm extends Model
     public function rules()
     {
         return [
-            [['IdPersona', 'Email', 'NombreCompleto'], 'required'],
+            [['IdPersona', 'Email', 'NombreCompleto', 'Celular'], 'required'],
             [['Email'], 'email'],
-            [['NombreCompleto'], 'string'],
+            [['Celular', 'NombreCompleto', 'CodigoUsuario'], 'string'],
         ];
     }
 

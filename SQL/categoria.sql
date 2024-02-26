@@ -440,3 +440,12 @@ CREATE TABLE dbo.OrdenesPagadas(
 	FechaCreacion DATETIME DEFAULT (getdate()) NOT NULL,
 	CONSTRAINT FK_IdOrden_OrdenesPagadas FOREIGN KEY (IdOrden) REFERENCES dbo.Ordenes(IdOrden),
 );
+
+--** aumento campos a Ordenes
+ALTER TABLE dbo.Ordenes
+  ADD Email VARCHAR(100) NOT NULL;
+ALTER TABLE dbo.Ordenes
+	ADD Celular VARCHAR(15) NOT NULL;
+ALTER TABLE dbo.Ordenes
+	ADD NombreCompleto VARCHAR(500) NOT NULL;
+

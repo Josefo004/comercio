@@ -124,6 +124,7 @@ class ProductosController extends Controller
         //dd($aProductos);
 
         if ($this->request->isPost) {
+            $model->load($this->request->post());
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'IdProducto' => $model->IdProducto]);
             }

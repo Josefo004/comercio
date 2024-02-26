@@ -4,7 +4,9 @@ namespace frontend\controllers;
 
 use common\components\CommonQueries;
 use common\models\Productos;
+use common\models\Usuarios;
 use common\models\DetalleTallas;
+use common\models\Ordenes;
 use common\models\ProductoTallas;
 use frontend\models\CarritoForm;
 use frontend\models\OrdenForm;
@@ -69,6 +71,14 @@ class CarritoController extends Controller
 
     public function actionShow(){
         $modeloOrden = new OrdenForm();
+        if ($this->request->isPost) {
+            $modeloOrden->load($this->request->post());
+            $usuario = ($modeloOrden->CodigoUsuario!='') ? Usuarios::findIdentity($modeloOrden->CodigoUsuario) : $usuario = $this->crearUsuario($modeloOrden); //recupero el usuario o guardo un nuevo usuario 
+            $orden = new Ordenes();
+            $orden->CodigoUsuarioCreacion = $usuario->CodigoUsuario;
+            dd($orden);
+
+        }
         return $this->render('show',[
             'modeloOrden' => $modeloOrden,
         ]);
@@ -125,5 +135,23 @@ class CarritoController extends Controller
                         ->andwhere(['>','Cantidad',0])
                         ->all();
         return $model;
+    }
+
+    protected function crearUsuario($modeloOrden){
+        $user = new Usuarios();
+        $user->NombreCompleto = $modeloOrden->NombreCompleto;
+        $user->Email = $modeloOrden->Email;
+        $user->IdPersona = $modeloOrden->IdPersona;
+        $user->Celular = $modeloOrden->Celular;
+        $user->generateCodigoUsuario();
+        $user->Login = $user->CodigoUsuario;
+        $user->setPassword($modeloOrden->IdPersona);
+        $user->generateAuthKey();
+        $user->generateEmailVerificationToken();
+        $user->Estado = 'V';
+        //dd($user);
+        //return $user->save() && $this->sendEmail($user);
+        //return $user;
+        return $user->save();
     }
 }

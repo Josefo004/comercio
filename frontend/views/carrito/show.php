@@ -32,6 +32,7 @@ $(document).ready(function() {
                 $('#ordenform-celular').val(response.Celular);
                 $('#ordenform-email').val(response.Email);
                 $('#ordenform-nombrecompleto').val(response.NombreCompleto);
+                $('#ordenform-codigousuario').val(response.CodigoUsuario);
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
@@ -73,6 +74,7 @@ $this->registerJs($script);
                         <div class="row">
                             <div class="col-12">
                                 <?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['class' => 'form-control form-control-sm']) ?>
+                                <?= $form->field($modeloOrden, 'CodigoUsuario')->hiddenInput()->label(false) ?>
                             </div>
                         </div>
                         <div class="row">
