@@ -412,6 +412,7 @@ ALTER TABLE dbo.DetalleOrdenes
 
 DROP TABLE dbo.DetalleOrdenes;
 
+--**
 SELECT CONSTRAINT_NAME
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE TABLE_NAME = 'Ordenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
@@ -448,4 +449,146 @@ ALTER TABLE dbo.Ordenes
 	ADD Celular VARCHAR(15) NOT NULL;
 ALTER TABLE dbo.Ordenes
 	ADD NombreCompleto VARCHAR(500) NOT NULL;
+
+
+--**
+use Ecommerce;
+
+select * from Usuarios;
+
+delete from Usuarios where CodigoUsuario='jmv';
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Ordenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoUsuarioCreacion_Ordenes;
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoUsuarioActualizacion_Ordenes;
+
+ALTER TABLE dbo.Ordenes ALTER COLUMN CodigoUsuarioCreacion VARCHAR(15);  
+
+ALTER TABLE dbo.Ordenes ALTER COLUMN CodigoUsuarioActualizacion VARCHAR(15);  
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioCreacion_Ordenes FOREIGN KEY (CodigoUsuarioCreacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioActualizacion_Ordenes FOREIGN KEY (CodigoUsuarioActualizacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+
+
+--** 
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Productos' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.Productos
+  DROP CONSTRAINT FK_CodigoUsuarioCreacion_Productos;
+
+ALTER TABLE dbo.Productos
+  DROP CONSTRAINT FK_CodigoUsuarioActualizacion_Productos;
+
+ALTER TABLE dbo.Productos ALTER COLUMN CodigoUsuarioCreacion VARCHAR(15);  
+
+ALTER TABLE dbo.Productos ALTER COLUMN CodigoUsuarioActualizacion VARCHAR(15);  
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioCreacion_Productos FOREIGN KEY (CodigoUsuarioCreacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioActualizacion_Productos FOREIGN KEY (CodigoUsuarioActualizacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+
+--**
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Usuarios' AND CONSTRAINT_TYPE = 'PRIMARY KEY';
+
+ALTER TABLE dbo.Usuarios
+  DROP CONSTRAINT PK_Usuarios;
+
+ALTER TABLE dbo.Usuarios ALTER COLUMN CodigoUsuario VARCHAR(15) NOT NULL;  
+
+ALTER TABLE dbo.Usuarios ADD PRIMARY KEY (CodigoUsuario);
+
+
+SELECT * 
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+WHERE CONSTRAINT_NAME LIKE 'DF__Productos__Codig__2E1BDC42';
+
+
+--**
+
+use Ecommerce;
+
+select * from Usuarios;
+
+delete from Usuarios where CodigoUsuario='jmv';
+
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Ordenes' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoUsuarioCreacion_Ordenes;
+
+ALTER TABLE dbo.Ordenes
+  DROP CONSTRAINT FK_CodigoUsuarioActualizacion_Ordenes;
+
+ALTER TABLE dbo.Ordenes ALTER COLUMN CodigoUsuarioCreacion VARCHAR(15);  
+
+ALTER TABLE dbo.Ordenes ALTER COLUMN CodigoUsuarioActualizacion VARCHAR(15);  
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioCreacion_Ordenes FOREIGN KEY (CodigoUsuarioCreacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioActualizacion_Ordenes FOREIGN KEY (CodigoUsuarioActualizacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+
+
+--** 
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Productos' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+ALTER TABLE dbo.Productos
+  DROP CONSTRAINT FK_CodigoUsuarioCreacion_Productos;
+
+ALTER TABLE dbo.Productos
+  DROP CONSTRAINT FK_CodigoUsuarioActualizacion_Productos;
+
+ALTER TABLE dbo.Productos ALTER COLUMN CodigoUsuarioCreacion VARCHAR(15);  
+
+ALTER TABLE dbo.Productos ALTER COLUMN CodigoUsuarioActualizacion VARCHAR(15);  
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioCreacion_Productos FOREIGN KEY (CodigoUsuarioCreacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+ALTER TABLE dbo.Ordenes
+  ADD CONSTRAINT FK_CodigoUsuarioActualizacion_Productos FOREIGN KEY (CodigoUsuarioActualizacion) REFERENCES dbo.Usuarios(CodigoUsuario);
+
+
+--**
+SELECT CONSTRAINT_NAME
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'Usuarios' AND CONSTRAINT_TYPE = 'PRIMARY KEY';
+
+ALTER TABLE dbo.Usuarios
+  DROP CONSTRAINT PK_Usuarios;
+
+ALTER TABLE dbo.Usuarios ALTER COLUMN CodigoUsuario VARCHAR(15) NOT NULL;  
+
+ALTER TABLE dbo.Usuarios ADD PRIMARY KEY (CodigoUsuario);
+
+
+
+
+
+SELECT * 
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+WHERE CONSTRAINT_NAME LIKE 'DF__Productos__Codig__2E1BDC42';
 

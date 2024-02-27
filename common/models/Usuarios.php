@@ -64,6 +64,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
         return [
             ['Estado', 'default', 'value' => self::STATUS_INACTIVE],
             ['Estado', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['CodigoUsuario'], 'string', 'max' => 15],
         ];
     }
 
@@ -218,6 +219,23 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     {
         $this->PasswordResetToken = null;
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            // if ($this->isNewRecord) {
+            //     $this->created_at = time();
+            // }
+            // $this->updated_at = time();
+            $this->NombreCompleto = mb_strtoupper($this->NombreCompleto);
+            $this->IdPersona = mb_strtoupper($this->IdPersona);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function generateCodigoUsuario()
     {
         $this->CodigoUsuario = $this->generateUniqueCodUser();
@@ -236,8 +254,10 @@ class Usuarios extends ActiveRecord implements IdentityInterface
         $codi = "";                                     // codigo inicial
         foreach ($porciones as $value) {
             $letra = "";
+            // extraemos la 1ra letra de cada palabra separada
             $letra = $value[0];
-            $letra = (strpos($permitted_chars, $letra) === false) ? substr(str_shuffle($permitted_chars), 0, 1) : $value[0]; // si es un caracter NO esta dentro los caracteres permitidos lo remplazamos por uno aleatoriamente
+            // si la letra NO esta dentro los caracteres permitidos lo remplazamos por uno aleatoriamente
+            $letra = (strpos($permitted_chars, $letra) === false) ? substr(str_shuffle($permitted_chars), 0, 1) : $value[0]; 
             $codi .= $letra;
         }
         $usrAux = static::findIdentity(['CodigoUsuario' => $codi]);

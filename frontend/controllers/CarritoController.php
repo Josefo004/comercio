@@ -73,10 +73,15 @@ class CarritoController extends Controller
         $modeloOrden = new OrdenForm();
         if ($this->request->isPost) {
             $modeloOrden->load($this->request->post());
-            $usuario = ($modeloOrden->CodigoUsuario!='') ? Usuarios::findIdentity($modeloOrden->CodigoUsuario) : $usuario = $this->crearUsuario($modeloOrden); //recupero el usuario o guardo un nuevo usuario 
-            $orden = new Ordenes();
-            $orden->CodigoUsuarioCreacion = $usuario->CodigoUsuario;
-            dd($orden);
+            
+            // recupero el usuario o guardo un nuevo usuario 
+            $usuario = ($modeloOrden->CodigoUsuario!='') ? Usuarios::findIdentity($modeloOrden->CodigoUsuario) : $usuario = $this->crearUsuario($modeloOrden); 
+
+            // Creamos una Orden 
+            $orden = $this->crearOrden($usuario, $modeloOrden->TotalOrden);
+            //dd($orden);
+
+            // Detalle de las ordenes
 
         }
         return $this->render('show',[
@@ -149,9 +154,28 @@ class CarritoController extends Controller
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         $user->Estado = 'V';
-        //dd($user);
+       
         //return $user->save() && $this->sendEmail($user);
-        //return $user;
-        return $user->save();
+       
+        $user->save();
+        return $user;
     }
+
+    protected function crearOrden($usuario, $TotalOrden=0){
+        $orden = new Ordenes();
+        $orden->CodigoUsuarioCreacion = $usuario->CodigoUsuario;
+        $orden->NombreCompleto = $usuario->NombreCompleto;
+        $orden->Celular = $usuario->Celular;
+        $orden->Email = $usuario->Email;
+        $orden->CodigoEstado = 'V';
+        $orden->TotalOrden = $TotalOrden;
+        $orden->FechaCreacion = CommonQueries::GetFechaHoraActual();
+        //dd($orden, $orden->save());
+        $orden->save();
+        //$errors = $orden->getErrors();
+        //dd($errors);
+        return $orden;
+    }
+
+    protected function detallarOrden(){}
 }

@@ -73,8 +73,9 @@ $this->registerJs($script);
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['class' => 'form-control form-control-sm']) ?>
+                                <?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['style' => 'text-transform: uppercase', 'class' => 'form-control form-control-sm']) ?>
                                 <?= $form->field($modeloOrden, 'CodigoUsuario')->hiddenInput()->label(false) ?>
+                                <?= $form->field($modeloOrden, 'TotalOrden')->hiddenInput(['value'=>$total])->label(false) ?>
                             </div>
                         </div>
                         <div class="row">

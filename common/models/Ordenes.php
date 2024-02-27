@@ -39,17 +39,10 @@ class Ordenes extends \yii\db\ActiveRecord
     public function rules()
     {
       return [
-        [['IdOrden', 'CodigoEstado', 'TotalOrden', 'CodigoQR', 'CodigoUsuarioCreacion', 'FechaCreacion'], 'required'],
+        [['CodigoEstado', 'TotalOrden', 'CodigoUsuarioCreacion', 'FechaCreacion'], 'required'],
         [['Observacion'], 'string', 'max' => 500],
         [['FechaCreacion', 'FechaActualizacion'], 'safe'],
+        // ['NombreProducto'], 'string', 'max' => 255],
       ];
     }
-
-    //devolviendo todos los genros como array asociativo
-    // public static function getGenerosAsArray(){
-    //     $generos = CategoriaGeneros::find()->all();
-    //     $generos = ArrayHelper::map($generos,'IdCategoriaGenero', 'Descripcion');
-    //     // return CategoriaGeneros::find()->select('IdCategoriaGenero', 'Descripcion')->asArray()->all();
-    //     return $generos;
-    // }
 }
