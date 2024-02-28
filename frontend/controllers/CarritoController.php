@@ -3,9 +3,9 @@
 namespace frontend\controllers;
 
 use common\components\CommonQueries;
+use common\models\DetalleOrdenes;
 use common\models\Productos;
 use common\models\Usuarios;
-use common\models\DetalleTallas;
 use common\models\Ordenes;
 use common\models\ProductoTallas;
 use frontend\models\CarritoForm;
@@ -18,7 +18,7 @@ class CarritoController extends Controller
 {
 
     public function asArray1($data){
-        $data = ArrayHelper::map($data,'IdTalla', function($data, $defaultValue){
+        $data = ArrayHelper::map($data,'IdProductoTalla', function($data, $defaultValue){
             //return $data->idTalla->Talla.' '.$data->idTalla->DescripcionTalla.' - cant. '.$data->Cantidad;
             return '"'.$data->idTalla->Talla.'" '.$data->idTalla->DescripcionTalla;
         });
@@ -44,6 +44,7 @@ class CarritoController extends Controller
         $producto = $this->findModel2($id);
         $tallas = $this->findTallas($id);
         $tallas = $this->asArray1($tallas);
+        //dd($tallas);
         $modeloCarrito = new CarritoForm();
 
         if ($this->request->isPost) {
@@ -82,6 +83,10 @@ class CarritoController extends Controller
             //dd($orden);
 
             // Detalle de las ordenes
+            // $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
+            $detalleOrd = $this->crearDetallarOrden(1);
+            dd($detalleOrd);
+           
 
         }
         return $this->render('show',[
@@ -98,7 +103,7 @@ class CarritoController extends Controller
 
     public function actionEliminar($id)
     {
-        $carritot = Yii::$app->session->get('carrito');
+        $carritot = Yii::$app->session->get('carrito'); //carrito temporal
         //dd($carritot);
         unset($_SESSION['carrito']);
         unset($carritot[$id]);
@@ -177,5 +182,26 @@ class CarritoController extends Controller
         return $orden;
     }
 
-    protected function detallarOrden(){}
+    protected function crearDetallarOrden($idOrden = 0){
+        $tmpCarrito = Yii::$app->session->get('carrito');
+        //dd($tmpCarrito);
+        $re = true;
+        foreach ($tmpCarrito as $value) {
+            $detalleO = new DetalleOrdenes();
+            $detalleO->IdOrden = $idOrden;
+            $detalleO->IdProduto = $value['IdProducto'];
+            $detalleO->IdProductoTalla = $value['IdProductoTalla'];
+            $detalleO->CodigoProducto = $value['CodigoProducto'];
+            $detalleO->ProductoPara = $value['ProductoPara'];
+            $detalleO->NombreProducto = $value['NombreProducto'];
+            $detalleO->Imagen = $value['Imagen'];
+            $detalleO->Precio = $value['Precio'];
+            $detalleO->Cantidad = $value['Cantidad'];
+            $detalleO->Total = $value['Total'];
+            $detalleO->FechaRegistro = $value['FechaRegistro'];
+            if(!$detalleO->save()){$re = false; break;}
+        }
+        if ($re) { unset($_SESSION['carrito']); }
+        return $re;
+    }
 }

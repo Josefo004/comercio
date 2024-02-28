@@ -34,6 +34,7 @@ switch ($tprecio) {
     $ppp = $producto->PrecioReserva;
     break;
 }
+//dd($tallas);
 $ppp = number_format($ppp,2);
 $genero = ($producto->IdCategoriaGenero!=1)?" - ".$producto->idCategoriaGenero->Descripcion:"";
 $this->registerJs("

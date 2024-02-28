@@ -199,15 +199,15 @@ class Productos extends \yii\db\ActiveRecord
         return $this->hasMany(ProductoTallas::class, ['IdProducto' => 'IdProducto']);
     }
 
-    /**
-     * Gets query for [[ProductosOrdenados]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductosOrdenados()
-    {
-        return $this->hasMany(ProductosOrdenados::class, ['IdProducto' => 'IdProducto']);
-    }
+    // /**
+    //  * Gets query for [[ProductosOrdenados]].
+    //  *
+    //  * @return \yii\db\ActiveQuery
+    //  */
+    // public function getProductosOrdenados()
+    // {
+    //     return $this->hasMany(ProductosOrdenados::class, ['IdProducto' => 'IdProducto']);
+    // }
 
     public function save($runValidation = true, $attributeNames = null)
     {

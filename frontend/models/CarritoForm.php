@@ -11,7 +11,7 @@ use yii\base\Model;
 class CarritoForm extends Model
 {
     public $IdProducto;
-    public $Idtalla;
+    public $Idtalla;            // IdProductoTalla para sacar cantidad segun talla
     public $Talla;
     public $CodigoProducto;
     public $ProductoPara;   
