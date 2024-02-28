@@ -45,4 +45,24 @@ class Ordenes extends \yii\db\ActiveRecord
         // ['NombreProducto'], 'string', 'max' => 255],
       ];
     }
+
+    /**
+     * Gets query for [[DestalleOrdenes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDetallesOrden()
+    {
+      return $this->hasMany(DetalleOrdenes::class, ['IdOrden' => 'IdOrden']);
+    }
+
+    /**
+     * Gets query for [[Estados]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEstado()
+    {
+      return $this->hasOne(Estados::class, ['CodigoEstado' => 'CodigoEstado']);
+    }
 }

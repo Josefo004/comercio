@@ -61,20 +61,20 @@ $this->registerJs($script);
                         <?php $form = ActiveForm::begin(); ?>
                         <div class="row">
                             <div class="col-md-7">
-                                <?= $form->field($modeloOrden, 'IdPersona')->textInput(['class' => 'form-control form-control-sm']) ?>
+                                <?= $form->field($modeloOrden, 'IdPersona')->textInput(['class' => 'form-control form-control-sm', 'autocomplete' => 'off']) ?>
                             </div>
                             <div class="col-md-5">
-                                <?= $form->field($modeloOrden, 'Celular')->textInput(['class' => 'form-control form-control-sm']) ?>
+                                <?= $form->field($modeloOrden, 'Celular')->textInput(['class' => 'form-control form-control-sm', 'autocomplete' => 'off']) ?>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <?= $form->field($modeloOrden, 'Email')->textInput(['class' => 'form-control form-control-sm']) ?>
+                                <?= $form->field($modeloOrden, 'Email')->textInput(['class' => 'form-control form-control-sm', 'autocomplete' => 'off']) ?>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['style' => 'text-transform: uppercase', 'class' => 'form-control form-control-sm']) ?>
+                                <?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['style' => 'text-transform: uppercase', 'class' => 'form-control form-control-sm', 'autocomplete' => 'off']) ?>
                                 <?= $form->field($modeloOrden, 'CodigoUsuario')->hiddenInput()->label(false) ?>
                                 <?= $form->field($modeloOrden, 'TotalOrden')->hiddenInput(['value'=>$total])->label(false) ?>
                             </div>

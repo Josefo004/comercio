@@ -38,6 +38,17 @@ class CarritoController extends Controller
     /// revisar
     }
 
+    //vizualizamos una orden
+    public function actionVerOrden($idOrden)
+    {
+        $orden = Ordenes::find()
+                        ->joinWith('estado')
+                        ->joinWith('detallesOrden')
+                        ->where(['Ordenes.IdOrden' => $idOrden])
+                        ->all();
+        return $this->render('orden', ['orden' => $orden]);
+    }
+
     //mandamos el identificador del producto y el tipo de precio al cual queremos procesar el pedido
     public function actionCreate($id, $tprecio=null)
     {
@@ -51,7 +62,7 @@ class CarritoController extends Controller
             $modeloCarrito->load($this->request->post());
             $modeloCarrito->FechaHoraRegistro = CommonQueries::GetFechaHoraActual();
             $this->addToCarrito($modeloCarrito);
-            //return $this->render('show');
+            
             return $this->render('create', [
                 'producto' => $producto,
                 'tallas' => $tallas,
@@ -71,26 +82,31 @@ class CarritoController extends Controller
     }
 
     public function actionShow(){
-        $modeloOrden = new OrdenForm();
-        if ($this->request->isPost) {
-            $modeloOrden->load($this->request->post());
-            
-            // recupero el usuario o guardo un nuevo usuario 
-            $usuario = ($modeloOrden->CodigoUsuario!='') ? Usuarios::findIdentity($modeloOrden->CodigoUsuario) : $usuario = $this->crearUsuario($modeloOrden); 
-
-            // Creamos una Orden 
-            $orden = $this->crearOrden($usuario, $modeloOrden->TotalOrden);
-            
-
-            // Detalle de las ordenes
-            $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
-            dd($detalleOrd);
-           
-
+        if (Yii::$app->session->has('carrito')) {
+            $modeloOrden = new OrdenForm();
+            if ($this->request->isPost) {
+                return $this->redirect(['ver-orden', 'idOrden' => 1]);
+                $modeloOrden->load($this->request->post());
+                
+                // recupero el usuario o guardo un nuevo usuario 
+                $usuario = ($modeloOrden->CodigoUsuario!='') ? Usuarios::findIdentity($modeloOrden->CodigoUsuario) : $usuario = $this->crearUsuario($modeloOrden); 
+    
+                // Creamos una Orden 
+                $orden = $this->crearOrden($usuario, $modeloOrden->TotalOrden);
+                
+                // Detalle de las ordenes
+                $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
+                // dd($detalleOrd);
+    
+                return $this->redirect(['ver-orden', 'idOrden' => $orden->IdOrden]);
+            }
+            return $this->render('show',[
+                'modeloOrden' => $modeloOrden,
+            ]);
         }
-        return $this->render('show',[
-            'modeloOrden' => $modeloOrden,
-        ]);
+        else {
+            return $this->redirect(['site/index']);
+        }
     }
 
     protected function findModel($IdProducto)
@@ -171,7 +187,7 @@ class CarritoController extends Controller
         $orden->NombreCompleto = $usuario->NombreCompleto;
         $orden->Celular = $usuario->Celular;
         $orden->Email = $usuario->Email;
-        $orden->CodigoEstado = 'V';
+        $orden->CodigoEstado = 'P';
         $orden->TotalOrden = $TotalOrden;
         $orden->FechaCreacion = CommonQueries::GetFechaHoraActual();
         //dd($orden, $orden->save());
@@ -190,6 +206,7 @@ class CarritoController extends Controller
             $detalleO->IdOrden = $idOrden;
             $detalleO->IdProducto = $value['IdProducto'];
             $detalleO->IdProductoTalla = $value['IdProductoTalla'];
+            $detalleO->Talla = $value['Talla'];
             $detalleO->CodigoProducto = $value['CodigoProducto'];
             $detalleO->ProductoPara = $value['ProductoPara'];
             $detalleO->NombreProducto = $value['NombreProducto'];

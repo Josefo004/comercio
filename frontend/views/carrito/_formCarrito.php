@@ -69,6 +69,7 @@ $this->registerJs("
             <?= $form->field($modeloCarrito, 'ProductoPara')->hiddenInput(['value'=> $producto->idCategoriaGenero->Descripcion])->label(false);?>
             <?= $form->field($modeloCarrito, 'NombreProducto')->hiddenInput(['value'=> $producto->NombreProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'Imagen')->hiddenInput(['value'=> $producto->getImageUrl()])->label(false);?>
+            <!-- <?= $form->field($modeloCarrito, 'Imagen')->hiddenInput(['value'=> $producto->Imagen])->label(false);?> -->
             <?= $form->field($modeloCarrito, 'Talla')->hiddenInput(['value'=> ""])->label(false);?>
           </div>
           <div class="col-md-4">

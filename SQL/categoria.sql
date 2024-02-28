@@ -381,10 +381,11 @@ CREATE TABLE dbo.DetalleOrdenes(
 	IdOrden INT NOT NULL,
 	IdProducto INT NOT NULL,
 	IdProductoTalla INT NOT NULL,
+	Talla VARCHAR(100) NOT NULL,
 	CodigoProducto VARCHAR(10) NOT NULL,
 	ProductoPara VARCHAR(100) NOT NULL,
 	NombreProducto VARCHAR(100) NOT NULL,
-	Imagen VARCHAR(2000) NULL,
+	Imagen VARCHAR(2000) NOT NULL,
 	Precio DECIMAL (10, 2) NOT NULL,
 	Cantidad INT NOT NULL,
 	Total DECIMAL (10, 2) NOT NULL,
@@ -592,3 +593,7 @@ SELECT *
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
 WHERE CONSTRAINT_NAME LIKE 'DF__Productos__Codig__2E1BDC42';
 
+--* reiniciar auto numerico
+DBCC CHECKIDENT (Ordenes, RESEED, 0);
+
+DBCC CHECKIDENT (DetalleOrdenes, RESEED, 0);
