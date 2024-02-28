@@ -11,7 +11,7 @@ use yii\base\Model;
 class CarritoForm extends Model
 {
     public $IdProducto;
-    public $Idtalla;            // IdProductoTalla para sacar cantidad segun talla
+    public $IdProductoTalla;            // IdProductoTalla para sacar cantidad segun talla
     public $Talla;
     public $CodigoProducto;
     public $ProductoPara;   
@@ -28,7 +28,7 @@ class CarritoForm extends Model
     public function rules()
     {
         return [
-            [['IdProducto', 'Idtalla', 'Talla', 'CodigoProducto', 'ProductoPara', 'NombreProducto', 'Imagen', 'Precio', 'Cantidad', 'Total'], 'required'],
+            [['IdProducto', 'IdProductoTalla', 'Talla', 'CodigoProducto', 'ProductoPara', 'NombreProducto', 'Imagen', 'Precio', 'Cantidad', 'Total'], 'required'],
             [['Cantidad'], 'number', 'min' => 1, 'max' => 10],
         ];
     }
@@ -36,7 +36,7 @@ class CarritoForm extends Model
     public function attributeLabels()
     {
         return [
-            'Idtalla' => 'Escoger Talla',
+            'IdProductoTalla' => 'Escoger Talla',
             'Cantidad' => 'Cantidad',
         ];
     }

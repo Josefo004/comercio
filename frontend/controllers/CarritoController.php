@@ -80,11 +80,10 @@ class CarritoController extends Controller
 
             // Creamos una Orden 
             $orden = $this->crearOrden($usuario, $modeloOrden->TotalOrden);
-            //dd($orden);
+            
 
             // Detalle de las ordenes
-            // $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
-            $detalleOrd = $this->crearDetallarOrden(1);
+            $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
             dd($detalleOrd);
            
 
@@ -189,7 +188,7 @@ class CarritoController extends Controller
         foreach ($tmpCarrito as $value) {
             $detalleO = new DetalleOrdenes();
             $detalleO->IdOrden = $idOrden;
-            $detalleO->IdProduto = $value['IdProducto'];
+            $detalleO->IdProducto = $value['IdProducto'];
             $detalleO->IdProductoTalla = $value['IdProductoTalla'];
             $detalleO->CodigoProducto = $value['CodigoProducto'];
             $detalleO->ProductoPara = $value['ProductoPara'];
@@ -198,7 +197,7 @@ class CarritoController extends Controller
             $detalleO->Precio = $value['Precio'];
             $detalleO->Cantidad = $value['Cantidad'];
             $detalleO->Total = $value['Total'];
-            $detalleO->FechaRegistro = $value['FechaRegistro'];
+            $detalleO->FechaRegistro = $value['FechaHoraRegistro'];
             if(!$detalleO->save()){$re = false; break;}
         }
         if ($re) { unset($_SESSION['carrito']); }

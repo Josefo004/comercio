@@ -63,7 +63,7 @@ $this->registerJs("
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
           <div class="col-md-7">
-            <?= $form->field($modeloCarrito, 'Idtalla')->radioList($tallas, ['id' => 'tallas-list']) ?>
+            <?= $form->field($modeloCarrito, 'IdProductoTalla')->radioList($tallas, ['id' => 'tallas-list']) ?>
             <?= $form->field($modeloCarrito, 'IdProducto')->hiddenInput(['value'=> $producto->IdProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'CodigoProducto')->hiddenInput(['value'=> $producto->CodigoProducto])->label(false);?>
             <?= $form->field($modeloCarrito, 'ProductoPara')->hiddenInput(['value'=> $producto->idCategoriaGenero->Descripcion])->label(false);?>

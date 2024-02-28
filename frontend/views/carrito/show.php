@@ -11,7 +11,7 @@ $this->title = 'Productos a Ordenar';
 // $this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
 $carrito = Yii::$app->session->get('carrito');
-dd($carrito);
+//dd($carrito);
 $total = array_sum(array_column($carrito, 'Total'));
 $total = number_format($total,2);
 
