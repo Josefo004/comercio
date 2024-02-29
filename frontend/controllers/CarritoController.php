@@ -44,8 +44,9 @@ class CarritoController extends Controller
         $orden = Ordenes::find()
                         ->joinWith('estado')
                         ->joinWith('detallesOrden')
+                        ->joinWith('creador')
                         ->where(['Ordenes.IdOrden' => $idOrden])
-                        ->all();
+                        ->one();
         return $this->render('orden', ['orden' => $orden]);
     }
 
@@ -85,14 +86,14 @@ class CarritoController extends Controller
         if (Yii::$app->session->has('carrito')) {
             $modeloOrden = new OrdenForm();
             if ($this->request->isPost) {
-                return $this->redirect(['ver-orden', 'idOrden' => 1]);
+                //return $this->redirect(['ver-orden', 'idOrden' => 4]);
                 $modeloOrden->load($this->request->post());
                 
                 // recupero el usuario o guardo un nuevo usuario 
                 $usuario = ($modeloOrden->CodigoUsuario!='') ? Usuarios::findIdentity($modeloOrden->CodigoUsuario) : $usuario = $this->crearUsuario($modeloOrden); 
     
                 // Creamos una Orden 
-                $orden = $this->crearOrden($usuario, $modeloOrden->TotalOrden);
+                $orden = $this->crearOrden($usuario, $modeloOrden);
                 
                 // Detalle de las ordenes
                 $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
@@ -181,14 +182,14 @@ class CarritoController extends Controller
         return $user;
     }
 
-    protected function crearOrden($usuario, $TotalOrden=0){
+    protected function crearOrden($usuario, $modeloOrden){
         $orden = new Ordenes();
         $orden->CodigoUsuarioCreacion = $usuario->CodigoUsuario;
-        $orden->NombreCompleto = $usuario->NombreCompleto;
-        $orden->Celular = $usuario->Celular;
-        $orden->Email = $usuario->Email;
+        $orden->NombreCompleto = mb_strtoupper($modeloOrden->NombreCompleto);
+        $orden->Celular = $modeloOrden->Celular;
+        $orden->Email = $modeloOrden->Email;
         $orden->CodigoEstado = 'P';
-        $orden->TotalOrden = $TotalOrden;
+        $orden->TotalOrden = $modeloOrden->TotalOrden;
         $orden->FechaCreacion = CommonQueries::GetFechaHoraActual();
         //dd($orden, $orden->save());
         $orden->save();

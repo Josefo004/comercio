@@ -65,4 +65,15 @@ class Ordenes extends \yii\db\ActiveRecord
     {
       return $this->hasOne(Estados::class, ['CodigoEstado' => 'CodigoEstado']);
     }
+
+    /**
+     * Gets query for [[Usuarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreador()
+    {
+      return $this->hasOne(Usuarios::class, ['CodigoUsuario' => 'CodigoUsuarioCreacion']);
+    }
+
 }
