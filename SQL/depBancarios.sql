@@ -226,16 +226,92 @@ insert into Conceptos(CodigoConcepto, Concepto, Monto, Estado) values(100, 'TITU
 insert into Conceptos(CodigoConcepto, Concepto, Monto, Estado) values(101, 'CARNET UNIVERSITARIO', 50, 1);
 insert into Conceptos(CodigoConcepto, Concepto, Monto, Estado) values(1101, 'PRO CLUB UNIVERSITARIO', 16, 1);
 
+--******
+
 USE Pagos;
-
 DROP TABLE dbo.TipoCuenta;
-
 CREATE TABLE dbo.TipoCuenta(
-	TipoCuenta INT PRIMARY KEY IDENTITY (1, 1),
-	Descripcion VARCHAR(100) NOT NULL,
+  TipoCuenta INT PRIMARY KEY IDENTITY (1, 1),
+  Descripcion VARCHAR(100) NOT NULL,
   Cuenta VARCHAR(50) NULL,
   Banco VARCHAR(100) NULL,
 );
 
-insert into TipoCuenta(TipoCuenta, Descripcion, Cuenta, Banco) values(1, 'FONDOS EN CUSTODIA', '415-554', 'UNION');
-insert into TipoCuenta(TipoCuenta, Descripcion, Cuenta, Banco) values(2, 'RECURSOS PROPIOS', '416-451', 'UNION');
+insert into TipoCuenta(Descripcion, Cuenta, Banco) values('FONDOS EN CUSTODIA', '415-554', 'UNION');
+insert into TipoCuenta(Descripcion, Cuenta, Banco) values('RECURSOS PROPIOS', '416-451', 'UNION');
+
+USE Pagos;
+DROP TABLE dbo.TiposTransaccionesBancarias;
+CREATE TABLE dbo.TiposTransaccionesBancarias(
+  CodigoTipoTransaccion CHAR(1) PRIMARY KEY,
+  Descripcion VARCHAR(50) NOT NULL,
+);
+
+insert into TiposTransaccionesBancarias (CodigoTipoTransaccion, Descripcion) values ('D', 'DEPOSITO');
+insert into TiposTransaccionesBancarias (CodigoTipoTransaccion, Descripcion) values ('Q', 'PAGO QR');
+insert into TiposTransaccionesBancarias (CodigoTipoTransaccion, Descripcion) values ('T', 'TRANSFERENCIA BANCARIA');
+
+USE Pagos;
+DROP TABLE dbo.Personas;
+CREATE TABLE dbo.Personas(
+	IdPersona VARCHAR(15) PRIMARY KEY,
+  Paterno VARCHAR(40) NULL,
+  Materno VARCHAR(40) NULL,
+  Nombres VARCHAR(60) NOT NULL,
+  Email VARCHAR(100) NULL,
+  Telefono VARCHAR(15) NULL,
+  CodigoUsuario CHAR(3) NOT NULL,
+  FechaHoraRegistro DATETIME DEFAULT (getdate()) NOT NULL,
+);
+
+USE Pagos;
+DROP TABLE dbo.Usuarios;
+CREATE TABLE dbo.Usuarios(
+  CodigoUsuario CHAR(3) PRIMARY KEY,
+  IdPersona VARCHAR(15) NOT NULL,
+  Login VARCHAR(20) NOT NULL,
+  Contrasenia VARCHAR(160) NOT NULL,
+  NivelAcceso TINYINT NOT NULL,
+  Llave VARCHAR(32) NOT NULL,
+  CONSTRAINT FK_IdPersona_Usuarios FOREIGN KEY (IdPersona) REFERENCES dbo.Personas(IdPersona),
+);
+
+USE Pagos;
+DROP TABLE dbo.Depositos;
+CREATE TABLE dbo.Depositos(
+	IdDeposito INT PRIMARY KEY IDENTITY (1, 1),
+  NroDocumento VARCHAR(30) NOT NULL,
+  gestion SMALLINT NOT NULL,
+  FechaDepositoBancario DATETIME NOT NULL,
+  TipoCuenta INT NOT NULL,
+  Monto DECIMAL (10, 2) NOT NULL,
+  CodigoEstado CHAR(1) DEFAULT 'V' NOT NULL,
+  Idpersona VARCHAR(15) NOT NULL,
+  CodigoUsuario CHAR(3) NOT NULL,
+  FechaHoraRegistro DATETIME DEFAULT (getdate()) NOT NULL,
+  CodigoTipoTransaccion CHAR(1) NOT NULL,
+  Observaciones VARCHAR(500) NULL,
+  CodigoPago VARCHAR(20) NULL,
+  CostoComision FLOAT NULL,
+  CONSTRAINT FK_TipoCuenta_Depositos FOREIGN KEY (TipoCuenta) REFERENCES dbo.TipoCuenta(TipoCuenta),
+  CONSTRAINT FK_CodigoEstado_Depositos FOREIGN KEY (CodigoEstado) REFERENCES dbo.Estados(CodigoEstado),
+  CONSTRAINT FK_CodigoUsuario_Depositos FOREIGN KEY (CodigoUsuario) REFERENCES dbo.Usuarios(CodigoUsuario),
+  CONSTRAINT FK_IdPersona_Depositos FOREIGN KEY (IdPersona) REFERENCES dbo.Personas(IdPersona),
+  CONSTRAINT FK_CodigoTipoTransaccion_Depositos FOREIGN KEY (CodigoTipoTransaccion) REFERENCES dbo.TiposTransaccionesBancarias(CodigoTipoTransaccion),
+);
+
+USE Pagos;
+ALTER TABLE dbo.PagosQr
+  ADD CodigoTipoTransaccion CHAR(1) NULL;
+
+USE Pagos;
+ALTER TABLE dbo.Personas
+  DROP COLUMN CodigoUsuario;
+
+ALTER TABLE dbo.Depositos
+  ALTER COLUMN CodigoPago VARCHAR(20) NULL;
+
+ALTER TABLE dbo.Depositos
+  ADD CONSTRAINT FK_CodigoPago_Depositos FOREIGN KEY (CodigoPago) REFERENCES dbo.PagosQr(CodigoPago);
+
+
