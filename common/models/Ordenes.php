@@ -42,6 +42,7 @@ class Ordenes extends \yii\db\ActiveRecord
         [['CodigoEstado', 'TotalOrden', 'CodigoUsuarioCreacion', 'FechaCreacion'], 'required'],
         [['Observacion'], 'string', 'max' => 500],
         [['FechaCreacion', 'FechaActualizacion'], 'safe'],
+        [['CodigoQR'], 'string'],
         // ['NombreProducto'], 'string', 'max' => 255],
       ];
     }

@@ -315,3 +315,13 @@ ALTER TABLE dbo.Depositos
   ADD CONSTRAINT FK_CodigoPago_Depositos FOREIGN KEY (CodigoPago) REFERENCES dbo.PagosQr(CodigoPago);
 
 
+
+
+USE Pagos;
+DROP TABLE dbo.Comision;
+CREATE TABLE dbo.Comision(
+	IdComision INT PRIMARY KEY IDENTITY (1, 1),
+  FechaHoraRegistro DATETIME DEFAULT (getdate()) NOT NULL,
+  CostoComision FLOAT NULL,
+);
+

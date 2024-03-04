@@ -15,6 +15,18 @@ return [
                     ")->execute();
             }
         ],
+        'db2' => [ // Segunda conexión a otra base de datos
+            'class' => 'yii\db\Connection',
+            'dsn' => 'sqlsrv:Server=172.16.1.250;Database=Pagos;Encrypt=0;TrustServerCertificate=1',
+            'username' => 'usrwebdj01',
+            'password' => 'masterkey',
+            'charset' => 'utf8',
+            'on afterOpen' => function($event) {
+                $event->sender->createCommand("SET DATEFORMAT DMY
+                    SET LANGUAGE spanish
+                ")->execute();
+            }
+        ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@common/mail',

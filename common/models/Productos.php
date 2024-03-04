@@ -30,9 +30,6 @@ use Yii;
  *
  * @property Usuarios $codigoUsuarioActualizacion
  * @property Usuarios $codigoUsuarioCreacion
- * @property DetalleProducto[] $detalleProductos
- * @property Ordenes[] $idOrdens
- * @property ProductosOrdenados[] $productosOrdenados
  */
 
 class Productos extends \yii\db\ActiveRecord

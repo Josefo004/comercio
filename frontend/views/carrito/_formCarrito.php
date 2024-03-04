@@ -78,8 +78,6 @@ $this->registerJs("
                 echo Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]);
               }
             ?>
-            <!-- <?= Html::button('Guia de Tallas', ['id' => 'modalButton', 'class' => 'btn btn-info', 'onclick' => "$('#myModal').modal('show')" ]) ?> -->
-            <!-- <?= Html::button('Abrir Modal', ['class' => 'btn btn-primary', 'id' => 'btn-abrir-modal', 'onclick' => "$('#myModalDerecha').modal('show')"]) ?> -->
           </div>
         </div>
         <div class="row">
@@ -217,43 +215,5 @@ $dataProvider = new ArrayDataProvider([
     <!-- Puedes agregar más botones aquí si lo deseas -->
 </div>
 
-<?php Modal::end(); ?>
-
-<?php
-Modal::begin([
-    // 'title' => 'Modal a la Derecha',
-    'id' => 'myModalDerecha',
-    'closeButton' => false,
-    'size' => 'md',
-    'bodyOptions' => ['class' => 'modal-body'],
-    'options' => ['class' => 'modal modal-right'],
-]);
-?>
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-md-6">
-          <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'summary' => '',
-            'showFooter' => false,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'Talla',
-                'Pecho-Axila',
-                'Largo',
-                'Espalda-Hombro',
-            ],
-            'options' => [
-              'class' => 'table-sm',
-            ],
-          ]); 
-          ?>
-        </div>
-        <div class="col-md-6">
-          <img src="<?= $urlimg ?>" class="img-fluid rounded" alt="guia de tallas">
-        </div>
-      </div>
-
-    </div>
 <?php Modal::end(); ?>
 

@@ -597,3 +597,9 @@ WHERE CONSTRAINT_NAME LIKE 'DF__Productos__Codig__2E1BDC42';
 DBCC CHECKIDENT (Ordenes, RESEED, 0);
 
 DBCC CHECKIDENT (DetalleOrdenes, RESEED, 0);
+
+--** Modificando Ordenes
+use Ecommerce;
+
+ALTER TABLE dbo.Ordenes
+  ALTER COLUMN CodigoQr NVARCHAR(MAX) null;

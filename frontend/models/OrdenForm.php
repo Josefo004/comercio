@@ -16,6 +16,7 @@ class OrdenForm extends Model
     public $NombreCompleto;     // Nombre del solicitante del o de los articulos
     public $CodigoUsuario;      // Usuario
     public $TotalOrden;         // Total de la Orden
+    public $Confirmar;         // Total de la Orden
 
     /**
      * {@inheritdoc}
@@ -23,8 +24,9 @@ class OrdenForm extends Model
     public function rules()
     {
         return [
-            [['IdPersona', 'Email', 'NombreCompleto', 'Celular', 'TotalOrden'], 'required'],
+            [['IdPersona', 'Email', 'NombreCompleto', 'Celular', 'TotalOrden', 'Confirmar'], 'required'],
             [['Email'], 'email'],
+            [['Confirmar'], 'boolean'],
             [['Celular', 'NombreCompleto', 'CodigoUsuario'], 'string'],
             [['TotalOrden'], 'number'],
             [['IdPersona'], 'string', 'min' => 6],
@@ -38,6 +40,7 @@ class OrdenForm extends Model
             'Email' => 'Correo Electrónico',
             'Celular' => 'Celular',
             'NombreCompleto' => 'Nombre completo',
+            'Confirmar' => 'Comisión Transacción 0.50 ctvs.'
         ];
     }
 
