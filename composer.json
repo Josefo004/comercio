@@ -21,7 +21,8 @@
         "yiisoft/yii2-bootstrap4": "^2.0",
         "fedemotta/yii2-widget-datatables": "*",
         "2amigos/yii2-ckeditor-widget": "*",
-        "yiisoft/yii2-jui": "^2.0"
+        "yiisoft/yii2-jui": "^2.0",
+        "yiisoft/yii2-httpclient": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

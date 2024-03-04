@@ -1,0 +1,21 @@
+GET http://localhost:3000/posts
+
+###
+POST http://172.16.1.251/pagos/pagos-qr/obtener-qr
+Content-Type: application/json
+
+{
+  "datos":
+  {
+    "monto":10,
+    "referencia":"pagoOrden-004-3651163",
+    "codigoPago":"VEN-004-3651163",
+    "nombreCompleto":"JOSE MENDOZA VARGAS",
+    "item":{
+      "idOrden":"003",
+      "nroComprobante":0,
+      "fechaPago":"2024-03-01",
+      "FechaLimiteAtencion":"07/03/2024"
+    }
+  }
+}
