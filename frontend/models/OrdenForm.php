@@ -40,7 +40,7 @@ class OrdenForm extends Model
             'Email' => 'Correo Electrónico',
             'Celular' => 'Celular',
             'NombreCompleto' => 'Nombre completo',
-            'Confirmar' => 'Comisión Transacción 0.50 ctvs.'
+            'Confirmar' => 'Comisión'
         ];
     }
 

@@ -10,6 +10,30 @@ use common\models\Ordenes;
 
 class ApiController extends Controller
 {
+
+  public static function getUltimaComision()
+  {
+    $apiUrl = 'http://172.16.1.251/consultasapi/v0/comision';
+    $client = new Client();
+    $response = $client->createRequest()
+      ->setMethod('GET')
+      ->setUrl($apiUrl)
+      ->send();
+
+    // Verificar si la solicitud fue exitosa (código de estado 200)
+    if ($response->isOk) {
+      // Decodificar la respuesta JSON
+      $data = $response->data['comision']['CostoComision'];
+      // dd($data);
+      return $data;
+    } else {
+      return [];
+      Yii::error('Error al consumir el servicio REST: ' . $response->statusCode);
+      // Por ejemplo, mostrar un mensaje de error
+      throw new \yii\web\HttpException($response->statusCode, 'Error al consumir el servicio REST');
+    }
+  }
+
   public function actionConsumeApi()
   {
     // URL del servicio REST que deseas consumir
@@ -40,15 +64,50 @@ class ApiController extends Controller
     }
   }
 
-  public function actionObtenerQr($IdOrden)
+  public static function obtenerQr($IdOrden)
   {
+
+    function crearSolicitudQr($ord) {
+      //dd($ord);
+      $code = completarCeros($ord->IdOrden);
+      $cod2 = $code.'-'.$ord->creador->IdPersona;
+      $fecha = date('Y-m-d', strtotime($ord->FechaCreacion));
+      $fecha2 = new \DateTime($fecha); 
+      $fecha2->modify('+2 days');
+      $fecha2 = $fecha2->format('d/m/Y');
+      $re = [
+        'datos' => [
+          'monto' => $ord->TotalOrden,
+          'referencia' => 'pagoOrden'.$cod2,
+          'codigoPago' => 'VEN-'.$cod2,
+          'nombreCompleto' => $ord->NombreCompleto,
+          'item' => [
+            'idOrden' => $code,
+            'nroComprobante' => '0',
+            'fechaPago' => $fecha,
+            'FechaLimiteAtencion' => $fecha2
+          ],
+        ]
+      ];
+  
+      return $re;
+    }
+  
+    function completarCeros($nu) {
+      $ta = strval($nu); //texto auxiliar
+      $lg = strlen($ta);
+      $cc = '0';
+      for ($i=1; strlen($cc.$ta) < 4  ; $i++) { $cc .= '0'; }
+      return $cc.$ta;
+    }
+
     $orden = Ordenes::find()
           ->joinWith('creador')
           ->where(['Ordenes.IdOrden' => $IdOrden])
           ->one();
     //dd($orden);
 
-    $solQr = $this->crearSolicitudQr( $orden );
+    $solQr = crearSolicitudQr( $orden );
     //dd($solQr);
     // URL del servicio REST que deseas consumir
     $apiUrl = 'http://172.16.1.251/pagos/pagos-qr/obtener-qr';
@@ -68,47 +127,14 @@ class ApiController extends Controller
     if ($response->isOk) {
       // Capturar la respuesta del servicio
       $responseData = $response->getData(); // Obtiene la respuesta en formato de array
-      dd($responseData);
+      return $responseData;
     }
     else{
       // Si la solicitud no fue exitosa, manejar el error apropiadamente
       Yii::error('Error al enviar datos al servicio REST: ' . $response->statusCode);
+      dd($response->statusCode);
       // Por ejemplo, mostrar un mensaje de error
       throw new \yii\web\HttpException($response->statusCode, 'Error al enviar datos al servicio REST');
     }
-  }
-
-  protected function crearSolicitudQr($ord) {
-    //dd($ord);
-    $code = $this->completarCeros($ord->IdOrden);
-    $cod2 = $code.'-'.$ord->creador->IdPersona;
-    $fecha = date('Y-m-d', strtotime($ord->FechaCreacion));
-    $fecha2 = new \DateTime($fecha); 
-    $fecha2->modify('+2 days');
-    $fecha2 = $fecha2->format('d/m/Y');
-    $re = [
-      'datos' => [
-        'monto' => $ord->TotalOrden,
-        'referencia' => 'pagoOrden'.$cod2,
-        'codigoPago' => 'VEN'.$cod2,
-        'nombreCompleto' => $ord->NombreCompleto,
-        'item' => [
-          'idOrden' => $code,
-          'nroComprobante' => '0',
-          'fechaPago' => $fecha,
-          'FechaLimiteAtencion' => $fecha2
-        ],
-      ]
-    ];
-
-    return $re;
-  }
-
-  protected function completarCeros($nu) {
-    $ta = strval($nu); //texto auxiliar
-    $lg = strlen($ta);
-    $cc = '0';
-    for ($i=1; $lg + 3 > $i  ; $i++) { $cc .= '0'; }
-    return '-'.$cc.$ta;
   }
 }

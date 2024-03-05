@@ -8,6 +8,17 @@ use yii\grid\GridView;
 
 $this->title = 'Orden Realizada';
 // dd($orden)
+$imagenBase64 = $orden->CodigoQR;
+
+$pos = strpos($imagenBase64, ';base64,');
+if ($pos !== false) {
+    $imagenBase64 = substr($imagenBase64, $pos + strlen(';base64,'));
+}
+
+$nroOrden = 'Orden-'.$orden->IdOrden;
+$imagenBinaria = base64_decode($imagenBase64);
+// $kk = base64_encode($imagenBinaria);
+// dd($imagenBase64, $imagenBinaria, $kk);
 ?>
 <div>
     <div class="card mb-3">
@@ -95,13 +106,23 @@ $this->title = 'Orden Realizada';
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
-                            <strong>QR</strong>
+                            <strong>QR de Pago</strong>
                         </div>
                         <div class="card-body">
-                            <img class="card-img-top" src="..." alt="Card image QR">
+                            <picture>
+                                <?php
+                                // Paso 3: Generar la etiqueta HTML de la imagen
+                                $imagenHtml = '<img src="data:image/png;base64,' . base64_encode($imagenBinaria) . '" class="img-fluid" alt="Codigo QR">';
+                                $enlaceDescarga = '<a class="btn btn-info btn-sm float-right" href="data:image/png;base64,' . base64_encode($imagenBinaria) . '" download="'.$nroOrden.'">Descargar QR</a>';
+                                // Muestra la imagen HTML en tu vista
+                                echo $imagenHtml;
+                                echo $enlaceDescarga;
+                                ?>
+                            </picture>
+                            <!-- <img class="card-img-top" src="..." alt="Card image QR"> -->
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><h5><strong>TOTAL</strong> <small><?= $orden->TotalOrden ?> Bs.</small></h5></li>
+                            <li class="list-group-item"><h4><strong>TOTAL</strong> <small><?= $orden->TotalOrden ?> Bs.</small></h4></li>
                         </ul>
                     </div>
                 </div>

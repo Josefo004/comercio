@@ -9,13 +9,13 @@ Content-Type: application/json
   {
     "monto":101,
     "referencia":"pagoOrden-018-3651163",
-    "codigoPago":"VEN-018-3651163",
+    "codigoPago":"VEN-019-3651163",
     "nombreCompleto":"JOSE MENDOZA VARGAS",
     "item":{
       "idOrden":"018",
       "nroComprobante":0,
-      "fechaPago":"2024-03-04",
-      "FechaLimiteAtencion":"06/03/2024"
+      "fechaPago":"2024-03-05",
+      "FechaLimiteAtencion":"07/03/2024"
     }
   }
 }

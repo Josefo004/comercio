@@ -16,6 +16,9 @@ $carrito = Yii::$app->session->get('carrito');
 $total = array_sum(array_column($carrito, 'Total'));
 $total = number_format($total, 2);
 
+$comi = number_format($comision,2) ;
+//dd($comi);
+
 $script = <<<JS
 $(document).ready(function() {
     $('#ordenform-idpersona').on('change', function() {
@@ -76,7 +79,7 @@ $this->registerJs($script);
 							<div class="row">
 								<div class="col-12">
 									<?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['style' => 'text-transform: uppercase', 'class' => 'form-control form-control-sm', 'autocomplete' => 'off']) ?>
-									<?= $form->field($modeloOrden, 'Confirmar')->checkbox(['checked' => false,'uncheck' => null]) ?>
+									<?= $form->field($modeloOrden, 'Confirmar')->checkbox(['checked' => false,'uncheck' => null])->label("Comisión $comi Bs.");?> 
 									<?= $form->field($modeloOrden, 'CodigoUsuario')->hiddenInput()->label(false) ?>
 									<?= $form->field($modeloOrden, 'TotalOrden')->hiddenInput(['value' => $total])->label(false) ?>
 								</div>
@@ -100,7 +103,7 @@ $this->registerJs($script);
 													<?= $form->field($modeloOrden, 'Confirmar')->checkbox([
 														'checked' => false,
 														'uncheck' => null,
-													]); ?>
+													]); ?> <?= $comi; ?>
 												</div>
 												
 											</div>

@@ -88,10 +88,12 @@ class CarritoController extends Controller
   public function actionShow()
   {
     if (Yii::$app->session->has('carrito')) {
+      //return $this->redirect(['ver-orden', 'idOrden' => 20]);
       $modeloOrden = new OrdenForm();
+      $comision = ApiController::getUltimaComision();
       if ($this->request->isPost) {
         //return $this->redirect(['api/consume-api']);
-        //return $this->redirect(['ver-orden', 'idOrden' => 4]);
+        // return $this->redirect(['ver-orden', 'idOrden' => 20]);
         $modeloOrden->load($this->request->post());
 
         // recupero el usuario o guardo un nuevo usuario 
@@ -109,14 +111,17 @@ class CarritoController extends Controller
 
         if ($detalleOrd) {
           //Mandamos la Orden a la API para crear el QR
-          return $this->redirect(['api/obtener-qr', 'IdOrden' => $orden->IdOrden]);
+          $codQr = ApiController::obtenerQr($orden->IdOrden);
+          // return $this->redirect(['api/obtener-qr', 'IdOrden' => $orden->IdOrden]);
+          $orden->CodigoQR = $codQr['imagen'];
+          $orden->save();
         }
 
-
-        //return $this->redirect(['ver-orden', 'idOrden' => $orden->IdOrden]);
+        return $this->redirect(['ver-orden', 'idOrden' => $orden->IdOrden]);
       }
       return $this->render('show', [
         'modeloOrden' => $modeloOrden,
+        'comision' => $comision
       ]);
     } else {
       return $this->redirect(['site/index']);
@@ -200,14 +205,16 @@ class CarritoController extends Controller
 
   protected function crearOrden($usuario, $modeloOrden)
   {
+    $comision = ApiController::getUltimaComision();
     $orden = new Ordenes();
     $orden->CodigoUsuarioCreacion = $usuario->CodigoUsuario;
     $orden->NombreCompleto = mb_strtoupper($modeloOrden->NombreCompleto);
     $orden->Celular = $modeloOrden->Celular;
     $orden->Email = $modeloOrden->Email;
     $orden->CodigoEstado = 'P';
-    $orden->TotalOrden = $modeloOrden->TotalOrden;
+    $orden->TotalOrden = strval($modeloOrden->TotalOrden) + strval($comision);
     $orden->FechaCreacion = CommonQueries::GetFechaHoraActual();
+    $orden->CostoComision = $comision;
     //dd($orden, $orden->save());
     $orden->save();
     //$errors = $orden->getErrors();
