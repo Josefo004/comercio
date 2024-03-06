@@ -78,7 +78,7 @@ class ApiController extends Controller
       $re = [
         'datos' => [
           'monto' => $ord->TotalOrden,
-          'referencia' => 'pagoOrden'.$cod2,
+          'referencia' => 'pagoOrden-'.$cod2,
           'codigoPago' => 'VEN-'.$cod2,
           'nombreCompleto' => $ord->NombreCompleto,
           'item' => [
