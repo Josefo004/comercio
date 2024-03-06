@@ -9,8 +9,7 @@ use yii\bootstrap5\Modal;
 /** @var common\models\Productos $model */
 
 $this->title = 'Productos a Ordenar';
-// $this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
-// $this->params['breadcrumbs'][] = $this->title;
+
 $carrito = Yii::$app->session->get('carrito');
 //dd($carrito);
 $total = array_sum(array_column($carrito, 'Total'));

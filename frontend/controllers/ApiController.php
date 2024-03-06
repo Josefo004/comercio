@@ -97,7 +97,7 @@ class ApiController extends Controller
       $ta = strval($nu); //texto auxiliar
       $lg = strlen($ta);
       $cc = '0';
-      for ($i=1; strlen($cc.$ta) < 4  ; $i++) { $cc .= '0'; }
+      for ($i=1; strlen($cc.$ta) < 5  ; $i++) { $cc .= '0'; }
       return $cc.$ta;
     }
 

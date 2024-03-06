@@ -88,12 +88,12 @@ class CarritoController extends Controller
   public function actionShow()
   {
     if (Yii::$app->session->has('carrito')) {
-      //return $this->redirect(['ver-orden', 'idOrden' => 20]);
+      // return $this->render('errorqr');
+      // return $this->redirect(['ver-orden', 'idOrden' => 25]);
       $modeloOrden = new OrdenForm();
       $comision = ApiController::getUltimaComision();
       if ($this->request->isPost) {
-        //return $this->redirect(['api/consume-api']);
-        // return $this->redirect(['ver-orden', 'idOrden' => 20]);
+        // Cargamos modeloOrden con datos del formulario
         $modeloOrden->load($this->request->post());
 
         // recupero el usuario o guardo un nuevo usuario 
@@ -101,21 +101,24 @@ class CarritoController extends Controller
 
         // Creamos una Orden 
         $orden = $this->crearOrden($usuario, $modeloOrden);
-                
-        // dd($solQr);
-        // return $this->redirect(['api/obtener-qr', 'IdOrden' => 2]);
+
+        //Mandamos la Orden a la API para crear el QR
+        $codQr = ApiController::obtenerQr($orden->IdOrden);
+
+        if (!isset($codQr['imagen'])) {
+          return $this->render('errorqr');
+        }
 
         // Detalle de las ordenes
         $detalleOrd = $this->crearDetallarOrden($orden->IdOrden);
         // dd($detalleOrd);
 
-        if ($detalleOrd) {
-          //Mandamos la Orden a la API para crear el QR
-          $codQr = ApiController::obtenerQr($orden->IdOrden);
-          // return $this->redirect(['api/obtener-qr', 'IdOrden' => $orden->IdOrden]);
-          $orden->CodigoQR = $codQr['imagen'];
-          $orden->save();
+        if (!$detalleOrd) {
+          return $this->render('errorqr');
         }
+        $orden->CodigoQR = $codQr['imagen'];
+        $orden->CodigoEstado = 'P';
+        $orden->save();
 
         return $this->redirect(['ver-orden', 'idOrden' => $orden->IdOrden]);
       }
@@ -211,7 +214,7 @@ class CarritoController extends Controller
     $orden->NombreCompleto = mb_strtoupper($modeloOrden->NombreCompleto);
     $orden->Celular = $modeloOrden->Celular;
     $orden->Email = $modeloOrden->Email;
-    $orden->CodigoEstado = 'P';
+    $orden->CodigoEstado = 'X';
     $orden->TotalOrden = strval($modeloOrden->TotalOrden) + strval($comision);
     $orden->FechaCreacion = CommonQueries::GetFechaHoraActual();
     $orden->CostoComision = $comision;
