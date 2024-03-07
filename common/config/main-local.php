@@ -28,16 +28,16 @@ return [
             }
         ],
         'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
-            'viewPath' => '@common/mail',
-            'useFileTransport' => false,
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mail',
+            'useFileTransport' => false, // Cambiar a false para enviar correos reales
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com',
-                'username' => 'soporte.academica@usfx.bo',
-                'password' => 'Usfx/123456',
-                'port' => '587',
-                'encryption' => 'tls',
+                'host' => 'smtp.gmail.com', // Configurar el servidor SMTP
+                'username' => 'ventas@usfx.bo',
+                'password' => 'S3l3ct2k24.',
+                'port' => '587', // Puerto SMTP
+                'encryption' => 'tls', // Tipo de cifrado (tls o ssl)
             ],
         ],
         // 'mailer' => [
