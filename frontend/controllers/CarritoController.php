@@ -105,7 +105,7 @@ class CarritoController extends Controller
         //Mandamos la Orden a la API para crear el QR
         $codQr = ApiController::obtenerQr($orden->IdOrden);
 
-        if (!isset($codQr['imagen'])) {
+        if (!isset($codQr['resposeData']['imagen'])) {
           return $this->render('errorqr');
         }
 
@@ -116,7 +116,8 @@ class CarritoController extends Controller
         if (!$detalleOrd) {
           return $this->render('errorqr');
         }
-        $orden->CodigoQR = $codQr['imagen'];
+        $orden->CodigoQR = $codQr['resposeData']['imagen'];
+        $orden->CodigoPago = $codQr['solQr']['datos']['codigoPago'];
         $orden->CodigoEstado = 'P';
         $orden->save();
 

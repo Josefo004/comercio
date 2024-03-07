@@ -7,8 +7,8 @@ Content-Type: application/json
 {
   "datos":
   {
-    "monto":101,
-    "referencia":"pagoOrden-018-3651163",
+    "monto":101.5,
+    "referencia":"pagoOrden-018A-3651163",
     "codigoPago":"VEN-019-3651163",
     "nombreCompleto":"JOSE MENDOZA VARGAS",
     "item":{
@@ -17,8 +17,42 @@ Content-Type: application/json
       "fechaPago":"2024-03-05",
       "FechaLimiteAtencion":"07/03/2024"
     }
+    "detallePagos":{
+      "cuentas":[
+        {
+          "monto": 101,
+          "cuenta": "415-554"
+        },
+        {
+          "monto": 0.5,
+          "cuenta": "416-451"
+        }
+      ]
+    }
   }
 }
+
+###
+POST http://172.16.1.251/pagos/pagos-qr/obtener-qr
+Content-Type: application/json
+
+{
+  "datos":
+  {
+    "monto":101.5,
+    "referencia":"pagoOrden-018A-3651163",
+    "codigoPago":"VEN-018A-3651163",
+    "nombreCompleto":"JOSE MENDOZA VARGAS",
+    "item":{
+      "idOrden":"018A",
+      "nroComprobante":0,
+      "fechaPago":"2024-03-05",
+      "FechaLimiteAtencion":"07/03/2024"
+    }
+  }
+}
+
+
 
 ###
 http://172.16.1.251/consultasapi/v0/recepcion?codigoPago=123&nroDocumento=123&fechaPago=2024-03-01

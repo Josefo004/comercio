@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $Email
  * @property string|null $Celular
  * @property float $CostoComision
+ * @property float $CodigoPago
  * 
  * 
  */
@@ -43,7 +44,7 @@ class Ordenes extends \yii\db\ActiveRecord
         [['CodigoEstado', 'TotalOrden', 'CodigoUsuarioCreacion', 'FechaCreacion', 'CostoComision'], 'required'],
         [['Observacion'], 'string', 'max' => 500],
         [['FechaCreacion', 'FechaActualizacion'], 'safe'],
-        [['CodigoQR'], 'string'],
+        [['CodigoQR', 'CodigoPago'], 'string'],
         // ['NombreProducto'], 'string', 'max' => 255],
       ];
     }

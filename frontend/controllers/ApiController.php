@@ -127,7 +127,7 @@ class ApiController extends Controller
     if ($response->isOk) {
       // Capturar la respuesta del servicio
       $responseData = $response->getData(); // Obtiene la respuesta en formato de array
-      return $responseData;
+      return ['resposeData' => $responseData, 'solQr' => $solQr];
     }
     else{
       // Si la solicitud no fue exitosa, manejar el error apropiadamente
