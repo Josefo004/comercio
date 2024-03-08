@@ -139,6 +139,9 @@ $imagenBinaria = base64_decode($imagenBase64);
                 </div>
             </div>
         </div>
+        <div class="card-footer">
+        <?= Html::a('Imprimir Comprobante', ['pdf/pdf'], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
+        </div>
     </div>
     
 

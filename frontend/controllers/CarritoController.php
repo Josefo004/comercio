@@ -89,7 +89,7 @@ class CarritoController extends Controller
   {
     if (Yii::$app->session->has('carrito')) {
       // return $this->render('errorqr');
-      // return $this->redirect(['ver-orden', 'idOrden' => 25]);
+      return $this->redirect(['ver-orden', 'idOrden' => 20]);
       $modeloOrden = new OrdenForm();
       $comision = ApiController::getUltimaComision();
       if ($this->request->isPost) {
