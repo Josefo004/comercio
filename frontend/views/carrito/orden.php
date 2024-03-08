@@ -109,6 +109,14 @@ $imagenBinaria = base64_decode($imagenBase64);
                             <strong>QR de Pago</strong>
                         </div>
                         <div class="card-body">
+                            <?php
+                            if ($orden->CodigoEstado !== 'P') {
+                            ?>
+                            <h5><strong>¡ GRACIAS POR SU COMPRA !</strong></h5>
+                            <?php
+                            }
+                            else {
+                            ?>
                             <picture>
                                 <?php
                                 // Paso 3: Generar la etiqueta HTML de la imagen
@@ -119,6 +127,9 @@ $imagenBinaria = base64_decode($imagenBase64);
                                 echo $enlaceDescarga;
                                 ?>
                             </picture>
+                            <?php
+                            }
+                            ?>
                             <!-- <img class="card-img-top" src="..." alt="Card image QR"> -->
                         </div>
                         <ul class="list-group list-group-flush">
