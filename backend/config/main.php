@@ -8,8 +8,8 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'language' => 'es',
     'name' => 'USFX Shop BACK',
+    'language' => 'es',
     'sourceLanguage' => 'en',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',

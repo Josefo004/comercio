@@ -26,8 +26,8 @@ $imagenBinaria = base64_decode($imagenBase64);
             <fieldset disabled>
                 <div class="row mb-3">
                     <div class="col-md-2">
-                        <label class="form-label"><strong>Nro. de Orden</strong></label>
-                        <input type="text" class="form-control form-control-sm" value="<?= $orden->IdOrden ?>">
+                        <label class="form-label"><strong>Código Comercio</strong></label>
+                        <input type="text" class="form-control form-control-sm" value="<?= $orden->CodigoPago ?>">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label"><strong>Nombre Completo</strong></label>
@@ -109,15 +109,15 @@ $imagenBinaria = base64_decode($imagenBase64);
                             <strong>QR de Pago</strong>
                         </div>
                         <div class="card-body">
+                            <picture>
                             <?php
-                            if ($orden->CodigoEstado !== 'P') {
+                            if ($orden->CodigoEstado === 'A') {
                             ?>
-                            <h5><strong>¡ GRACIAS POR SU COMPRA !</strong></h5>
+                            <?= Html::img('img/gracias.png');?>
                             <?php
                             }
                             else {
                             ?>
-                            <picture>
                                 <?php
                                 // Paso 3: Generar la etiqueta HTML de la imagen
                                 $imagenHtml = '<img src="data:image/png;base64,' . base64_encode($imagenBinaria) . '" class="img-fluid" alt="Codigo QR">';
@@ -126,10 +126,10 @@ $imagenBinaria = base64_decode($imagenBase64);
                                 echo $imagenHtml;
                                 echo $enlaceDescarga;
                                 ?>
-                            </picture>
                             <?php
                             }
                             ?>
+                            </picture>
                             <!-- <img class="card-img-top" src="..." alt="Card image QR"> -->
                         </div>
                         <ul class="list-group list-group-flush">
@@ -140,7 +140,7 @@ $imagenBinaria = base64_decode($imagenBase64);
             </div>
         </div>
         <div class="card-footer">
-        <?= Html::a('Imprimir Comprobante', ['pdf/pdf'], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
+        <?= Html::a('Imprimir Comprobante', ['pdf/comprobante', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
         </div>
     </div>
     

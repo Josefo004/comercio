@@ -1,9 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Ordenes;
 use common\components\fpdf\FPDF;
-use Yii;
 use yii\web\Controller;
+
+date_default_timezone_set('America/La_Paz');
 
 class PDF_MC_Table extends FPDF
 {
@@ -113,10 +115,31 @@ class PDF_MC_Table extends FPDF
 
 class PDF extends PDF_MC_Table
 {
-    private $empresa;
-    private $requerimiento;
+    private $orden;
     private $usuario;
     private $fecha_hora;
+
+    function inicio(object $ord, string $feho=null){
+        $this->orden = $ord;
+        $this->usuario = $ord->creador->Login;
+        $this->fecha_hora = $feho;
+    }
+
+    function imagenQr ($orden, $y){
+        if ($orden->CodigoEstado === 'A') {
+            $this->Image('img/gracias.png', 170, $y, 37, 37);
+        } 
+        else{
+            $imagenBase64 = $orden->CodigoQR;
+            $pos = strpos($imagenBase64, ';base64,');
+            if ($pos !== false) {
+                $imagenBase64 = substr($imagenBase64, $pos + strlen(';base64,'));
+            }
+            $imagenBinaria = base64_decode($imagenBase64);
+            $img2 = 'data:image/png;base64,'.base64_encode($imagenBinaria);
+            $this->Image($img2, 165, $y, 45, 45, 'png');
+        }
+    }
 
     function celda($w1,$w2,$txt1,$txt2){
         $t1=utf8_decode ($txt1);
@@ -147,12 +170,12 @@ class PDF extends PDF_MC_Table
         // Logo
         $this->Image('img/escudo.png',10,5,17);
         // Arial bold 15
-        $this->SetFont('Arial','B',7);
+        $this->SetFont('Arial','B',5);
         // Movernos a la derecha
         $this->Cell(17);
-        $this->Cell(100,4, utf8_decode ('UNIVERSIDAD MAYOR REAL Y PONTIFICIA DE'),0,1,'L');
+        $this->Cell(100,4, utf8_decode ('UNIVERSIDAD MAYOR REAL Y PONTIFICIA DE SAN FRANCISCO'),0,1,'L');
         $this->Cell(17);
-        $this->Cell(100,4, utf8_decode ('SAN FRANCISCO XAVIER DE CHUQUISACA'),0,1,'L');
+        $this->Cell(100,4, utf8_decode ('XAVIER DE CHUQUISACA'),0,1,'L');
 
         // Salto de línea
         $title = "COMPROBANTE";
@@ -168,34 +191,35 @@ class PDF extends PDF_MC_Table
         //$this->SetLineWidth(0);
         // Título
         $this->Cell($w,9,$title,1,1,'C',true);
-        $this->Ln(4);
+        $this->Ln(5);
         // $this->cabecera($cas);
         // Salto de línea
-        $this->celda(25,18,'NRO. DE ORDEN', '');
-        $this->celda(32,60,'NOMBRE COMPLETO', '');
-        $this->celda(20,40,'CELULAR', '');
-        $this->Ln();
-        $this->celda(18,45,'EMAIL', '');
-        $this->celda(20,60,'USUARIO', '');
-        $this->celda(20,32,'F. SOLICITUD', '');
-        $this->Ln();
-        $this->celda(18,55,'ESTADO', '');
+        $this->celda(28,32,'CODIGO COMERCIO', $this->orden->CodigoPago);
+        $this->celda(32,63,'NOMBRE COMPLETO', $this->orden->NombreCompleto);
+        $this->celda(18,22,'CELULAR', $this->orden->Celular);
         $this->Ln();
         $this->Ln(1);
+        $this->celda(10,55,'EMAIL', $this->orden->Email);
+        $this->celda(15,60,'USUARIO', $this->orden->creador->NombreCompleto);
+        $this->celda(13,42,'ESTADO', strtoupper($this->orden->estado->Descripcion));
+        $this->Ln();
+        $this->Ln(1);
+        $FechaSolicitud = date('d-m-Y H:i', strtotime($this->orden->FechaCreacion));
+        $this->celda(30,37,'FFECHA SOLICITUD', $FechaSolicitud);
+        $this->celda(25,20,'COMISION', $this->orden->CostoComision);
+        $this->celda(25,20,'TOTAL ORDEN', $this->orden->TotalOrden);
+        $this->Ln();
+        $this->Ln(3);
 
-
-        $this->cabecera(10,'ID FRM.');
-        $this->cabecera(20,'CARNET');
-        $this->cabecera(40,'NOMBRE COMPLETO');
-        $this->cabecera(17,'SEXO');
-        $this->cabecera(18,'FECH. NAC.');
-        $this->cabecera(10,'EDAD');
-        $this->cabecera(15,'CELULAR');
-        $this->cabecera(25,'MUNICIPIO');
-        $this->cabecera(30,'NIV. ACADÉMICO');
-        $this->cabecera(20,'IDIOMAS');
-        $this->cabecera(37,'PROFESIONES');
-        $this->cabecera(18,'FECH. REG.');
+        $this->cabecera(10,'Nro.');
+        $this->cabecera(20,'Código');
+        $this->cabecera(38,'Talla');
+        $this->cabecera(20,'Para');
+        $this->cabecera(56,'Producto');
+        $this->cabecera(17,'Precio');
+        $this->cabecera(17,'Cantidad');
+        $this->cabecera(17,'Total');
+        
         $this->Ln();
     }
 
@@ -213,24 +237,61 @@ class PDF extends PDF_MC_Table
         // $f = date('d-m-Y H:i:s',$hoy);
 
         //$f = " 20-01-2019 11:53:32";
-        // $this->Cell(72,4,'Usuario: '.$this->usuario,0,0,'L');
-        $this->Cell(116,4,'Fecha Impresion: '.$this->fecha_hora,0,0,'C');
-        $this->Cell(72,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
+        $this->Cell(50,4,'Usuario: '.$this->usuario,0,0,'L');
+        $this->Cell(95,4,'Fecha Impresion: '.$this->fecha_hora,0,0,'C');
+        $this->Cell(50,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
     }
 }
 
 
 class PdfController extends Controller
 {
-  public function actionPdf()
+  public function actionComprobante($IdOrden = null)
   {
-    $this->layout = false;
-
+    $orden = Ordenes::find()
+      ->joinWith('estado')
+      ->joinWith('detallesOrden')
+      ->joinWith('creador')
+      ->where(['Ordenes.IdOrden' => $IdOrden])
+      ->one();
+    $detalle = $orden->detallesOrden;
+    // dd($orden);
+    $hoy = time();
+    $f = date('d-m-Y H:i:s',$hoy);
     $pdf = new PDF('P','mm','Letter');
+    $pdf->inicio($orden, $f);
+    $pdf->SetMargins(10,7,10);
+    $pdf->AliasNbPages();
     $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 15);
-    $pdf->Cell(40, 10, utf8_decode('¡Hola, mundo!'));
-    $pdf->Output();
+    $pdf->SetFont('Arial', '', 7);
+    $pdf->SetWidths([10, 20, 38, 20, 56, 17, 17, 17]);
+    $i = 0; $ttt = 0;
+    foreach ($detalle as $valor) {
+        $i++;
+        $codigo = utf8_decode($valor['CodigoProducto']);
+        $talla = utf8_decode(ucwords(strtolower($valor['Talla'])));
+        $para = utf8_decode(ucwords(strtolower($valor['ProductoPara'])));
+        $producto  = utf8_decode(ucwords(strtolower($valor['NombreProducto'])));
+        $precio  = utf8_decode($valor['Precio']);
+        $cantidad  = utf8_decode($valor['Cantidad']);
+        $total  = utf8_decode($valor['Total']);
+        $pdf->Row([$i, $codigo, $talla, $para, $producto, $precio, $cantidad, $total]);
+        $ttt += $total;
+    }
+    $ttt = number_format($ttt, 2);
+    $pdf->SetWidths([178, 17]);
+    $pdf->Cell(161);
+    $pdf->celda(17, 17, 'TOTAL', $ttt);
+    $pdf->Ln();
+    $pdf->Ln(2);
+    $yy = $pdf->GetY();
+    if ($yy+50 > 265) {
+        $pdf->AddPage();
+        $pdf->Ln(2);
+        $yy = $pdf->GetY();
+    }
+    $pdf->imagenQr($orden, $yy);
+    $pdf->Output('I','orden-'.$orden->IdOrden.'.pdf');
     exit;
   }
 }

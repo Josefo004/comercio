@@ -9,9 +9,9 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'name' => 'USFX Shop',
-    'basePath' => dirname(__DIR__),
     'language' => 'es',
     'sourceLanguage' => 'en',
+    'basePath' => dirname(__DIR__),
 
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
