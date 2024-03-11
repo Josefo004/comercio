@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var common\models\Productos $model */
@@ -42,18 +41,22 @@ $imagenBinaria = base64_decode($imagenBase64);
                         <input type="text" class="form-control form-control-sm" value="<?= $orden->Email ?>">
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-4">
                     <div class="col-md-4">
                         <label class="form-label"><strong>Usuario</strong></label>
                         <input type="text" class="form-control form-control-sm" value="<?= $orden->creador->NombreCompleto ?>">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label"><strong>Fecha Hora Solicitud</strong></label>
-                        <input type="text" class="form-control form-control-sm" value="<?= $orden->FechaCreacion ?>">
+                        <input type="text" class="form-control form-control-sm" value="<?= Yii::$app->formatter->asDate($orden->FechaCreacion, 'dd-MM-yyyy hh:mm:ss') ?>">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label"><strong>Estado</strong></label>
                         <input type="text" class="form-control form-control-sm" value="<?= mb_strtoupper($orden->estado->Descripcion) ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label"><strong>Comisión</strong></label>
+                        <input type="text" class="form-control form-control-sm" value="<?= $orden->CostoComision ?>">
                     </div>
                 </div>
             </fieldset>
@@ -81,9 +84,10 @@ $imagenBinaria = base64_decode($imagenBase64);
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $i = 0;
+                                            $i = 0; $ttt = 0;
                                             foreach ($orden->detallesOrden as $item): 
                                             $i++;
+                                            $ttt += $item['Total'];
                                         ?>
                                             <tr>
                                                 <th><?= $i ?></th>
@@ -96,8 +100,16 @@ $imagenBinaria = base64_decode($imagenBase64);
                                                 <td><?= $item['Cantidad'] ?></td>
                                                 <th><?= $item['Total'] ?></th>
                                             </tr>
-                                        <?php endforeach; ?>
+                                        <?php 
+                                            endforeach; 
+                                            $ttt = number_format($ttt, 2);
+                                        ?>
                                     </tbody>
+                                    <tfoot>
+                                        <th colspan="7"></th>
+                                        <th></th>
+                                        <th><?= $ttt ?></th>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -133,7 +145,7 @@ $imagenBinaria = base64_decode($imagenBase64);
                             <!-- <img class="card-img-top" src="..." alt="Card image QR"> -->
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><h4><strong>TOTAL</strong> <small><?= $orden->TotalOrden ?> Bs.</small></h4></li>
+                            <li class="list-group-item"><h4><strong>TOTAL</strong> <small><?= $orden->TotalOrden ?> <small>BOB</small></small></h4></li>
                         </ul>
                     </div>
                 </div>
@@ -141,6 +153,7 @@ $imagenBinaria = base64_decode($imagenBase64);
         </div>
         <div class="card-footer">
         <?= Html::a('Imprimir Comprobante', ['pdf/comprobante', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
+        <?= Html::a('Mandar Correo', ['email/enviar-correo', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-left', 'target'=>'_blank']) ?>
         </div>
     </div>
     
