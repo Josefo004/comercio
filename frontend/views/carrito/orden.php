@@ -20,6 +20,16 @@ $imagenBinaria = base64_decode($imagenBase64);
 // dd($imagenBase64, $imagenBinaria, $kk);
 ?>
 <div>
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div class="info">
+            <?php echo Yii::$app->session->getFlash('success'); ?>
+        </div>
+    <?php endif; ?>
+    <?php if (Yii::$app->session->hasFlash('error')): ?>
+        <div class="danger">
+            <?php echo Yii::$app->session->getFlash('error'); ?>
+        </div>
+    <?php endif; ?>
     <div class="card mb-3">
         <div class="card-body">
             <fieldset disabled>
@@ -153,9 +163,7 @@ $imagenBinaria = base64_decode($imagenBase64);
         </div>
         <div class="card-footer">
         <?= Html::a('Imprimir Comprobante', ['pdf/comprobante', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
-        <?= Html::a('Mandar Correo', ['email/enviar-correo', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-left', 'target'=>'_blank']) ?>
+        <!-- <?= Html::a('Mandar Correo', ['email/enviar-correo', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-left', 'target'=>'_blank']) ?> -->
         </div>
     </div>
-    
-
 </div>

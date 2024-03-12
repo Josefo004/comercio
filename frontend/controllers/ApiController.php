@@ -87,6 +87,11 @@ class ApiController extends Controller
             'fechaPago' => $fecha,
             'FechaLimiteAtencion' => $fecha2
           ],
+          'detallePagos' => [
+            'monto' => "$ord->TotalOrden;$ord->CostoComision",
+            'cuenta' => "415-554;416-451"
+          ],
+          "codigoTipoTransaccion" => "Q"
         ]
       ];
   

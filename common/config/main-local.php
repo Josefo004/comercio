@@ -21,8 +21,10 @@ return [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com', 
-                'username' => 'secretaria.mdhs@gmail.com', 
-                'password' => 'hlpehitoscwhmzwe',
+                // 'username' => 'secretaria.mdhs@gmail.com', 
+                'username' => 'dtic.mail3@usfx.bo', 
+                // 'password' => 'hlpehitoscwhmzwe',
+                'password' => '9511*dtic1',
                 'port' => '587',
                 'encryption' => 'tls',
             ],

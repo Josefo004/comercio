@@ -8,9 +8,9 @@ use common\models\Ordenes;
 
 class EmailController extends Controller
 {
-  public function actionEnviarCorreo($IdOrden=null)
+  public static function enviarOrden($IdOrden=null)
   {
-    $this->layout = '@frontend/views/email/layouts/main';
+    // $this->layout = '@frontend/views/email/layouts/main';
     
     $orden = Ordenes::find()
       ->joinWith('estado')
@@ -30,14 +30,12 @@ class EmailController extends Controller
       ->setTo(trim($edestino))
       ->setSubject('Envio de Orden '.$orden->IdOrden);
     
-    if ($mensaje->send()) {
-      Yii::$app->session->setFlash('success', 'Comprobante electrónico enviado correctamente a '.$edestino);
-    } else {
-      Yii::$app->session->setFlash('error', 'Hubo un error al enviar el correo electrónico.');
-    }
+    $envio = $mensaje->send();
 
     // Redirigir a una página después del envío del correo electrónico
-    return $this->redirect(['site/index']);
+    // return $this->redirect(['site/index']);
+
+    return $envio;
 
   }
   

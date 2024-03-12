@@ -3,8 +3,6 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-use Yii;
-
 /* @var $this yii\web\View */
 /** @var \yii\data\ActiveDataProvider $dataProvider */
 
@@ -14,11 +12,6 @@ $this->title = 'USFX';
 <div class="site-index">
     <div class="body-content">
         <div class="row justify-content-end">
-            <?php if (Yii::$app->session->hasFlash('success')): ?>
-                <div class="info">
-                    <?php echo Yii::$app->session->getFlash('success'); ?>
-                </div>
-            <?php endif; ?>
             <div class="col-lg-3 col-md-4"> 
                 <?php
                 $form = ActiveForm::begin([

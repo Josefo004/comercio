@@ -47,13 +47,6 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
-    if ($hayCarrito) {
-        //echo Html::a('<span class="fa fa-shopping-cart"></span>', ['/carrito/show'], ['class' => 'btn btn-outline-secondary btn-sm']);        
-        echo Html::button('<span class="fa fa-shopping-cart"></span>', [
-            'class' => 'btn btn-outline-secondary btn-sm', 
-            'onclick' => "$('#myModalCarritoDerecha').modal('show')"
-        ]);
-    }
     $menuItems = [
         ['label' => 'Inicio', 'url' => ['/site/index']],
         [
@@ -66,29 +59,36 @@ $hayCarrito = isset($_SESSION['carrito']) ? true : false;
             //'items' => $this->params['aProductos'],
             'items' => $sProductos,
         ],
-        ['label' => 'Acerca de', 'url' => ['/site/about']],
-        ['label' => 'Contacto', 'url' => ['/site/contact']],
+        // ['label' => 'Acerca de', 'url' => ['/site/about']],
+        // ['label' => 'Contacto', 'url' => ['/site/contact']],
         
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-    }
+    // if (Yii::$app->user->isGuest) {
+    //     $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+    // }
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
         'items' => $menuItems,
     ]);
 
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->Login . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
-            )
-            . Html::endForm();
+    if ($hayCarrito) {
+        echo Html::button('<span class="fa fa-shopping-cart"></span>', [
+            'class' => 'btn btn-outline-secondary btn-sm d-flex', 
+            'onclick' => "$('#myModalCarritoDerecha').modal('show')"
+        ]);
     }
+
+    // if (Yii::$app->user->isGuest) {
+    //     echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+    // } else {
+    //     echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
+    //         . Html::submitButton(
+    //             'Logout (' . Yii::$app->user->identity->Login . ')',
+    //             ['class' => 'btn btn-link logout text-decoration-none']
+    //         )
+    //         . Html::endForm();
+    // }
     NavBar::end();
     ?>
 </header>

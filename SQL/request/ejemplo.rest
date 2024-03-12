@@ -40,11 +40,11 @@ Content-Type: application/json
 "datos":
   {
     "monto":101.5,
-    "referencia":"pagoOrden-018A-3651163",
-    "codigoPago":"VEN-018A-3651163",
+    "referencia":"pagoOrden-018ABC-3651163",
+    "codigoPago":"VEN-018ABC-3651163",
     "nombreCompleto":"JOSE MENDOZA VARGAS",
     "item":{
-        "idOrden":"018A",
+        "idOrden":"018ABC",
         "nroComprobante":0,
         "fechaPago":"2024-03-05",
         "FechaLimiteAtencion":"07/03/2024"
@@ -85,3 +85,6 @@ Content-Type: application/json
 
 ###
 http://172.16.1.251/consultasapi/v0/recepcion?codigoPago=123&nroDocumento=123&fechaPago=2024-03-01
+
+###
+http://172.16.1.251/consultasapi/v0/recepcion?codigoPago=VEN-00034-3650893&nroDocumento=11111111125&fechaPago=2024-03-12

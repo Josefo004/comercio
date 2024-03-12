@@ -89,7 +89,7 @@ class CarritoController extends Controller
   {
     if (Yii::$app->session->has('carrito')) {
       // return $this->render('errorqr');
-      return $this->redirect(['ver-orden', 'idOrden' => 20]);
+      // return $this->redirect(['ver-orden', 'idOrden' => 20]);
       $modeloOrden = new OrdenForm();
       $comision = ApiController::getUltimaComision();
       if ($this->request->isPost) {
@@ -116,10 +116,18 @@ class CarritoController extends Controller
         if (!$detalleOrd) {
           return $this->render('errorqr');
         }
+        
+        
         $orden->CodigoQR = $codQr['resposeData']['imagen'];
         $orden->CodigoPago = $codQr['solQr']['datos']['codigoPago'];
         $orden->CodigoEstado = 'P';
         $orden->save();
+        
+        if (EmailController::enviarOrden($orden->IdOrden)) {
+          Yii::$app->session->setFlash('success', 'Orden Inviada al correo '.$orden->Email);
+        } else {
+          Yii::$app->session->setFlash('error', 'Hubo un error al enviar el correo electrónico. '.$orden->Email);
+        }
 
         return $this->redirect(['ver-orden', 'idOrden' => $orden->IdOrden]);
       }
