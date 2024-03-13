@@ -65,6 +65,7 @@ class CarritoController extends Controller
     if ($this->request->isPost) {
       $modeloCarrito->load($this->request->post());
       $modeloCarrito->FechaHoraRegistro = CommonQueries::GetFechaHoraActual();
+      $modeloCarrito->Total = $modeloCarrito->Precio * $modeloCarrito->Cantidad;
       $this->addToCarrito($modeloCarrito);
 
       return $this->render('create', [
@@ -89,7 +90,7 @@ class CarritoController extends Controller
   {
     if (Yii::$app->session->has('carrito')) {
       // return $this->render('errorqr');
-      // return $this->redirect(['ver-orden', 'idOrden' => 20]);
+      // return $this->redirect(['ver-orden', 'idOrden' => 38]);
       $modeloOrden = new OrdenForm();
       $comision = ApiController::getUltimaComision();
       if ($this->request->isPost) {
@@ -217,6 +218,7 @@ class CarritoController extends Controller
 
   protected function crearOrden($usuario, $modeloOrden)
   {
+    date_default_timezone_set('America/La_Paz');
     $comision = ApiController::getUltimaComision();
     $orden = new Ordenes();
     $orden->CodigoUsuarioCreacion = $usuario->CodigoUsuario;
@@ -227,7 +229,13 @@ class CarritoController extends Controller
     $orden->TotalOrden = strval($modeloOrden->TotalOrden) + strval($comision);
     $orden->FechaCreacion = CommonQueries::GetFechaHoraActual();
     $orden->CostoComision = $comision;
-    //dd($orden, $orden->save());
+    $ff = date('d/m/Y H:m:s', strtotime($orden->FechaCreacion));
+    $ff2 = new \DateTime($orden->FechaCreacion); 
+    $ff2->modify('+2 days');
+    $ff2 = $ff2->format('d/m/Y ').'23:59:59';
+    $orden->FechaCaducidad = $ff2;
+    $orden->Observacion = $ff. ' Orden Creada por: '.$orden->CodigoUsuarioCreacion.' con caducidad '.$ff2.';';
+    // dd($orden, $orden->save());
     $orden->save();
     //$errors = $orden->getErrors();
     //dd($errors);

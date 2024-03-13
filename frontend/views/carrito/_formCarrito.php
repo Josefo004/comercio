@@ -51,10 +51,10 @@ $this->registerJs("
   <div class="col-md-8">
     <div class="card-body">
       <div class="row">
-        <div class="col-md-7 border border-dark rounded-sm p-2 m-1 bg-secondary text-white">
+        <div class="col-md-11 border border-dark rounded-sm p-2 m-1 bg-secondary text-white">
           <small><strong><?= $producto->CodigoProducto?></strong> <?= $genero?> </small> <?=$producto->NombreProducto ?>
         </div>
-        <div class="col-md-4 border border-dark rounded-sm p-2 m-1 bg-danger text-white"> <strong><?= $precio ?></strong> <small><?= $validez ?></small></div>
+        <div class="col-md-3 border border-dark rounded-sm p-2 m-1 bg-danger text-white"> <h3><strong><?= $precio ?></strong> <small><?= $validez ?></small></h3></div>
       </div>
       <div class="row">
         <div class="col-md-11 p-1 m-1"><?=$producto->Descripcion ?></div>
@@ -86,7 +86,7 @@ $this->registerJs("
             <?= $form->field($modeloCarrito, 'Precio')->hiddenInput(['value'=> $ppp])->label(false);?>
             <?= $form->field($modeloCarrito, 'Precio')->hiddenInput(['value'=> $ppp])->label(false);?>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 border border-dark rounded-sm bg-danger text-white"">
             <?= $form->field($modeloCarrito, 'Total', ['inputOptions' => ['value' => number_format($modeloCarrito->Total, 2)]])->textInput(['readonly'=> true]) ?>
           </div>
         </div>

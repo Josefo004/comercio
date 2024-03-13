@@ -154,6 +154,19 @@ class PDF extends PDF_MC_Table
         $this->Cell($w2,5,$t2,1,0,'L');
     }
 
+    function celda2($w1,$w2,$txt1,$txt2){
+        $t1=utf8_decode ($txt1);
+        $t2 = utf8_decode($txt2);
+        $this->SetFillColor(230,230,230);
+        $this->SetTextColor(0);
+        $this->SetDrawColor(10,10,10);
+        $this->SetLineWidth(.1);
+        $this->SetFont('Arial','B',7);
+        $this->Cell($w1,5,$t1,1,0,'L',true);
+        $this->SetFont('Arial','B',7);
+        $this->Cell($w2,5,$t2,1,0,'R');
+    }
+
     function cabecera($w1,$txt1){
         $t1=utf8_decode ($txt1);
         $this->SetFillColor(230,230,230);
@@ -206,8 +219,8 @@ class PDF extends PDF_MC_Table
         $this->Ln(1);
         $FechaSolicitud = date('d-m-Y H:i', strtotime($this->orden->FechaCreacion));
         $this->celda(30,37,'FFECHA SOLICITUD', $FechaSolicitud);
-        $this->celda(25,20,'COMISION', $this->orden->CostoComision);
-        $this->celda(25,20,'TOTAL ORDEN', $this->orden->TotalOrden);
+        // $this->celda(25,20,'COMISION', $this->orden->CostoComision);
+        // $this->celda(25,20,'TOTAL ORDEN', $this->orden->TotalOrden);
         $this->Ln();
         $this->Ln(3);
 
@@ -279,9 +292,17 @@ class PdfController extends Controller
         $ttt += $total;
     }
     $ttt = number_format($ttt, 2);
+    $tcc = number_format($orden->CostoComision, 2);
+
     $pdf->SetWidths([178, 17]);
-    $pdf->Cell(161);
-    $pdf->celda(17, 17, 'TOTAL', $ttt);
+    $pdf->Cell(144);
+    $pdf->celda2(34, 17, 'Total Productos', $ttt);
+    $pdf->Ln();
+    $pdf->Cell(144);
+    $pdf->celda2(34, 17, 'Comisión Bancaria', $tcc);
+    $pdf->Ln();
+    $pdf->Cell(144);
+    $pdf->celda2(34, 17, 'Total ', $orden->TotalOrden);
     $pdf->Ln();
     $pdf->Ln(2);
     $yy = $pdf->GetY();

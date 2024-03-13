@@ -25,11 +25,6 @@ $imagenBinaria = base64_decode($imagenBase64);
             <?php echo Yii::$app->session->getFlash('success'); ?>
         </div>
     <?php endif; ?>
-    <?php if (Yii::$app->session->hasFlash('error')): ?>
-        <div class="danger">
-            <?php echo Yii::$app->session->getFlash('error'); ?>
-        </div>
-    <?php endif; ?>
     <div class="card mb-3">
         <div class="card-body">
             <fieldset disabled>
@@ -69,7 +64,7 @@ $imagenBinaria = base64_decode($imagenBase64);
                         <input type="text" class="form-control form-control-sm" value="<?= $orden->CostoComision ?>">
                     </div>
                 </div>
-            </fieldset>
+            
             <div class="row">
                 <div class="col-md-9">
                     <div class="card">
@@ -108,7 +103,7 @@ $imagenBinaria = base64_decode($imagenBase64);
                                                 <td><?= Html::img($item->getImageUrl(), ['style' => 'width: 55px'])?></td>
                                                 <td><?= $item['Precio'] ?></td>
                                                 <td><?= $item['Cantidad'] ?></td>
-                                                <th><?= $item['Total'] ?></th>
+                                                <td align="right"><?= $item['Total'] ?></td>
                                             </tr>
                                         <?php 
                                             endforeach; 
@@ -116,11 +111,34 @@ $imagenBinaria = base64_decode($imagenBase64);
                                         ?>
                                     </tbody>
                                     <tfoot>
-                                        <th colspan="7"></th>
-                                        <th></th>
-                                        <th><?= $ttt ?></th>
+                                        <tr>
+                                            <td colspan="8" align="right">Total Productos</td>
+                                            <td align="right">
+                                                <strong><?= $ttt ?></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="8" align="right">Comisión Bancaria</td>
+                                            <td align="right">
+                                                <strong><?= number_format($orden->CostoComision, 2) ?></strong>
+                                            </td>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="8" align="right">Total</td>
+                                            <td align="right">
+                                                <strong><?= $orden->TotalOrden ?></strong>
+                                            </td>
+                                            <th></th>
+                                        </tr>                                     
                                     </tfoot>
                                 </table>
+                            </div>
+                            <div class="col-md-12">
+                            <?php 
+                                $bodytag = str_replace(";", "<br>", $orden->Observacion);
+                                echo $bodytag; 
+                            ?>
                             </div>
                         </div>
                     </div>
@@ -160,6 +178,7 @@ $imagenBinaria = base64_decode($imagenBase64);
                     </div>
                 </div>
             </div>
+            </fieldset>
         </div>
         <div class="card-footer">
         <?= Html::a('Imprimir Comprobante', ['pdf/comprobante', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>

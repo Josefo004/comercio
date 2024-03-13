@@ -89,7 +89,7 @@ class ApiController extends Controller
           ],
           'detallePagos' => [
             'monto' => "$ord->TotalOrden;$ord->CostoComision",
-            'cuenta' => "415-554;416-451"
+            'cuenta' => "1-1176028;416-451"
           ],
           "codigoTipoTransaccion" => "Q"
         ]

@@ -29,7 +29,7 @@ class CarritoForm extends Model
     {
         return [
             [['IdProducto', 'IdProductoTalla', 'Talla', 'CodigoProducto', 'ProductoPara', 'NombreProducto', 'Imagen', 'Precio', 'Cantidad', 'Total'], 'required'],
-            [['Cantidad'], 'number', 'min' => 1, 'max' => 10],
+            [['Cantidad'], 'integer', 'min' => 1, 'max' => 10],
         ];
     }
 

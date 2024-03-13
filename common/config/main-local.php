@@ -22,7 +22,7 @@ return [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com', 
                 // 'username' => 'secretaria.mdhs@gmail.com', 
-                'username' => 'dtic.mail3@usfx.bo', 
+                'username' => 'dtic.mail@usfx.bo', 
                 // 'password' => 'hlpehitoscwhmzwe',
                 'password' => '9511*dtic1',
                 'port' => '587',

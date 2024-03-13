@@ -12,9 +12,11 @@ $this->title = 'Productos a Ordenar';
 $carrito = Yii::$app->session->get('carrito');
 //dd($carrito);
 $total = array_sum(array_column($carrito, 'Total'));
-$total = number_format($total, 2);
 
 $comi = number_format($comision,2) ;
+$total = number_format($total, 2);
+$totalG = $total + $comi;
+$totalG = number_format($totalG, 2);
 //dd($comi);
 
 $script = <<<JS
@@ -77,9 +79,10 @@ $this->registerJs($script);
 							<div class="row">
 								<div class="col-12">
 									<?= $form->field($modeloOrden, 'NombreCompleto')->textInput(['style' => 'text-transform: uppercase', 'class' => 'form-control form-control-sm', 'autocomplete' => 'off']) ?>
-									<?= $form->field($modeloOrden, 'Confirmar')->checkbox(['checked' => false,'uncheck' => null])->label("Comisión $comi Bs.");?> 
+									<!-- <?= $form->field($modeloOrden, 'Confirmar')->checkbox(['checked' => true,'uncheck' => null])->label("Comisión $comi Bs.");?>  -->
 									<?= $form->field($modeloOrden, 'CodigoUsuario')->hiddenInput()->label(false) ?>
 									<?= $form->field($modeloOrden, 'TotalOrden')->hiddenInput(['value' => $total])->label(false) ?>
+									<?= $form->field($modeloOrden, 'Confirmar')->hiddenInput(['value' => true])->label(false) ?>
 								</div>
 							</div>
 							<div class="row">
@@ -168,11 +171,27 @@ $this->registerJs($script);
 									<?php endforeach; ?>
 								</tbody>
 								<tfoot>
-									<th></th><th></th><th></th><th></th><th></th><th></th><th></th>
-									<th>
-										<?= $total ?>
-									</th>
-									<th></th>
+									<tr>
+										<td colspan="7" align="right">Total Productos</td>
+										<td align="right">
+											<strong><?= $total ?></strong>
+										</td>
+										<th></th>
+									</tr>
+									<tr>
+										<td colspan="7" align="right">Comisión Bancaria</td>
+										<td align="right">
+											<strong><?= $comi ?></strong>
+										</td>
+										<th></th>
+									</tr>
+									<tr>
+										<td colspan="7" align="right">Total a Pagar</td>
+										<td align="right">
+											<strong><?= $totalG ?></strong>
+										</td>
+										<th></th>
+									</tr>
 								</tfoot>
 							</table>
 						</div>

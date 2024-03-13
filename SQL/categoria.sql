@@ -586,9 +586,6 @@ ALTER TABLE dbo.Usuarios ALTER COLUMN CodigoUsuario VARCHAR(15) NOT NULL;
 ALTER TABLE dbo.Usuarios ADD PRIMARY KEY (CodigoUsuario);
 
 
-
-
-
 SELECT * 
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
 WHERE CONSTRAINT_NAME LIKE 'DF__Productos__Codig__2E1BDC42';
@@ -603,3 +600,7 @@ use Ecommerce;
 
 ALTER TABLE dbo.Ordenes
   ALTER COLUMN CodigoQr NVARCHAR(MAX) null;
+
+
+ALTER TABLE dbo.Ordenes
+	ADD FechaCaducidad DATETIME NULL;
