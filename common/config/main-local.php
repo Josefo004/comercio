@@ -15,6 +15,21 @@ return [
                     ")->execute();
             }
         ],
+        // 'mailer' => [
+        //     'class' => 'yii\swiftmailer\Mailer',
+        //     'useFileTransport' => false, 
+        //     'transport' => [
+        //         'class' => 'Swift_SmtpTransport',
+        //         'host' => 'smtp.gmail.com', 
+        //         // 'username' => 'secretaria.mdhs@gmail.com', 
+        //         'username' => 'dtic.mail@usfx.bo', 
+        //         // 'password' => 'hlpehitoscwhmzwe',
+        //         'password' => '9511*dtic1',
+        //         'port' => '587',
+        //         'encryption' => 'tls',
+        //     ],
+        //     'viewPath' => '@app/views/email',
+        // ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => false, 
@@ -22,9 +37,9 @@ return [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com', 
                 // 'username' => 'secretaria.mdhs@gmail.com', 
-                'username' => 'dtic.mail@usfx.bo', 
+                'username' => 'ventas@usfx.bo', 
                 // 'password' => 'hlpehitoscwhmzwe',
-                'password' => '9511*dtic1',
+                'password' => 'S3l3ct2k24.',
                 'port' => '587',
                 'encryption' => 'tls',
             ],

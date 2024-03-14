@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var common\models\Productos $model */
@@ -21,9 +22,8 @@ $imagenBinaria = base64_decode($imagenBase64);
 ?>
 <div>
     <?php if (Yii::$app->session->hasFlash('success')): ?>
-        <div class="info">
-            <?php echo Yii::$app->session->getFlash('success'); ?>
-        </div>
+    <?php endif; ?>
+    <?php if (Yii::$app->session->hasFlash('error')): ?>
     <?php endif; ?>
     <div class="card mb-3">
         <div class="card-body">
@@ -47,7 +47,7 @@ $imagenBinaria = base64_decode($imagenBase64);
                     </div>
                 </div>
                 <div class="row mb-4">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label"><strong>Usuario</strong></label>
                         <input type="text" class="form-control form-control-sm" value="<?= $orden->creador->NombreCompleto ?>">
                     </div>
@@ -56,15 +56,16 @@ $imagenBinaria = base64_decode($imagenBase64);
                         <input type="text" class="form-control form-control-sm" value="<?= Yii::$app->formatter->asDate($orden->FechaCreacion, 'dd-MM-yyyy hh:mm:ss') ?>">
                     </div>
                     <div class="col-md-3">
+                        <label class="form-label"><strong>Fecha Caducidad</strong></label>
+                        <input type="text" class="form-control form-control-sm" value="<?= Yii::$app->formatter->asDate($orden->FechaCaducidad, 'dd-MM-yyyy hh:mm:ss') ?>">
+                    </div>
+                    <div class="col-md-3">
                         <label class="form-label"><strong>Estado</strong></label>
                         <input type="text" class="form-control form-control-sm" value="<?= mb_strtoupper($orden->estado->Descripcion) ?>">
                     </div>
-                    <div class="col-md-2">
-                        <label class="form-label"><strong>Comisión</strong></label>
-                        <input type="text" class="form-control form-control-sm" value="<?= $orden->CostoComision ?>">
-                    </div>
+                    
                 </div>
-            
+            </fieldset>
             <div class="row">
                 <div class="col-md-9">
                     <div class="card">
@@ -178,11 +179,10 @@ $imagenBinaria = base64_decode($imagenBase64);
                     </div>
                 </div>
             </div>
-            </fieldset>
         </div>
         <div class="card-footer">
-        <?= Html::a('Imprimir Comprobante', ['pdf/comprobante', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
-        <!-- <?= Html::a('Mandar Correo', ['email/enviar-correo', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-left', 'target'=>'_blank']) ?> -->
+            <?= Html::a('Imprimir Comprobante', ['pdf/comprobante', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-right', 'target'=>'_blank']) ?>
+            <!-- <?= Html::a('Mandar Correo', ['email/enviar-correo', 'IdOrden' => $orden->IdOrden], ['class'=>'btn btn-primary float-left', 'target'=>'_blank']) ?> -->
         </div>
     </div>
 </div>

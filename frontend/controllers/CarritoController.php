@@ -188,10 +188,15 @@ class CarritoController extends Controller
 
   protected function findTallas($IdProducto)
   {
+    // $model = ProductoTallas::find()
+    //   ->joinWith('idTalla')
+    //   ->where(['=', 'IdProducto', $IdProducto])
+    //   ->andwhere(['>', 'Cantidad', 0])
+    //   ->all();
     $model = ProductoTallas::find()
       ->joinWith('idTalla')
       ->where(['=', 'IdProducto', $IdProducto])
-      ->andwhere(['>', 'Cantidad', 0])
+      ->andwhere(['>=', new \yii\db\Expression('Cantidad - CantidadVendida'), 2])
       ->all();
     return $model;
   }

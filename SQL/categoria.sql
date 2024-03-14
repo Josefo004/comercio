@@ -604,3 +604,6 @@ ALTER TABLE dbo.Ordenes
 
 ALTER TABLE dbo.Ordenes
 	ADD FechaCaducidad DATETIME NULL;
+
+ALTER TABLE dbo.ProductoTallas
+	ADD CantidadVendida INT DEFAULT 0 NULL;

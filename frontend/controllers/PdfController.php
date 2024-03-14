@@ -127,7 +127,7 @@ class PDF extends PDF_MC_Table
 
     function imagenQr ($orden, $y){
         if ($orden->CodigoEstado === 'A') {
-            $this->Image('img/gracias.png', 170, $y, 37, 37);
+            $this->Image('img/gracias.png', 170, $y, 45, 45);
         } 
         else{
             $imagenBase64 = $orden->CodigoQR;
@@ -137,7 +137,7 @@ class PDF extends PDF_MC_Table
             }
             $imagenBinaria = base64_decode($imagenBase64);
             $img2 = 'data:image/png;base64,'.base64_encode($imagenBinaria);
-            $this->Image($img2, 165, $y, 45, 45, 'png');
+            $this->Image($img2, 155, $y, 55, 55, 'png');
         }
     }
 
@@ -218,7 +218,9 @@ class PDF extends PDF_MC_Table
         $this->Ln();
         $this->Ln(1);
         $FechaSolicitud = date('d-m-Y H:i', strtotime($this->orden->FechaCreacion));
+        $FechaCaducidad = date('d-m-Y H:i', strtotime($this->orden->FechaCaducidad));
         $this->celda(30,37,'FFECHA SOLICITUD', $FechaSolicitud);
+        $this->celda(30,37,'FFECHA CADUCIDAD', $FechaCaducidad);
         // $this->celda(25,20,'COMISION', $this->orden->CostoComision);
         // $this->celda(25,20,'TOTAL ORDEN', $this->orden->TotalOrden);
         $this->Ln();
