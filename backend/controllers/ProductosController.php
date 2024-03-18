@@ -22,20 +22,20 @@ class ProductosController extends Controller
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
+    // public function behaviors()
+    // {
+    //     return array_merge(
+    //         parent::behaviors(),
+    //         [
+    //             'verbs' => [
+    //                 'class' => VerbFilter::class,
+    //                 'actions' => [
+    //                     'delete' => ['POST'],
+    //                 ],
+    //             ],
+    //         ]
+    //     );
+    // }
 
 
     public function __construct($id, $module, $config = array()) {
@@ -78,7 +78,7 @@ class ProductosController extends Controller
                                 ]),
             
             'pagination' => [
-                'pageSize' => 6
+                'pageSize' => 15
             ],
             // 'sort' => [
             //     'defaultOrder' => [

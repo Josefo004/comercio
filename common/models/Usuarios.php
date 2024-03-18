@@ -220,6 +220,15 @@ class Usuarios extends ActiveRecord implements IdentityInterface
         $this->PasswordResetToken = null;
     }
 
+    /**
+     * Devuelve el nombre para mostrar del usuario.
+     * @return string El nombre para mostrar del usuario.
+     */
+    public function getDisplayName()
+    {
+        return $this->NombreCompleto;
+    }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {

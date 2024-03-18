@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="productos-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>PRODUCTO <?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'IdProducto' => $model->IdProducto], ['class' => 'btn btn-primary']) ?>
+        <!-- <?= Html::a('Actualizar', ['update', 'IdProducto' => $model->IdProducto], ['class' => 'btn btn-primary']) ?> -->
         
     </p>
 
@@ -43,10 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => fn() => Html::img($model->getImageUrl(), ['style' => 'width: 50px']),
             ],
             'Precio',
-            'PrecioPreventa',
-            'FechaCaducidadPreVenta',
-            'PrecioReserva',
-            'FechaCaducidadReserva',
+            // 'PrecioPreventa',
+            // 'FechaCaducidadPreVenta',
+            // 'PrecioReserva',
+            // 'FechaCaducidadReserva',
             [
                 'attribute' => 'Publicado',
                 'format' => 'html',
@@ -55,9 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]),
             ],
             'FechaHoraRegistro',
-            'FechaHoraActualizacion',
-            'CodigoUsuarioCreacion',
-            'CodigoUsuarioActualizacion',
+            // 'FechaHoraActualizacion',
+            // 'CodigoUsuarioCreacion',
+            // 'CodigoUsuarioActualizacion',
         ],
     ]) ?>
 
@@ -69,6 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th scope="col">Talla</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Cantidad</th>
+                <th scope="col">Cantidad Vendida</th>
+                <th scope="col">Cantidad Disponible</th>
             </tr>
         </thead>
         <tbody>
@@ -77,6 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $i = 0;
             foreach ($tallas as $valor) {
             $i++;
+            $disponible = $valor->Cantidad - $valor->CantidadVendida;
             ?>
             <tr>
                 <th scope="row"><?= $i ?></th>
@@ -84,6 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $valor->idTalla->Talla ?></td>
                 <td><?= $valor->idTalla->DescripcionTalla ?></td>
                 <td><?= $valor->Cantidad ?></td>
+                <td><?= $valor->CantidadVendida ?></td>
+                <td><?= $disponible ?></td>
             </tr>
             <?php
             }

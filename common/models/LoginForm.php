@@ -15,6 +15,7 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user;
+    private $_user2;
 
 
     /**
@@ -55,8 +56,20 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
+            // $user2 = $this->getUser2();
+            //dd($user);
+            if ($user!=null) {
+                if (Yii::$app->security->validatePassword($user->IdPersona, $user->PasswordHash))
+                {
+                    $this->addError($attribute, 'Contraseña IGUAL a CI debe cambiar su contraseña.');
+                }
+                if ($user->EsAdmin!=1) {
+                    $this->addError($attribute, 'ACCESO BLOQUEADO!! (SOLO ADMINISTRADORES)');
+                }
+            }
+            //dd($user, $user2);
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Usuario o Contraseña Incorrectos.');
             }
         }
     }
@@ -69,7 +82,8 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-             Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            // Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 2 : 0);
         }
         return false;
     }
@@ -85,5 +99,13 @@ class LoginForm extends Model
             $this->_user = Usuarios::findByUsername($this->login);
         }
         return $this->_user;
+    }
+
+    protected function getUser2()
+    {
+        if ($this->_user2 === null) {
+            $this->_user2 = Usuarios::findByUsername('admin');
+        }
+        return $this->_user2;
     }
 }

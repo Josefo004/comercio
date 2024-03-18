@@ -1,5 +1,5 @@
 <?php
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use common\models\Ordenes;
 use common\components\fpdf\FPDF;
@@ -126,7 +126,7 @@ class PDF extends PDF_MC_Table
     }
 
     function imagenQr ($orden, $y){
-        if ($orden->CodigoEstado === 'A') {
+        if (($orden->CodigoEstado === 'A') || ($orden->CodigoEstado === 'E')) {
             $this->Image('img/gracias.png', 170, $y, 45, 45);
         } 
         else{
@@ -283,13 +283,13 @@ class PdfController extends Controller
     $i = 0; $ttt = 0;
     foreach ($detalle as $valor) {
         $i++;
-        $codigo = utf8_decode($valor['CodigoProducto']);
-        $talla = utf8_decode(ucwords(strtolower($valor['Talla'])));
-        $para = utf8_decode(ucwords(strtolower($valor['ProductoPara'])));
-        $producto  = utf8_decode(ucwords(strtolower($valor['NombreProducto'])));
-        $precio  = utf8_decode($valor['Precio']);
-        $cantidad  = utf8_decode($valor['Cantidad']);
-        $total  = utf8_decode($valor['Total']);
+        $codigo = $valor['CodigoProducto'];
+        $talla = $valor['Talla'];
+        $para = $valor['ProductoPara'];
+        $producto  = $valor['NombreProducto'];
+        $precio  = $valor['Precio'];
+        $cantidad  = $valor['Cantidad'];
+        $total  = $valor['Total'];
         $pdf->Row([$i, $codigo, $talla, $para, $producto, $precio, $cantidad, $total]);
         $ttt += $total;
     }

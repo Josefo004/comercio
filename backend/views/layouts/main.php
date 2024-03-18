@@ -35,19 +35,18 @@ AppAsset::register($this);
             <!--            <div class="sidebar-brand-icon rotate-n-15">-->
             <!--                <i class="fas fa-laugh-wink"></i>-->
             <!--            </div>-->
-            <div class="sidebar-brand-text mx-3">Yii2 E-commerce</div>
+            <div class="sidebar-brand-text mx-3">Tienda Virtual</div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <!-- <li class="nav-item active">
             <a class="nav-link" href="<?php echo Yii::$app->homeUrl ?>">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
-        </li>
-
+        </li> -->
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -63,7 +62,7 @@ AppAsset::register($this);
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/order/index']) ?>">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/ordenes/index']) ?>">
                 <i class="fas fa-money-check-alt"></i>
                 <span>Ordenes</span>
             </a>
@@ -103,22 +102,23 @@ AppAsset::register($this);
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                <?php //echo Yii::$app->user->identity->getDisplayName() ?>
+                                <small>
+                                <?php echo Yii::$app->user->identity->getDisplayName(); ?>
+                                </small>
                             </span>
-                            <img class="img-profile rounded-circle"
-                                 src="/img/undraw_profile_1.svg">
+                            <!-- <img class="img-profile rounded-circle" src="/img/profile.svg"> -->
+                            <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"  aria-labelledby="userDropdown">
+                            <!-- <a class="dropdown-item" href="#">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Cuenta
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Configuración
-                            </a>
+                            </a> -->
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
